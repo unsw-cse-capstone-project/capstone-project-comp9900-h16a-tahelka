@@ -1,0 +1,7 @@
+Week 1
+Group was formed online and we had our first meeting for an hour on the 16th of September. Went over our backgrounds, skills we were bringing to the table, project ideas and then voted on a project to pursue which was FilmFinder. Class lab meeting to discuss database choice, structure, clarifications. Assigned roles for the rest of the project. Planned to self-study about Jira and note down novel ideas to add on to the FilmFinder before our next meeting on the 19th of September. I created the latex outline for the project proposal in Overleaf and noted down over eight novel ideas of potential projects. Meeting on the 19th included finalizing project scope/novel idea/architecture. 
+
+
+Week 2
+My task for the week is to finish existing product research, finalize data source and finish 60-70% of the project proposal by Sept 24th lab time. Group discussions via WhatsApp so the project continues faster parallel rather than collaboratively. 
+
