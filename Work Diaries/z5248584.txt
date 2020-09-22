@@ -1,0 +1,3 @@
+Week 1
+
+Gathered team members and formed Webcms group. I also created project on JIRA and invited team members to collaborate. Had a couple of team meetings over MS teams where we discusses various project topics and settled on FilmFinder. In other meetings, we discussed FilmFinder specs, features and technicalities. Also, finalised everyone's roles and involvement.
