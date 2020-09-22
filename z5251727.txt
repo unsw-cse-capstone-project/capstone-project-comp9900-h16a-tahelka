@@ -1,0 +1,7 @@
+Week 1
+
+Found a group after a bit of searching.  Had a couple of group meetings where we
+discussed possible project ideas, and settled on FilmFinder.  Found a couple of
+useable datasets for movie data.  Discussed database design for the project and
+more or less decided on a schema.  The plan for the coming week is to complete
+about two thirds of the project proposal.
