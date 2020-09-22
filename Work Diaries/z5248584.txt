@@ -1,3 +1,11 @@
 Week 1
 
 Gathered team members and formed Webcms group. I also created project on JIRA and invited team members to collaborate. Had a couple of team meetings over MS teams where we discusses various project topics and settled on FilmFinder. In other meetings, we discussed FilmFinder specs, features and technicalities. Also, finalised everyone's roles and involvement.
+
+Week 2
+
+1. I Created System Architecture diagram using draw.io tool.
+2. Wrote a bit about System Architecture in the proposal.
+3. As scrum master, I am to create user stories in JIRA.
+4. The task for this week is collaboratively have 60-70% of proposal complete. 
+
