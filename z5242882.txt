@@ -1,0 +1,11 @@
+Week 1:
+We formed a Group and our first online meeting was held on 16th of September. We introduced ourselves and learnt about strengths and the weaknesses of all the group members. We had discussed about the different projects and based on a voting system we decided on the project. The project we decided on was FilmFinder. We also discussed on the  meeting schedules and decided the communication platforms. By the start of second meeting, everyone had to come up with a database of their own and decide novel ideas for the projects.
+Then in our second meeting, we discussed the different aspects of the project what everyone would like to manage and contribute the most to. We decided the novel ideas based on a voting system. 
+Personally, I have studied about jira, brain stormed about the novel ideas and came up with 2 novel ideas, and created a database for the project based on my thinking.
+
+
+
+Week 2:
+1.) Learnt about basics of Java script, CSS and HTML. Learnt these basics to understand angular, the framework which we are going to use for our project frontend.
+2.) Learnt a part of angular and would try to complete learning about angular by the end of Week 3.
+3.) Created the UI diagrams on draw.io based on the diagrams and instructions given by Jatin. 
