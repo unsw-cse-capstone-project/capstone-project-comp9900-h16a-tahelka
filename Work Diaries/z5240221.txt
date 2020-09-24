@@ -1,3 +1,8 @@
 Week 1:
-Set up github repo. Discussed and finalized topic. Discussed and finalized novel featrues. Discussed DB. Learnt Angular and angular material. Started work on UI mock ups and UI flow. 
-Target for this week is to finish proposal work and put in stories in JIRA. Then start setting up development env.
+1. Set up github repo. 
+2. Discussed and finalized topic. 
+3. Discussed and finalized novel featrues. 
+4. Discussed DB. 
+5. Learnt Angular and angular material. 
+6. Started work on UI mock ups and UI flow. 
+7. Target for this week is to finish proposal work and put in stories in JIRA. Then start setting up development env.
