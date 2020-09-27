@@ -3,5 +3,7 @@ Group was formed online and we had our first meeting for an hour on the 16th of 
 
 
 Week 2
-My task for the week is to finish existing product research, finalize data source and finish 60-70% of the project proposal by Sept 24th lab time. Group discussions via WhatsApp so the project continues faster parallel rather than collaboratively. 
+Completed existing platforms research and finalized novelty of three concepts to be implemented for the project. Wrote out part of the project proposal. Found 3 databases to be combined to get all the information for our project. Coded a Jupiter notebook and then moved it to Google Collaborate since the processing power was not adequate to process on my computer but the Google Collab GPUs could not be used either since it was not a tensor flow operation. Had a discussion on 24th Sept lab 2 about how many users, movies etc we wanted to retain from the data sources due to limited processing power and how to structure it. 
 
+Week 3
+My task for the week is to complete my part of the proposal on MSteams, to help with user stories where possible and move entire report over to Overleaf and help with editing/submission by Lab3. Also to finish combining the three sources of the data.  
