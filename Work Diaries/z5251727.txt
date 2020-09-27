@@ -5,3 +5,16 @@ discussed possible project ideas, and settled on FilmFinder.  Found a couple of
 useable datasets for movie data.  Discussed database design for the project and
 more or less decided on a schema.  The plan for the coming week is to complete
 about two thirds of the project proposal.
+
+Week 2
+
+Entered user stories on Jira.  Made Project Objectives document, with FilmFinder
+specification divided up into objectives and paired description points with
+corresponding objectives points, for our convenience, as the similar but
+non-identical 'Project Description' and 'Project Objectives' descriptions were
+annoying.  Produced an initial software architecture diagram, then produced a
+new version of the diagram that Jatin had drawn.  Updated some user stories on
+Jira to conform to the 'Connextra' format.  With regard to the stories, was a
+bit uncertain about whether we were breaking up the objectives sufficiently, so
+emailed mentor for feedback.  The plan for the coming week is to complete the
+project proposal.
