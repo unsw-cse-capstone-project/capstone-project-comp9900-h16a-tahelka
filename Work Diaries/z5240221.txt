@@ -6,3 +6,11 @@ Week 1:
 5. Learnt Angular and angular material. 
 6. Started work on UI mock ups and UI flow. 
 7. Target for this week is to finish proposal work and put in stories in JIRA. Then start setting up development env.
+
+Week 2:
+1. Helped in creating Story boards.
+2. Created and updated tasks on JIRA.
+3. Held multiple meeting for discussion about architecture.
+4. Finalized novel ideas.
+5. Wrote parts of proposal.
+6. Contributed to Architecture Diagram.
