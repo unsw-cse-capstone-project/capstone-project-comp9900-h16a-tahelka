@@ -8,4 +8,11 @@ Week 2
 2. Wrote a bit about System Architecture in the proposal.
 3. As scrum master, I am to create user stories in JIRA.
 4. The task for this week is collaboratively have 60-70% of proposal complete. 
+5. Brainstormed technicalities of various ideas with team.
+6. Updated a few JIRA stories.
+
+Week 3
+
+1. Assigned various stories to different sprints.
+2. Sprint planning for 1st Sprint.
 
