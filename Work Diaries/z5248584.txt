@@ -15,4 +15,8 @@ Week 3
 
 1. Assigned various stories to different sprints.
 2. Sprint planning for 1st Sprint.
+3. Proofread JIRA stories.
+4. Held meeting with Jatin and Ian to discuss other technicalities.
+5. Updated JIRA board after lab meeting. 
+6. Updated sprint planning to address concerns raised in the lab.
 
