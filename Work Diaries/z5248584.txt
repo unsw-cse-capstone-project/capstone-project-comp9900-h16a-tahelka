@@ -16,7 +16,10 @@ Week 3
 1. Assigned various stories to different sprints.
 2. Sprint planning for 1st Sprint.
 3. Proofread JIRA stories.
-4. Held meeting with Jatin and Ian to discuss other technicalities.
+4. Held meetings with Jatin, Ian and Theruni to discuss other technicalities.
 5. Updated JIRA board after lab meeting. 
 6. Updated sprint planning to address concerns raised in the lab.
+7. Finalised DB Design with Ian
+8. Proof read proposal, made edits and submitted it.
+9. Wrote script to setup database.
 

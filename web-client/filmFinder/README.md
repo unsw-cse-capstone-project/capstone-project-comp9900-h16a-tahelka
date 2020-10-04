@@ -1,4 +1,13 @@
 # FilmFinder
+# Requirement
+* Node
+* NPM
+
+## Install global Angular CLI
+```npm install -g @angular/cli```
+
+## Install Dependencies
+```npm install```
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.4.
 
