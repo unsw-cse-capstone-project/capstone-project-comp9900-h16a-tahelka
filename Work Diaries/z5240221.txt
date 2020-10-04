@@ -14,3 +14,15 @@ Week 2:
 4. Finalized novel ideas.
 5. Wrote parts of proposal.
 6. Contributed to Architecture Diagram.
+
+Week 3:
+1. Sprint planning for 1st Sprint.
+2. Sprint planning for other weeks.
+3. Updated and created JIRA stories
+4. Held multiple meetings for architecture, db, recommendation engine and UI.
+5. Mapped storyboard with story in JIRA.
+6. Contributed in proposal.
+7. Intial code set up for front end
+8. Started sprint 1.
+9. Created Login Page with validations
+10. Created Signup page with validations
