@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
     confirmPassword: new FormControl('', Validators.required),
     dob: new FormControl('', Validators.required)
   });
+  yearList = this.generateYear();
   public generateYear(): object {
     const retVal = [];
     for (let i = 2020; i > 1900; i--) {
@@ -21,7 +22,6 @@ export class SignupComponent implements OnInit {
     }
     return retVal;
   }
-  yearList = this.generateYear();
   constructor() { }
 
   ngOnInit(): void {
