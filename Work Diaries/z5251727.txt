@@ -18,3 +18,15 @@ Jira to conform to the 'Connextra' format.  With regard to the stories, was a
 bit uncertain about whether we were breaking up the objectives sufficiently, so
 emailed mentor for feedback.  The plan for the coming week is to complete the
 project proposal.
+
+Week 3
+
+Did some more work on user stories on Jira.  Matched each project objective with
+its corresponding user stories, for proposal, to justify that the stories
+satisfy all the objectives.  Produced a new software architecture diagram after
+discussion with our mentor revealed that the previous one didn't have the right
+details in it.  Finalised database schema with Yash and made up some web
+contracts between the API and the UI for the first sprint.  The project proposal
+was completed and submitted.  The plan for the coming week is to complete the
+first sprint, which includes user stories on authentication, searching for
+movies by name and viewing a movie's full details.
