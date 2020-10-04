@@ -18,7 +18,7 @@
           </mat-form-field>
           <br>
           <mat-form-field>
-            <mat-select formControlName="department" placeholder="Year of birth">
+            <mat-select formControlName="dob" placeholder="Year of birth" required>
               <mat-option>None</mat-option>
               <ng-container *ngFor="let year of yearList">
                 <mat-option value="{{year.value}}">{{year.value}}</mat-option>

@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
     confirmPassword: new FormControl('', Validators.required),
-    dob: new FormControl('', Validators.required)
+    dob: new FormControl(2020, Validators.required)
   });
   yearList = this.generateYear();
   public generateYear(): object {

@@ -17,7 +17,7 @@
             <mat-error>Password required</mat-error>
           </mat-form-field>
           <button mat-raised-button color="primary" class="top-margin" [disabled]="loginForm.invalid">Login</button>
-          <button mat-raised-button color="accent" class="top-margin">Sign Up</button>
+          <button mat-raised-button color="accent" (click)="navigate('/signup')" class="top-margin">Sign Up</button>
         </div>
       </mat-card-content>
     </mat-card>
