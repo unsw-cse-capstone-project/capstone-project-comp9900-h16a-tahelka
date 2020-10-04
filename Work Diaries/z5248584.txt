@@ -21,4 +21,5 @@ Week 3
 6. Updated sprint planning to address concerns raised in the lab.
 7. Finalised DB Design with Ian
 8. Proof read proposal, made edits and submitted it.
+9. Wrote script to setup database.
 
