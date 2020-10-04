@@ -1,0 +1,21 @@
+<p>
+  <mat-toolbar color="primary">
+    <span>FilmFinder</span>
+    <span class="left-right-spacing">Browse</span>
+    <span>My Wishlist</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button [mat-menu-trigger-for]="userMenu" class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item>Subscribed List</button>
+      <button mat-menu-item>Subscribed Wishlist</button>
+      <button mat-menu-item>Watched Movies</button>
+      <button mat-menu-item>Block Users List</button>
+      <button mat-menu-item>Log Out</button>
+    </mat-menu>
+  </mat-toolbar>
+</p>
