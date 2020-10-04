@@ -1,3 +1,21 @@
 <form [formGroup]="loginForm">
-
+  <mat-grid-list cols="3">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <div class="login-form-width">
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="Enter email" required>
+          <mat-error>Email required in correct form</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input type="password" formControlName="password" matInput placeholder="Enter password" required>
+          <mat-error>Password required</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="top-margin" [disabled]="loginForm.invalid">Login</button>
+        <button mat-raised-button color="accent" class="top-margin">Sign Up</button>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+  </mat-grid-list>
 </form>
