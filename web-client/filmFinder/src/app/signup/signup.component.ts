@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -22,9 +23,11 @@ export class SignupComponent implements OnInit {
     }
     return retVal;
   }
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
-
+  navigate(pathToNavigate: string): void {
+    this.router.navigate([pathToNavigate]);
+  }
 }
