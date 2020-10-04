@@ -1,0 +1,45 @@
+<form [formGroup]="signUpForm">
+  <mat-grid-list cols="3">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Sign Up</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <mat-form-field>
+              <input formControlName="email" matInput placeholder="Enter email" required>
+              <mat-error>Email required in correct form</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input  formControlName="username" matInput placeholder="Enter username" required>
+              <mat-error>Username required</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input formControlName="dob" matInput placeholder="Enter year of birth" required>
+              <mat-error>Year of birth required</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input type="password" formControlName="password" matInput placeholder="Enter password" required>
+              <mat-error>Password required</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input type="password" formControlName="confirmPassword" matInput placeholder="Confirm password" required>
+              <mat-error>Password required</mat-error>
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="accent" class="top-margin" [disabled]="signUpForm.invalid">Sign Up</button>
+            <button mat-raised-button color="primary" class="top-margin">Login</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+  </mat-grid-list>
+</form>
+

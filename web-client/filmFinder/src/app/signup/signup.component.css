@@ -1,0 +1,11 @@
+.login-form-width > * {
+  width: 100%;
+}
+
+.top-margin {
+  margin-top: 10px;
+}
+
+.example-card {
+  max-width: 100%;
+}
