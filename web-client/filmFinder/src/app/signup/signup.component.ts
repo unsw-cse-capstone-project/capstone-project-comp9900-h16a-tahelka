@@ -14,6 +14,14 @@ export class SignupComponent implements OnInit {
     confirmPassword: new FormControl('', Validators.required),
     dob: new FormControl('', Validators.required)
   });
+  public generateYear(): object {
+    const retVal = [];
+    for (let i = 2020; i > 1900; i--) {
+      retVal.push({value: i});
+    }
+    return retVal;
+  }
+  yearList = this.generateYear();
   constructor() { }
 
   ngOnInit(): void {
