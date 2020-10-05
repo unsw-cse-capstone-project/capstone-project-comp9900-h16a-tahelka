@@ -2,8 +2,8 @@ from flask import Blueprint, g
 from flask_restx import Api
 from werkzeug.exceptions import BadRequest, Unauthorized, Forbidden, NotFound
 
-# from apis.tokens import api as tokens
-# from apis.users import api as users
+from apis.tokens import api as tokens
+from apis.users import api as users
 
 blueprint = Blueprint('apiv1', __name__, url_prefix='/api/v1')
 
@@ -23,8 +23,8 @@ api = Api(
     security='HTTP Bearer Authentication'
 )
 
-# api.add_namespace(tokens)
-# api.add_namespace(users)
+api.add_namespace(tokens)
+api.add_namespace(users)
 
 @api.errorhandler(BadRequest)
 def handle_bad_request(error):

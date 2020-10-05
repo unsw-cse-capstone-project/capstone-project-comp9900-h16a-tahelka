@@ -5,6 +5,7 @@ from authentication.hash_generator import HashGenerator
 from models.User import User
 from werkzeug.exceptions import BadRequest
 
+
 api = Namespace('Registration', path='/users',
                 description='New FilmFinder registration')
 
@@ -45,7 +46,7 @@ class Users(Resource):
         session.commit()
 
         # Put the current user id in global
-        g.user_id = new_user.id
+        g.user_id = new_user.userID
 
         response = {'message': 'Registration successful.'}
         return response, 201
