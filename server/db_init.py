@@ -7,7 +7,7 @@ from models.GenreOfFilm import GenreOfFilm
 from models.FilmDirector import FilmDirector
 from models.FilmCast import FilmCast
 from models.MovieReview import MovieReview
-from models.FilmFinder import FilmFinder
+from models.User import User
 from models.Person import Person
 from models.WishList import Wishlist
 from models.Watchlist import Watchlist

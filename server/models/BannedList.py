@@ -4,9 +4,9 @@ from models.Common import Base
 class Bannedlist(Base):
     __tablename__ = "bannedlists"
 
-    userID = Column(Integer, ForeignKey("filmFinders.userID"), primary_key=True,
+    userID = Column(Integer, ForeignKey("users.userID"), primary_key=True,
                     index=True)
-    bannedUserID = Column(Integer, ForeignKey("filmFinders.userID"), primary_key=True,
+    bannedUserID = Column(Integer, ForeignKey("users.userID"), primary_key=True,
                           index=True)
 
     def __init__(self, userID, bannedUserID):

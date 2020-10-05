@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String
 from models.Common import Base
 
 
-class FilmFinder(Base):
-    __tablename__ = "filmFinders"
+class User(Base):
+    __tablename__ = "users"
 
     userID = Column(Integer, primary_key=True)
     username = Column(String)
