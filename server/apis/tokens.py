@@ -1,8 +1,8 @@
 from flask import Blueprint, request, g
 from flask_restx import Namespace, fields, Resource
 from authentication.credentials_authenticator import CredentialsAuthenticator
-# from tahelka.analytics.recorder import Recorder
-# from tahelka.analytics.summarizer import Summarizer
+
+
 
 
 api = Namespace('Authentication', path='/tokens',
@@ -41,7 +41,6 @@ class Tokens(Resource):
         response = {
             'message': 'Login successful. Token is successfully created.',
             'email': user.email,
-            'is_admin': user.is_admin,
             'token': token
         }
 

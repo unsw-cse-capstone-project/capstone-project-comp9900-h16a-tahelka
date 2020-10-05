@@ -1,3 +1,3 @@
 import os
 
-SECRET_KEY = os.environ.get('SECRET_KEY','set jwt secret')
+SECRET_KEY = os.environ.get('SECRET_KEY')

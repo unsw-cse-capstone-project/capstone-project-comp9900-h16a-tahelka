@@ -23,7 +23,7 @@ class CredentialsAuthenticator:
             raise Unauthorized
 
         # Put the authenticated user as current user in global
-        g.user = user.id
+        g.user = user.userID
 
         return user, TokenGenerator(user).generate()
 
