@@ -8,11 +8,11 @@ class User(Base):
     userID = Column(Integer, primary_key=True)
     username = Column(String)
     email = Column(String)
-    password_hash = Column(String)
+    password = Column(String)
     yob = Column(Integer)
 
-    def __init__(self, username, email, password_hash, yob):
+    def __init__(self, username, email, password, yob):
         self.username = username
         self.email = email
-        self.password_hash = password_hash
+        self.password = password
         self.yob = yob
