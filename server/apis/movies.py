@@ -9,12 +9,7 @@ from string import punctuation
 api = Namespace('Search', path = '/movies', description = 'Search for movies')
 
 def transform(s):
-    return set(remove_punctuation(s.lower().translate(str.maketrans('', '',
-                                                                    punctuation
-                                                                   )
-                                                     )
-                                 ).split()
-              )
+    return set(s.lower().translate(str.maketrans('', '', punctuation)).split())
 
 @api.route('')
 class Movies(Resource):
