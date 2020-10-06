@@ -1,0 +1,26 @@
+<app-navbar [isLoggedIn]="true"></app-navbar>
+<form [formGroup]="searchForm">
+  <mat-form-field>
+    <input formControlName="movieName" matInput placeholder="Enter movie name">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input  formControlName="movieDescription" matInput placeholder="Enter movie description">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-select formControlName="movieGenre" placeholder="Select genre">
+      <ng-container *ngFor="let g of genre">
+        <mat-option value="{{g.value}}">{{g.value}}</mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-select formControlName="movieGenre" placeholder="Select genre">
+      <ng-container *ngFor="let m of mood">
+        <mat-option value="{{m.value}}">{{m.value}}</mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+</form>
