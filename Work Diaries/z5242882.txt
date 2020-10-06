@@ -6,6 +6,12 @@ Personally, I have studied about jira, brain stormed about the novel ideas and c
 
 
 Week 2:
-1.) Learnt about basics of Java script, CSS and HTML. Learnt these basics to understand angular, the framework which we are going to use for our project frontend.
+1.) Learnt the basics of Java script, CSS and HTML. Learnt these basics to understand angular, the framework which we are going to use for our project frontend.
 2.) Learnt a part of angular and would try to complete learning about angular by the end of Week 3.
 3.) Created the UI diagrams on draw.io based on the diagrams and instructions given by Jatin. 
+
+
+Week 3:
+1.) Learnt Typescript basics for better understanding of angular. Completed half of the angular courses on youtube.
+2.) Made the required changes to the UI diagrams based on the changes made to the project proposal and the novel ideas.
+3.) Contributed to the project proposal by updating the story boards and creating few of the user stories.
