@@ -13,7 +13,7 @@ class TokenGenerator:
 
     def construct_payload(self):
         payload = {
-            'id': self.filmfinder.id,
+            'id': self.filmfinder.userID,
             'username': self.filmfinder.username,
             'email': self.filmfinder.email,
             'exp': TokenGenerator.decide_expire_time()

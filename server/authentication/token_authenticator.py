@@ -5,7 +5,7 @@ from jwt.exceptions import InvalidTokenError
 import time
 from werkzeug.exceptions import Forbidden, Unauthorized
 
-from tahelka.auth.token_extractor import TokenExtractor
+from authentication.token_extractor import TokenExtractor
 
 class TokenAuthenticator:
     def __init__(self, auth_header):
