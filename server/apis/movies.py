@@ -6,9 +6,7 @@ from models.Movie import Movie
 from string import punctuation
 
 
-api = Namespace('Search', path = '/movies',
-                description = 'Search for movies by keywords'
-               )
+api = Namespace('Search', path = '/movies', description = 'Search for movies')
 
 def remove_punctuation(s):
     return s.translate(str.maketrans('', '', punctuation))
