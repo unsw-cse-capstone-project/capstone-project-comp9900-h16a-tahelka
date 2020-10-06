@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "filmFinder"
+  "defaultProject": "filmFinder",
+  "cli": {
+    "analytics": false
+  }
 }

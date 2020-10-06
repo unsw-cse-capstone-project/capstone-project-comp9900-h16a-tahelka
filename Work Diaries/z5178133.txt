@@ -1,9 +1,13 @@
-Week 1
+Week 1 (14/09 - 20/09)
 Group was formed online and we had our first meeting for an hour on the 16th of September. Went over our backgrounds, skills we were bringing to the table, project ideas and then voted on a project to pursue which was FilmFinder. Class lab meeting to discuss database choice, structure, clarifications. Assigned roles for the rest of the project. Planned to self-study about Jira and note down novel ideas to add on to the FilmFinder before our next meeting on the 19th of September. I created the latex outline for the project proposal in Overleaf and noted down over eight novel ideas of potential projects. Meeting on the 19th included finalizing project scope/novel idea/architecture. 
 
 
-Week 2
+Week 2 (21-09-27/09)
 Completed existing platforms research and finalized novelty of three concepts to be implemented for the project. Wrote out part of the project proposal. Found 3 databases to be combined to get all the information for our project. Coded a Jupiter notebook and then moved it to Google Collaborate since the processing power was not adequate to process on my computer but the Google Collab GPUs could not be used either since it was not a tensor flow operation. Had a discussion on 24th Sept lab 2 about how many users, movies etc we wanted to retain from the data sources due to limited processing power and how to structure it. 
 
-Week 3
-My task for the week is to complete my part of the proposal on MSteams, to help with user stories where possible and move entire report over to Overleaf and help with editing/submission by Lab3. Also to finish combining the three sources of the data.  
+Week 3 (28/09-04/10)
+Completed majority of combining the three databases but had an issue with the number of records per user and the number fo movies we wanted to retain because the data distribution was different to what was expected. Finalized in team meeting. Completed writing parts of the proposal and transferred the whole report from MS teams word document to overleaf latex. Proof read the proposal. Read proposal specs and project objective document and ticked off satisfying all criteria in the proposal. 
+  
+
+Week 4 (05/10 - 11/10)
+My task for the week is to complete the database creation that was incomplete from Week 3. I will clean up the code and have it commented and uploaded onto GitHub. Also have the final datasets ready for download. Plan out the recommendation system  and start on the recommendation system task in Sprint 1. 
