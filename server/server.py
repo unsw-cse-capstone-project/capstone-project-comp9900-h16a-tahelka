@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 app.register_blueprint(blueprint)
-# app.config.from_pyfile('configuration.py')
+app.config.from_pyfile('configuration.py')
 
 # Register app error handlers
 @app.errorhandler(404)
