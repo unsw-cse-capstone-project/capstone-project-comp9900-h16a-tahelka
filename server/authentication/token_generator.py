@@ -8,7 +8,7 @@ class TokenGenerator:
 
     def generate(self):
         payload = self.construct_payload()
-        secret = current_app.config['JWT_SECRET']
+        secret = current_app.config['SECRET_KEY']
         return jwt.encode(payload, secret, algorithm='HS256').decode()
 
     def construct_payload(self):

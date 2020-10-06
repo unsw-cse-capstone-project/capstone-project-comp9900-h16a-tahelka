@@ -8,9 +8,8 @@ from werkzeug.exceptions import Forbidden, Unauthorized
 from tahelka.auth.token_extractor import TokenExtractor
 
 class TokenAuthenticator:
-    def __init__(self, auth_header, must_be_admin):
+    def __init__(self, auth_header):
         self.auth_header = auth_header
-        self.must_be_admin = must_be_admin
 
     def authenticate(self):
         # Decode
@@ -20,12 +19,8 @@ class TokenAuthenticator:
         # Set the user_id as global
         g.user_id = payload['id']
 
-        # Check role
-        if self.must_be_admin and 'is_admin' not in payload:
-            raise Forbidden
-
     def decode_token(self):
-        secret = current_app.config['JWT_SECRET']
+        secret = current_app.config['SECRET_KEY']
         try:
             payload = jwt.decode(self.extract_token(), secret,
                                  algorithms='HS256')
