@@ -8,12 +8,13 @@ from string import punctuation
 
 api = Namespace('Search', path = '/movies', description = 'Search for movies')
 
-def remove_punctuation(s):
-    return s.translate(str.maketrans('', '', punctuation))
-
-def matches(keywords, value):
-    return set(remove_punctuation(keywords.lower()).split())\
-           <= set(remove_punctuation(value.lower()).split())
+def transform(s):
+    return set(remove_punctuation(s.lower().translate(str.maketrans('', '',
+                                                                    punctuation
+                                                                   )
+                                                     )
+                                 ).split()
+              )
 
 @api.route('')
 class Movies(Resource):
@@ -25,12 +26,13 @@ class Movies(Resource):
         TokenAuthenticator(request.headers.get('Authorization'),
                            False
                           ).authenticate()
-        name = request.args.get('name')
-        return [{'movieID': movieID, 'title': title,
-                 'year': year, 'rating': avg_rating
-                } for movieID, title, year, avg_rating
-                      in Session().query(Movie.movieID, Movie.title,
-                                         Movie.year, Movie.avg_rating
-                                        )
-                      if matches(name, title)
-               ], 200
+        name_keywords = transform(request.args.get('name'))
+        movies = Session().query(Movie.movieID, Movie.title,
+                                 Movie.year, Movie.avg_rating
+                                )
+        search_results = [{'movieID': movieID, 'title': title,
+                           'year': year, 'rating': avg_rating
+                          } for movieID, title, year, avg_rating in movies
+                                if name_keywords <= transform(title)
+                         ]
+        return search_results, 200
