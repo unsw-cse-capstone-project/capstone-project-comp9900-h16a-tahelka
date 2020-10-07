@@ -12,7 +12,7 @@
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button style="width: 100%" mat-raised-button color="accent">Search</button>
+      <button style="width: 100%" mat-raised-button color="accent" (click)="search()">Search</button>
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="search-form-width">
@@ -34,3 +34,4 @@
     </mat-grid-tile>
   </mat-grid-list>
 </form>
+<app-search-result></app-search-result>

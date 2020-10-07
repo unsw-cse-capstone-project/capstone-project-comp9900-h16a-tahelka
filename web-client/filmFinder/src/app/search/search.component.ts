@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Search} from '../models/Search';
+import {AuthenticatedUser} from '../models/AuthenticatedUser';
+import {WebService} from '../services/web.service';
 
 @Component({
   selector: 'app-search',
@@ -9,13 +12,14 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class SearchComponent implements OnInit {
   genre: object[];
   mood: object[];
+  searchObject: Search;
   searchForm: FormGroup = new FormGroup({
     movieName: new FormControl(''),
     movieDescription: new FormControl(''),
     movieGenre: new FormControl(''),
     mood: new FormControl('')
   });
-  constructor() {
+  constructor(private webService: WebService) {
     this.genre = [
       {value: 'Animation'},
       {value: 'Adult'},
@@ -55,5 +59,12 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  search(): void {
+    this.searchObject = new Search(this.searchForm.value.movieName);
+    this.webService.search(this.searchObject).subscribe(success => {
+      console.log(success);
+    }, err => {
+      alert(JSON.stringify(err));
+    });
+  }
 }
