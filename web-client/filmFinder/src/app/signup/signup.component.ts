@@ -37,7 +37,7 @@ export class SignupComponent implements OnInit {
           console.log(success);
         },
         err => {
-          console.log(err);
+          alert(err);
         });
     } else {
       alert('password and confirm password do not match');
