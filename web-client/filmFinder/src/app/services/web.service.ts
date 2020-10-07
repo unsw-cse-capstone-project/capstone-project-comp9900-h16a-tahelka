@@ -31,8 +31,13 @@ export class WebService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     const params = new HttpParams()
-      .set('name', searchObject.name)
-      .set('abc', 'def');
+      .set('name', searchObject.name);
     return this.http.get(moviesUrl, {params, headers});
+  }
+  movieDetails(id: number): Observable<any> {
+    const moviesUrl = this.API_URL + 'movies/' + id.toString();
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(moviesUrl, {headers});
   }
 }

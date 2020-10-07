@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MovieResult} from '../models/MovieResult';
+import {WebService} from '../services/web.service';
+import {Search} from '../models/Search';
 
 @Component({
   selector: 'app-movie-details',
@@ -9,13 +11,17 @@ import {MovieResult} from '../models/MovieResult';
 export class MovieDetailsComponent implements OnInit {
   @Input() desc: string;
   @Input() movie: MovieResult;
-  constructor() { }
+  constructor(private webService: WebService) { }
 
   ngOnInit(): void {
     console.log(this.movie);
   }
   movieDetails(): void {
-    console.log(this.movie);
-  }
+      this.webService.movieDetails(this.movie.movieID).subscribe(success => {
+        console.log(success);
+      }, err => {
+        alert(JSON.stringify(err));
+      });
+    }
 
 }
