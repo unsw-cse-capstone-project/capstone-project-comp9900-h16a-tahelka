@@ -4,7 +4,8 @@ from werkzeug.exceptions import BadRequest, Unauthorized, Forbidden, NotFound
 
 from apis.tokens import api as tokens
 from apis.users import api as users
-from apis.movies import api as movies
+from apis.movie_search import api as movie_search
+from apis.movie_details import api as movie_details
 
 blueprint = Blueprint('apiv1', __name__, url_prefix='/api/v1')
 
@@ -26,7 +27,8 @@ api = Api(
 
 api.add_namespace(tokens)
 api.add_namespace(users)
-api.add_namespace(movies)
+api.add_namespace(movie_search)
+api.add_namespace(movie_details)
 
 @api.errorhandler(BadRequest)
 def handle_bad_request(error):
