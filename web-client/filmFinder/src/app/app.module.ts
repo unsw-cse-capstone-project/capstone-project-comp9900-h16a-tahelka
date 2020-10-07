@@ -12,6 +12,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SearchComponent } from './search/search.component';
 import {HttpClientModule} from '@angular/common/http';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SearchResultComponent } from './search-result/search-result.component';
     NavbarComponent,
     SignupComponent,
     SearchComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    MovieDetailsComponent
   ],
   imports: [
     BrowserModule,
