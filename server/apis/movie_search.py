@@ -16,10 +16,10 @@ class MovieSearch(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         name_keywords = request.args.get('name') if 'name' in request.args else ''
-        matches = Session().query(Movie.movieID, Movie.title,
-                                  Movie.year, Movie.avg_rating
-                                 ).filter(Movie.title.ilike(f'%{name_keywords}%'))
+        search_results = Session().query(Movie.movieID, Movie.title,
+                                         Movie.year, Movie.avg_rating
+                                        ).filter(Movie.title.ilike(f'%{name_keywords}%'))
         return [{'movieID': movieID, 'title': title,
                  'year': year, 'rating': avg_rating
-                } for movieID, title, year, avg_rating in matches
+                } for movieID, title, year, avg_rating in search_results
                ], 200
