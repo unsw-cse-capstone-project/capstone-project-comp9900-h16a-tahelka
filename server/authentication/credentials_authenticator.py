@@ -9,8 +9,8 @@ from flask import g
 
 
 class CredentialsAuthenticator:
-    def __init__(self, username, password):
-        self.username = username
+    def __init__(self, email, password):
+        self.email = email
         self.password = password
 
     def authenticate(self):
@@ -23,10 +23,10 @@ class CredentialsAuthenticator:
             raise Unauthorized
 
         # Put the authenticated user as current user in global
-        g.user = user.userID
+        g.userID = user.userID
 
         return user, TokenGenerator(user).generate()
 
     def find_filmfinder(self):
         session = Session()
-        return session.query(User).filter(User.username == self.username).first()
+        return session.query(User).filter(User.email == self.email).first()
