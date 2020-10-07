@@ -18,8 +18,7 @@ class Movies(Resource):
         '''
         Search for movies by name.
         '''
-        TokenAuthenticator(request.headers.get('Authorization'),
-                           False
+        TokenAuthenticator(request.headers.get('Authorization')
                           ).authenticate()
         name_keywords = transform(request.args.get('name'))
         movies = Session().query(Movie.movieID, Movie.title,
