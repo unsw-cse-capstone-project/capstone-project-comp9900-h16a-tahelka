@@ -39,6 +39,7 @@ class Tokens(Resource):
         response = {
             'message': 'Login successful. Token is successfully created.',
             'email': user.email,
+            'username': user.username,
             'token': token
         }
 
