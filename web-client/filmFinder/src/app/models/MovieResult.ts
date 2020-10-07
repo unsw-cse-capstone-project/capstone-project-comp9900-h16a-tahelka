@@ -3,7 +3,6 @@ export class MovieResult {
   title: string;
   year: number;
   rating: number;
-  name: string;
   constructor() {
   }
 }
