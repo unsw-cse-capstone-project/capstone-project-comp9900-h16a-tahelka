@@ -16,7 +16,7 @@
             <input type="password" formControlName="password" matInput placeholder="Enter password" required>
             <mat-error>Password required</mat-error>
           </mat-form-field>
-          <button mat-raised-button color="primary" (click)="navigate('/search')" class="top-margin" [disabled]="loginForm.invalid">Login</button>
+          <button mat-raised-button color="primary" (click)="login()" class="top-margin" [disabled]="loginForm.invalid">Login</button>
           <button mat-raised-button color="accent" (click)="navigate('/signup')" class="top-margin">Sign Up</button>
         </div>
       </mat-card-content>

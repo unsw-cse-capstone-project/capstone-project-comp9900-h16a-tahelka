@@ -34,10 +34,10 @@ export class SignupComponent implements OnInit {
     if (this.signUpForm.value.confirmPassword === this.signUpForm.value.password) {
       this.newUser = this.signUpForm.value;
       this.webService.signup(this.newUser).subscribe(success => {
-          console.log(success);
+          this.navigate('/login');
         },
         err => {
-          alert(err);
+          alert(JSON.stringify(err));
         });
     } else {
       alert('password and confirm password do not match');
