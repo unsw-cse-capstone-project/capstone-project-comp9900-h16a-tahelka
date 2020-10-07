@@ -5,7 +5,7 @@ from authentication.token_authenticator import TokenAuthenticator
 from models.Movie import Movie
 
 
-api = Namespace('Movies', 'Find movies', '/movies')
+api = Namespace('Movie Search', path = '/movies')
 
 @api.route('')
 @api.param('name', 'Name search keywords')

@@ -6,7 +6,7 @@ from models.Movie import Movie
 from werkzeug.exceptions import NotFound
 
 
-api = Namespace('Movies', 'Find movies', '/movies')
+api = Namespace('Movie Details', path = '/movies')
 
 @api.route('/<int:movieID>')
 class MovieDetails(Resource):
