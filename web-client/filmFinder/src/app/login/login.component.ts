@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
       const authUser = new AuthenticatedUser(success.username, success.email, success.token);
       this.authenticationService.login(authUser);
       this.navigate('/search');
-    }, error => {
-      alert(error);
+    }, err => {
+      alert(JSON.stringify(err));
     });
     this.navigate('/search');
   }
