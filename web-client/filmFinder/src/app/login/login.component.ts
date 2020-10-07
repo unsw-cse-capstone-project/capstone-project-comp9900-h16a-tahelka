@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
+import {WebService} from '../services/web.service';
+import {AuthenticatedUser} from '../models/AuthenticatedUser';
+import {User} from '../models/User';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +16,22 @@ export class LoginComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required)
   });
-  constructor(private router: Router) { }
+  user: User;
+  constructor(private webService: WebService, private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+  }
+  login(): void {
+    this.user = this.loginForm.value;
+    this.webService.login(this.user).subscribe(success => {
+      console.log(success);
+      const authUser = new AuthenticatedUser(success.username, success.email, success.token);
+      this.authenticationService.login(authUser);
+      this.navigate('/search');
+    }, err => {
+      alert(JSON.stringify(err));
+    });
+    this.navigate('/search');
   }
   navigate(pathToNavigate: string): void {
     this.router.navigate([pathToNavigate]);

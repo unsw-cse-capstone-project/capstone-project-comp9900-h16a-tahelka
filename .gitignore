@@ -1,2 +1,5 @@
 
 server/.idea/*
+*.pyc
+server/filmfinder_tahelka.db
+server/dummy_data.py
