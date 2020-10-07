@@ -12,16 +12,15 @@
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <div class="example-element-diagram">
-          <div class="example-element-position"> {{element.position}} </div>
-          <div class="example-element-symbol"> {{element.symbol}} </div>
-          <div class="example-element-name"> {{element.name}} </div>
+          <div class="example-element-position"> {{element.title}} </div>
+          <div class="example-element-symbol"> {{element.rating}} </div>
+          <div class="example-element-name"> {{element.year}} </div>
           <div class="example-element-weight"> {{element.weight}} </div>
         </div>
         <div class="example-element-description">
           {{element.description}}
-          <span class="example-element-description-attribution"> -- Wikipedia </span>
         </div>
-        <app-movie-details [desc]="element.description"></app-movie-details>
+        <app-movie-details [desc]="element.description" [movie]="element"></app-movie-details>
       </div>
     </td>
   </ng-container>

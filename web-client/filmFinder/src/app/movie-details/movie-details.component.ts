@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {MovieResult} from '../models/MovieResult';
 
 @Component({
   selector: 'app-movie-details',
@@ -7,15 +8,14 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class MovieDetailsComponent implements OnInit {
   @Input() desc: string;
-  // desc: string;
+  @Input() movie: MovieResult;
   constructor() { }
 
   ngOnInit(): void {
-    console.log('init');
+    console.log(this.movie);
   }
-  test(de: string): void {
-    console.log('test');
-    this.desc = de;
+  movieDetails(): void {
+    console.log(this.movie);
   }
 
 }
