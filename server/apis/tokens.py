@@ -3,13 +3,11 @@ from flask_restx import Namespace, fields, Resource
 from authentication.credentials_authenticator import CredentialsAuthenticator
 
 
-
-
 api = Namespace('Authentication', path='/tokens',
                 description='User authentication and JWT token creation')
 
 credential = api.model('Credential', {
-    'username': fields.String(required=True, description='Email of the user'),
+    'email': fields.String(required=True, description='Email of the user'),
     'password': fields.String(required=True, description='Password that the user specified when registering to the platform')
 })
 
@@ -28,9 +26,9 @@ class Tokens(Resource):
         '''
         Authenticates a user and creates a JWT token for the user
         '''
-        username = request.json['username']
+        email = request.json['email']
         password = request.json['password']
-        authenticator = CredentialsAuthenticator(username, password)
+        authenticator = CredentialsAuthenticator(email, password)
         user, token = authenticator.authenticate()
 
         # Analytics here
