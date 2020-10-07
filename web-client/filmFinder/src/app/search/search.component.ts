@@ -17,12 +17,39 @@ export class SearchComponent implements OnInit {
   });
   constructor() {
     this.genre = [
-      {value: 'action'},
-      {value: 'comedy'}
+      {value: 'Animation'},
+      {value: 'Adult'},
+      {value: 'Documentary'},
+      {value: 'Mystery'},
+      {value: 'Fantasy'},
+      {value: 'Family'},
+      {value: 'Drama'},
+      {value: 'Biography'},
+      {value: 'Adventure'},
+      {value: 'Sci-Fi'},
+      {value: 'Comedy'},
+      {value: 'Western'},
+      {value: 'Action'},
+      {value: 'Musical'},
+      {value: 'News'},
+      {value: 'Sport'},
+      {value: 'Horror'},
+      {value: 'Romance'},
+      {value: 'Reality-TV'},
+      {value: 'Music'},
+      {value: 'Film-Noir'},
+      {value: 'Thriller'},
+      {value: 'War'},
+      {value: 'History'},
+      {value: 'Crime'}
     ];
     this.mood = [
-      {value: 'happy'},
-      {value: 'sad'},
+      {value: 'Indifferent'},
+      {value: 'Sad and Rejected'},
+      {value: 'Flirty'},
+      {value: 'Energetic and Excited'},
+      {value: 'Stressed'},
+      {value: 'Weird'}
     ];
   }
 
