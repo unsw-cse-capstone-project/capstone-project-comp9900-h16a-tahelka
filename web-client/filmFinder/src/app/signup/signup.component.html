@@ -1,5 +1,5 @@
 <app-navbar [isLoggedIn]="false"></app-navbar>
-<form [formGroup]="signUpForm">
+<form [formGroup]="signUpForm" (submit)="signup()">
   <div >
     <mat-card class="example-card">
       <mat-card-header>
@@ -18,7 +18,7 @@
           </mat-form-field>
           <br>
           <mat-form-field>
-            <mat-select formControlName="dob" placeholder="Year of birth" required>
+            <mat-select formControlName="yob" placeholder="Year of birth" required>
               <mat-option>None</mat-option>
               <ng-container *ngFor="let year of yearList">
                 <mat-option value="{{year.value}}">{{year.value}}</mat-option>
@@ -36,7 +36,7 @@
             <mat-error>Confirm password required</mat-error>
           </mat-form-field>
           <br>
-          <button mat-raised-button color="accent" class="top-margin" [disabled]="signUpForm.invalid">Sign Up</button>
+          <button mat-raised-button color="accent" type="submit" class="top-margin" (click)="signUpForm" [disabled]="signUpForm.invalid">Sign Up</button>
           <br>
           <button mat-raised-button color="primary" (click)="navigate('/login')" class="top-margin">Login</button>
         </div>
