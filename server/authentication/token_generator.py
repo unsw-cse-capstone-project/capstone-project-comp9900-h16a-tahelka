@@ -8,12 +8,12 @@ class TokenGenerator:
 
     def generate(self):
         payload = self.construct_payload()
-        secret = current_app.config['JWT_SECRET']
+        secret = current_app.config['SECRET_KEY']
         return jwt.encode(payload, secret, algorithm='HS256').decode()
 
     def construct_payload(self):
         payload = {
-            'id': self.filmfinder.id,
+            'id': self.filmfinder.userID,
             'username': self.filmfinder.username,
             'email': self.filmfinder.email,
             'exp': TokenGenerator.decide_expire_time()
