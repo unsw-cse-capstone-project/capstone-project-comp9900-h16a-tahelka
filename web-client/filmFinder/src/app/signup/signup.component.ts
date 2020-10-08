@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {NewUser} from '../models/NewUser';
+import {WebService} from '../services/web.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,9 +15,10 @@ export class SignupComponent implements OnInit {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
     confirmPassword: new FormControl('', Validators.required),
-    dob: new FormControl(2020, Validators.required)
+    yob: new FormControl(2020, Validators.required)
   });
   yearList = this.generateYear();
+  newUser: NewUser;
   public generateYear(): object {
     const retVal = [];
     for (let i = 2020; i > 1900; i--) {
@@ -23,9 +26,22 @@ export class SignupComponent implements OnInit {
     }
     return retVal;
   }
-  constructor(private router: Router) { }
+  constructor(private router: Router, private webService: WebService) { }
 
   ngOnInit(): void {
+  }
+  signup(): void {
+    if (this.signUpForm.value.confirmPassword === this.signUpForm.value.password) {
+      this.newUser = this.signUpForm.value;
+      this.webService.signup(this.newUser).subscribe(success => {
+          this.navigate('/login');
+        },
+        err => {
+          alert(JSON.stringify(err));
+        });
+    } else {
+      alert('password and confirm password do not match');
+    }
   }
   navigate(pathToNavigate: string): void {
     this.router.navigate([pathToNavigate]);

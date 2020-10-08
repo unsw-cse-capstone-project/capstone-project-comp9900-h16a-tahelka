@@ -17,7 +17,7 @@ class TokenAuthenticator:
         TokenAuthenticator.validate_payload(payload)
 
         # Set the user_id as global
-        g.user_id = payload['id']
+        g.userID = payload['userID']
 
     def decode_token(self):
         secret = current_app.config['SECRET_KEY']
@@ -33,6 +33,6 @@ class TokenAuthenticator:
         return TokenExtractor(self.auth_header).extract()
 
     def validate_payload(payload):
-        for key in ['id', 'exp']:
+        for key in ['userID', 'exp']:
             if key not in payload:
                 raise Unauthorized

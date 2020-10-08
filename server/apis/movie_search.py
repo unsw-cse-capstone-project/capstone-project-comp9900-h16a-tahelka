@@ -14,7 +14,7 @@ class MovieSearch(Resource):
         '''
         Search for movies by name.
         '''
-        TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        # TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         name_keywords = request.args.get('name') if 'name' in request.args else ''
         search_results = Session().query(Movie.movieID, Movie.title,
                                          Movie.year, Movie.avg_rating

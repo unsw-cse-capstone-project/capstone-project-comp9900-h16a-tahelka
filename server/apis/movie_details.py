@@ -21,25 +21,26 @@ class MovieDetails(Resource):
         '''
         View a movie's full details.
         '''
-        TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        # TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
         movie = session.query(Movie.movieID, Movie.title, Movie.year,
                               Movie.description, Movie.avg_rating
                              ).filter(Movie.movieID == movieID).one_or_none()
         if movie is None:
             raise NotFound
-        genres = session.query(Genres.genre).filter(GenreOfFilm.movieID
-                                                    == movie.movieID
-                                                   ).join(GenreOfFilm).all()
-        directors = session.query(Person.name).filter(FilmDirector.movieID
-                                                      == movie.movieID
-                                                     ).join(FilmDirector).all()
-        cast = session.query(Person.name).filter(FilmCast.movieID
-                                                 == movie.movieID
-                                                ).join(FilmCast).all()
+        genres = session.query(Genres.genre).join(GenreOfFilm)\
+                                            .filter(GenreOfFilm.movieID == movie.movieID)
+        genres = [genre for genre, in genres]
+        directors = session.query(Person.name).join(FilmDirector)\
+                                              .filter(FilmDirector.movieID == movie.movieID)
+        directors = [director for director, in directors]
+        cast = session.query(Person.name).join(FilmCast)\
+                                         .filter(FilmCast.movieID == movie.movieID)
+        cast = [member for member, in cast]
         reviews = session.query(User.userID, User.username,
                                 MovieReview.rating, MovieReview.review
-                               ).filter(MovieReview.movieID == movie.movieID)
+                               ).join(MovieReview)\
+                                .filter(MovieReview.movieID == movie.movieID)
         reviews = [{'userID': userID, 'username': username,
                     'rating': rating, 'review': review
                    } for userID, username, rating, review in reviews
