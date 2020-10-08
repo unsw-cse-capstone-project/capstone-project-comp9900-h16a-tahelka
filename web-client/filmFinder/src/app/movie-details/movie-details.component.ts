@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MovieResult} from '../models/MovieResult';
 import {WebService} from '../services/web.service';
 import {Search} from '../models/Search';
+import {MovieDetails} from '../models/MovieDetails';
 
 @Component({
   selector: 'app-movie-details',
@@ -11,6 +12,7 @@ import {Search} from '../models/Search';
 export class MovieDetailsComponent implements OnInit {
   @Input() desc: string;
   @Input() movie: MovieResult;
+  movieDetailsObject: MovieDetails;
   constructor(private webService: WebService) { }
 
   ngOnInit(): void {
@@ -18,7 +20,8 @@ export class MovieDetailsComponent implements OnInit {
   }
   movieDetails(): void {
       this.webService.movieDetails(this.movie.movieID).subscribe(success => {
-        console.log(success);
+        this.movieDetailsObject = success;
+        console.log(this.movieDetailsObject);
       }, err => {
         alert(JSON.stringify(err));
       });

@@ -17,7 +17,7 @@
           <div class="example-element-name"> {{element.year}} </div>
           <div class="example-element-weight"> {{element.weight}} </div>
         </div>
-        <div class="example-element-description">
+        <div (click)="movieDetailsComponent.movieDetails()"  class="example-element-description">
           {{element.description}}
         </div>
         <app-movie-details [desc]="element.description" [movie]="element"></app-movie-details>
@@ -29,7 +29,7 @@
   <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
       class="example-element-row"
       [class.example-expanded-row]="expandedElement === element"
-      (click)="[expandedElement = expandedElement === element ? null : element, movieDetailsComponent.movieDetails()]">
+      (click)="[expandedElement = expandedElement === element ? null : element]">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
