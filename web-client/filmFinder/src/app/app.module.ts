@@ -13,6 +13,7 @@ import { SearchComponent } from './search/search.component';
 import {HttpClientModule} from '@angular/common/http';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
     SignupComponent,
     SearchComponent,
     SearchResultComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    ReviewComponent,
   ],
   imports: [
     BrowserModule,
