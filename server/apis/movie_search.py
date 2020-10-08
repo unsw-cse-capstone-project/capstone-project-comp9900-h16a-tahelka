@@ -15,14 +15,11 @@ class MovieSearch(Resource):
         Search for movies by name.
         '''
         # TokenAuthenticator(request.headers.get('Authorization')).authenticate()
-
+        limit = 5  # TODO: change limit later as needed.
         name_keywords = request.args.get('name') if 'name' in request.args else ''
-        limit = 5   #TODO: change limit later as needed.
-
         search_results = Session().query(Movie.movieID, Movie.title,
                                          Movie.year, Movie.avg_rating
-                                        ).filter(Movie.title.ilike(f'%{name_keywords}%')).limit(limit)
-        
+                                        ).filter(Movie.title.ilike(f'%{name_keywords}%'))[: limit]
         return [{'movieID': movieID, 'title': title,
                  'year': year, 'rating': avg_rating
                 } for movieID, title, year, avg_rating in search_results
