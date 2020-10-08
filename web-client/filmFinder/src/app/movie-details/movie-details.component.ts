@@ -10,13 +10,11 @@ import {MovieDetails} from '../models/MovieDetails';
   styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit {
-  @Input() desc: string;
   @Input() movie: MovieResult;
   movieDetailsObject: MovieDetails;
   constructor(private webService: WebService) { }
 
   ngOnInit(): void {
-    console.log(this.movie);
   }
   movieDetails(): void {
       this.webService.movieDetails(this.movie.movieID).subscribe(success => {
