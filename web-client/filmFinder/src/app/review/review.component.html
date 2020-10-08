@@ -1,0 +1,25 @@
+<mat-form-field floatLabel="auto" appearance="fill" legacy="standard">
+  <mat-label>Select Rating</mat-label>
+  <mat-select [(value)]="selectedRating">
+    <mat-option value="0.5">0.5</mat-option>
+    <mat-option value="1.0">1.0</mat-option>
+    <mat-option value="1.5">1.5</mat-option>
+    <mat-option value="2.0">2.0</mat-option>
+    <mat-option value="2.5">2.5</mat-option>
+    <mat-option value="3.0">3.0</mat-option>
+    <mat-option value="3.5">3.5</mat-option>
+    <mat-option value="4.0">4.0</mat-option>
+    <mat-option value="4.5">4.5</mat-option>
+    <mat-option value="5.0">5.0</mat-option>
+  </mat-select>
+</mat-form-field>
+{{selectedRating}}
+<div>
+  <mat-form-field floatLabel="auto" appearance="outline" legacy="standard">
+    <mat-label>Enter the Review</mat-label>
+    <input matInput>
+      <mat-hint align="end">Max 100 words</mat-hint>
+  </mat-form-field>
+</div>
+<button (click)="saveClick()" mat-stroked-button color="primary">Save</button>
+<button (click)="cancelClick()" mat-raised-button color="accent">Cancel</button>
