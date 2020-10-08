@@ -31,7 +31,8 @@ movie_recommendation = api.model('Movie Recommendation',
                                 )
 
 movie_details = api.model('Full Movie Details',
-                          {'title': fields.String,
+                          {'movieID': fields.Integer,
+                           'title': fields.String,
                            'year': fields.Integer,
                            'description': fields.String,
                            'genre': fields.List(fields.String),
@@ -58,25 +59,24 @@ class MovieDetails(Resource):
                              ).filter(Movie.movieID == id).one_or_none()
         if movie is None:
             raise NotFound
-        genres = session.query(Genres.genre).join(GenreOfFilm)\
-                                            .filter(GenreOfFilm.movieID == movie.movieID)
-        genres = [genre for genre, in genres]
-        directors = session.query(Person.name).join(FilmDirector)\
-                                              .filter(FilmDirector.movieID == movie.movieID)
-        directors = [director for director, in directors]
-        cast = session.query(Person.name).join(FilmCast)\
-                                         .filter(FilmCast.movieID == movie.movieID)
-        cast = [member for member, in cast]
-        reviews = session.query(User.userID, User.username,
-                                MovieReview.rating, MovieReview.review
-                               ).join(MovieReview)\
-                                .filter(MovieReview.movieID == movie.movieID)
+        query = session.query(Genres.genre).join(GenreOfFilm)\
+                                           .filter(GenreOfFilm.movieID == id)
+        genres = [genre for genre, in query]
+        query = session.query(Person.name).join(FilmDirector)\
+                                          .filter(FilmDirector.movieID == id)
+        directors = [director for director, in query]
+        query = session.query(Person.name).join(FilmCast)\
+                                          .filter(FilmCast.movieID == id)
+        cast = [member for member, in query]
+        query = session.query(User.userID, User.username,
+                              MovieReview.rating, MovieReview.review
+                             ).join(MovieReview).filter(MovieReview.movieID == id)
         reviews = [{'userID': userID, 'username': username,
                     'rating': rating, 'review': review
-                   } for userID, username, rating, review in reviews
+                   } for userID, username, rating, review in query
                   ]
         recommendations = []
-        return {'title': movie.title, 'year': movie.year,
+        return {'movieID': id, 'title': movie.title, 'year': movie.year,
                 'description': movie.description, 'genre': genres,
                 'director': directors, 'cast': cast, 'rating': movie.avg_rating,
                 'reviews': reviews, 'recommendations': recommendations
