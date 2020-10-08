@@ -15,9 +15,9 @@ from werkzeug.exceptions import NotFound
 
 api = Namespace('Movie Details', path = '/movies')
 
-@api.route('/<int:movieID>')
+@api.route('/<int:id>')
 class MovieDetails(Resource):
-    def get(self, movieID):
+    def get(self, id):
         '''
         View a movie's full details.
         '''
@@ -25,7 +25,7 @@ class MovieDetails(Resource):
         session = Session()
         movie = session.query(Movie.movieID, Movie.title, Movie.year,
                               Movie.description, Movie.avg_rating
-                             ).filter(Movie.movieID == movieID).one_or_none()
+                             ).filter(Movie.movieID == id).one_or_none()
         if movie is None:
             raise NotFound
         genres = session.query(Genres.genre).join(GenreOfFilm)\
