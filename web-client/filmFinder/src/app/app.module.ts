@@ -14,7 +14,6 @@ import {HttpClientModule} from '@angular/common/http';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { ReviewComponent } from './review/review.component';
-import { TestGroundComponent } from './test-ground/test-ground.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { TestGroundComponent } from './test-ground/test-ground.component';
     SearchResultComponent,
     MovieDetailsComponent,
     ReviewComponent,
-    TestGroundComponent
   ],
   imports: [
     BrowserModule,

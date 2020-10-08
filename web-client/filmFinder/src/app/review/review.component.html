@@ -1,8 +1,8 @@
-<form [formGroup]="reviewForm">
+<form [formGroup]="reviewForm" >
   <div>
     <mat-form-field floatLabel="auto" appearance="fill" legacy="standard">
       <mat-label>Select Rating</mat-label>
-      <mat-select formControlName="givenRating">
+      <mat-select required formControlName="givenRating">
         <mat-option value="0.5">0.5</mat-option>
         <mat-option value="1.0">1.0</mat-option>
         <mat-option value="1.5">1.5</mat-option>
@@ -20,11 +20,10 @@
   <div>
     <mat-form-field floatLabel="auto" appearance="outline" legacy="standard">
       <mat-label>Enter the Review</mat-label>
-      <input formControlName="givenReview" matInput>
+      <input formControlName="givenReview" matInput required>
       <mat-hint align="end">Max 100 words</mat-hint>
     </mat-form-field>
   </div>
-  <button (click)="saveClick()" mat-stroked-button color="primary">Save</button>
-  <button (click)="cancelClick()" mat-raised-button color="accent">Cancel</button>
+  <button (click)="saveClick()" [disabled]="!reviewForm.valid" mat-stroked-button color="primary">Save</button>
 </form>
 
