@@ -23,3 +23,11 @@ Week 3
 8. Proof read proposal, made edits and submitted it.
 9. Wrote script to setup database.
 
+Week 4
+1. Setup backend of platform.
+2. Incorporated JWT authentication.
+3. Made signup service.
+4. Made login service.
+5. Made Swagger docs for those 2 services.
+5. Held meetings with Ian and Jatin regarding implementation and integration.
+6. Maintained a service contract outlining REST endpoint, sample request and responses.
