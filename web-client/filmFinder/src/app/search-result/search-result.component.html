@@ -21,9 +21,9 @@
 <!--          {{element.description}}-->
 <!--        </div>-->
         <div class="tabs-width-100">
-          <mat-tab-group mat-align-tabs="start"  backgroundColor="accent" (selectedTabChange)="tabChange($event);">
+          <mat-tab-group mat-align-tabs="start"  backgroundColor="accent">
             <mat-tab label="Movie Details">
-              <app-movie-details [movie]="element"></app-movie-details>
+              <app-movie-details (recommendations)="setRecommendations($event)" [movie]="element"></app-movie-details>
             </mat-tab>
             <mat-tab label="Add to Wishlist/Watchlist">
               <button class="spacing" mat-raised-button color="accent">Add to Wishlist</button>
@@ -34,7 +34,7 @@
               <app-review></app-review>
             </mat-tab>
             <mat-tab label="Recommendation">
-              <app-recommend [movie]="element"></app-recommend>
+              <app-recommend [recommendSource]="recommendations"></app-recommend>
             </mat-tab>
           </mat-tab-group>
         </div>

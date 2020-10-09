@@ -1,3 +1,5 @@
+import {Recommendations} from './Recommendations';
+
 export interface MovieDetails {
   movieID: number;
   title: string;
@@ -7,6 +9,6 @@ export interface MovieDetails {
   genre: string[];
   director: string[];
   cast: string[];
-  recommendations: any[];
+  recommendations: Recommendations[];
   reviews: any[];
 }

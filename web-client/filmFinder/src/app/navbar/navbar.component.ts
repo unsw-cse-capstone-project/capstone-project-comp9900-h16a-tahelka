@@ -9,12 +9,19 @@ import {AuthenticationService} from '../services/authentication.service';
 })
 export class NavbarComponent implements OnInit {
   @Input() isLoggedIn: boolean;
+  username: string;
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.authenticationService.currentUserValue){
+      this.username = this.authenticationService.currentUserValue.username;
+    }
   }
   logout(): void {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
+  }
+  navigate(pathToNavigate: string): void {
+    this.router.navigate([pathToNavigate]);
   }
 }

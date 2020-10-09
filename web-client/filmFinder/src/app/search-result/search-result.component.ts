@@ -2,6 +2,7 @@ import {Component, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@ang
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MovieDetailsComponent} from '../movie-details/movie-details.component';
 import {MovieResult} from '../models/MovieResult';
+import {Recommendations} from '../models/Recommendations';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -27,6 +28,7 @@ export class SearchResultComponent implements OnInit {
   expandedElement: MovieResult | null;
   @Input() movieSearchResult: MovieResult[];
   @ViewChildren(MovieDetailsComponent) movieDetailsComponents: QueryList<MovieDetailsComponent>;
+  recommendations: Recommendations[];
   constructor() { }
 
   ngOnInit(): void {
@@ -39,7 +41,7 @@ export class SearchResultComponent implements OnInit {
       }
     });
   }
-  tabChange(event: any): void {
-    console.log(event);
+  setRecommendations(recommendations: Recommendations[]): void {
+    this.recommendations = recommendations;
   }
 }
