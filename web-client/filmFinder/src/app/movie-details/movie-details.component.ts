@@ -12,6 +12,8 @@ import {MovieDetails} from '../models/MovieDetails';
 export class MovieDetailsComponent implements OnInit {
   @Input() movie: MovieResult;
   movieDetailsObject: MovieDetails;
+  displayedColumns: string[] = ['title', 'year', 'rating', 'description', 'genre', 'director', 'cast'];
+  dataSource: MovieDetails[];
   constructor(private webService: WebService) { }
 
   ngOnInit(): void {
@@ -20,6 +22,7 @@ export class MovieDetailsComponent implements OnInit {
       this.webService.movieDetails(this.movie.movieID).subscribe(success => {
         this.movieDetailsObject = success;
         console.log(this.movieDetailsObject);
+        this.dataSource = [success];
       }, err => {
         alert(JSON.stringify(err));
       });

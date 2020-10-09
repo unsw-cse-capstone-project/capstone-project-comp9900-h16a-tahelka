@@ -20,20 +20,23 @@
 <!--        <div  class="example-element-description">-->
 <!--          {{element.description}}-->
 <!--        </div>-->
-        <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChange($event);">
-          <mat-tab label="Movie Details">
-            <app-movie-details [movie]="element"></app-movie-details>
-          </mat-tab>
-          <mat-tab label="Add to Wishlist/Watchlist">
-            <button class="spacing" mat-raised-button color="accent">Add to Wishlist</button>
-            <button class="spacing" mat-raised-button color="accent">Add to Watchlist</button>
-          </mat-tab>
-          <mat-tab label="See all reviews">Reviews by users</mat-tab>
-          <mat-tab label="Add a review">
-            <app-review></app-review>
-          </mat-tab>
-          <mat-tab label="Recommendation">Recommendation component</mat-tab>
-        </mat-tab-group>
+        <div class="tabs-width-100">
+          <mat-tab-group mat-align-tabs="start"  backgroundColor="accent" (selectedTabChange)="tabChange($event);">
+            <mat-tab label="Movie Details">
+              <app-movie-details [movie]="element"></app-movie-details>
+            </mat-tab>
+            <mat-tab label="Add to Wishlist/Watchlist">
+              <button class="spacing" mat-raised-button color="accent">Add to Wishlist</button>
+              <button class="spacing" mat-raised-button color="accent">Add to Watchlist</button>
+            </mat-tab>
+            <mat-tab label="See all reviews">Reviews by users</mat-tab>
+            <mat-tab label="Add a review">
+              <app-review></app-review>
+            </mat-tab>
+            <mat-tab label="Recommendation">Recommendation component</mat-tab>
+          </mat-tab-group>
+        </div>
+
       </div>
     </td>
   </ng-container>
