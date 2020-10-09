@@ -33,7 +33,9 @@
             <mat-tab label="Add a review">
               <app-review></app-review>
             </mat-tab>
-            <mat-tab label="Recommendation">Recommendation component</mat-tab>
+            <mat-tab label="Recommendation">
+              <app-recommend [movie]="element"></app-recommend>
+            </mat-tab>
           </mat-tab-group>
         </div>
 

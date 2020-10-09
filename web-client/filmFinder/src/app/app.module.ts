@@ -14,6 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { ReviewComponent } from './review/review.component';
+import { RecommendComponent } from './recommend/recommend.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ReviewComponent } from './review/review.component';
     SearchResultComponent,
     MovieDetailsComponent,
     ReviewComponent,
+    RecommendComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,12 +4,12 @@ import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {SearchComponent} from './search/search.component';
 import {AuthGuard} from './_helpers/auth.guard';
-import {ReviewComponent} from './review/review.component';
+import {RecommendComponent} from './recommend/recommend.component';
 
 const routes: Routes = [
   {
     path:  'test',
-    component:  ReviewComponent,
+    component:  RecommendComponent,
     canActivate: [AuthGuard]
   },
   {
