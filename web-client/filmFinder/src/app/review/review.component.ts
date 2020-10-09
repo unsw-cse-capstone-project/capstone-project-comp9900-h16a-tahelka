@@ -1,5 +1,7 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {WebService} from '../services/web.service';
+import {Review} from '../models/Review';
 
 @Component({
   selector: 'app-review',
@@ -8,20 +10,24 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class ReviewComponent implements OnInit {
 
-
-  public selectedRating: number;
+  @Input() movieId: number;
+  review: Review;
   reviewForm = new FormGroup({
     givenRating: new FormControl('', [Validators.required]),
     givenReview: new FormControl('', [Validators.required])
   });
-  @Output() private ratingNew = new EventEmitter();
 
-  constructor() { }
+  constructor(private webService: WebService) {}
 
   ngOnInit(): void {
   }
   saveClick(): void {
     console.log('Review Saved');
-    console.log(this.reviewForm.value);
+    this.review = this.reviewForm.value;
+    this.webService.review(this.review, this.movieId).subscribe(success => {
+      this.review = success;
+    }, err => {
+      alert(JSON.stringify(err));
+    });
   }
 }

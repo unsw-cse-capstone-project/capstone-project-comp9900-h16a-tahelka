@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import { User } from '../models/User';
 import { NewUser } from '../models/NewUser';
 import {Search} from '../models/Search';
+import {Review} from '../models/Review';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -39,5 +40,9 @@ export class WebService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     return this.http.get(moviesUrl, {headers});
+  }
+  review(review: Review, movieId: number): Observable<any> {
+    const reviewUrl = this.API_URL + 'movies/' + movieId.toString() + '/reviews';
+    return this.http.post(reviewUrl, review, httpOptions);
   }
 }
