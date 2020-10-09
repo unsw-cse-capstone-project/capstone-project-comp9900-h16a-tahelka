@@ -24,7 +24,4 @@ export class ReviewComponent implements OnInit {
     console.log('Review Saved');
     console.log(this.reviewForm.value);
   }
-  cancelClick(): void {
-    console.log('Review Canceled');
-  }
 }

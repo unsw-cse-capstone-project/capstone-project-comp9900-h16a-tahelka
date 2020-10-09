@@ -1,4 +1,16 @@
 button {
   margin-left: 2rem;
   margin-top: 2rem;
+  margin-bottom: 2rem ;
 }
+
+textarea {
+  height: 10rem;
+  width: 10rem;
+}
+
+mat-form-field {
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
+

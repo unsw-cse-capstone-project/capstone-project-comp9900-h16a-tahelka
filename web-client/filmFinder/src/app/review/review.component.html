@@ -17,13 +17,13 @@
     </mat-form-field>
     {{reviewForm.value.givenRating}}
   </div>
+
   <div>
     <mat-form-field floatLabel="auto" appearance="outline" legacy="standard">
       <mat-label>Enter the Review</mat-label>
-      <input formControlName="givenReview" matInput required>
-      <mat-hint align="end">Max 100 words</mat-hint>
+      <textarea formControlName="givenReview" matInput required></textarea>
     </mat-form-field>
   </div>
-  <button (click)="saveClick()" [disabled]="!reviewForm.valid" mat-stroked-button color="primary">Save</button>
+  <button (click)="saveClick()" [disabled]="!reviewForm.valid" mat-raised-button color="accent">Save</button>
 </form>
 
