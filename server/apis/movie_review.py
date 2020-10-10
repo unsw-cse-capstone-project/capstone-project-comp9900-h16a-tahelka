@@ -1,40 +1,52 @@
 from flask import request, g
 from flask_restx import Namespace, fields, Resource
-
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.Movie import Movie
-from models.MovieReview import MovieReview as mrModel
+from models.MovieReview import MovieReview
 from models.Watchlist import Watchlist
+from werkzeug.exceptions import NotFound
+from time import time
 
 api = Namespace('Movie Review', path = '/movies')
 
-movie_review_model = api.model('Movie Review',
-                               {'rating': fields.Float, 'review': fields.String}
-                               )
+film_review = api.model('Movie Review',
+                        {'rating': fields.Float, 'review': fields.String}
+                       )
 
 @api.route('/<int:id>/reviews')
-class MovieReview(Resource):
+class FilmReview(Resource):
     @api.response(201, 'Success')
-    @api.expect(movie_review_model)
+    @api.response(404, 'Movie was not found')
+    @api.expect(film_review)
     def post(self, id):
         '''
         Leave a movie review
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
-
-        movie = session.query(Movie).filter(Movie.movieID == id).first()
-        watchlist = Watchlist(id, g.userID)
-
-        rating = request.json['rating']
-        review = request.json['review']
-        movieReview = mrModel(id, g.userID, rating, review)
-
-        session.add(watchlist)
-        session.add(movieReview)
-
-        movie.ratings_sum += request.json['rating']
-        movie.review_count += 1
+        movie = session.query(Movie).filter(Movie.movieID == id).one_or_none()
+        if movie is None:
+            raise NotFound
+        query = session.query(Watchlist).filter(Watchlist.movieID == id,
+                                                Watchlist.userID == g.userID
+                                               ).one_or_none()
+        if query is None:
+            session.add(Watchlist(id, g.userID))
+        query = session.query(MovieReview).filter(MovieReview.movieID == id,
+                                                  MovieReview.userID == g.userID
+                                                 ).one_or_none()
+        if query is None:  # FilmFinder has not reviewed this movie before.
+            session.add(MovieReview(id, g.userID, request.json['rating'],
+                                    request.json['review'], time()
+                                   )
+                       )
+            movie.ratings_sum += request.json['rating']
+            movie.review_count += 1
+        else:  #FilmFinder is updating a previously left review.
+            movie.ratings_sum += request.json['rating'] - query.rating
+            query.rating = request.json['rating']
+            query.review = request.json['review']
+            query.timestamp = time()
         session.commit()
-        return 201
+        return {'message': 'Review received.'}, 201

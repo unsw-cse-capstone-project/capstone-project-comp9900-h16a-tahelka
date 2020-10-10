@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
 from models.Common import Base
-from time import time
 
 
 class MovieReview(Base):
@@ -12,9 +11,9 @@ class MovieReview(Base):
     review = Column(String)
     timestamp = Column(Float)
 
-    def __init__(self, movieID, userID, rating, review):
+    def __init__(self, movieID, userID, rating, review, timestamp):
         self.movieID = movieID
         self.userID = userID
         self.rating = rating
         self.review = review
-        self.timestamp = time()
+        self.timestamp = timestamp

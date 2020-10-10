@@ -1,7 +1,7 @@
-from db_engine import Session
 from flask import request
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
+from db_engine import Session
 from models.Movie import Movie
 
 
