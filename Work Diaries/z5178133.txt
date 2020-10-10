@@ -10,4 +10,4 @@ Completed majority of combining the three databases but had an issue with the nu
   
 
 Week 4 (05/10 - 11/10)
-My task for the week is to complete the database creation that was incomplete from Week 3. I will clean up the code and have it commented and uploaded onto GitHub. Also have the final datasets ready for download. Plan out the recommendation system  and start on the recommendation system task in Sprint 1. 
+My task for the week is to complete the database creation that was incomplete from Week 3. I will clean up the code and have it commented and uploaded onto GitHub. Also have the final datasets ready for download. Carried out literature and video review of movie recommendation system algorithm choices and decided to use a Hybrid system but the main system to be k-NN. Plan to finish initial recommendation system for demo A. 
