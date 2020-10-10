@@ -11,7 +11,9 @@ from time import time
 api = Namespace('Movie Review', path = '/movies')
 
 film_review = api.model('Movie Review',
-                        {'rating': fields.Float, 'review': fields.String}
+                        {'rating': fields.String(description = 'A rating from 0 to 5.'),
+                         'review': fields.String
+                        }
                        )
 
 @api.route('/<int:id>/reviews')
@@ -36,18 +38,19 @@ class FilmReview(Resource):
         query = session.query(MovieReview).filter(MovieReview.movieID == id,
                                                   MovieReview.userID == g.userID
                                                  ).one_or_none()
+        rating = float(request.json['rating'])
         if query is None:  # FilmFinder has not reviewed this movie before.
-            session.add(MovieReview(id, g.userID, request.json['rating'],
+            session.add(MovieReview(id, g.userID, rating,
                                     request.json['review'], time()
                                    )
                        )
-            movie.ratings_sum += request.json['rating']
+            movie.ratings_sum += rating
             movie.review_count += 1
             session.commit()
             return {'message': 'Review received.'}, 201
         #FilmFinder is updating a previously left review.
-        movie.ratings_sum += request.json['rating'] - query.rating
-        query.rating = request.json['rating']
+        movie.ratings_sum += rating - query.rating
+        query.rating = rating
         query.review = request.json['review']
         query.timestamp = time()
         session.commit()
