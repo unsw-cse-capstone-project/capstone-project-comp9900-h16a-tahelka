@@ -25,11 +25,12 @@ class MovieReview(Resource):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
         movie = session.query(Movie).filter(Movie.movieID == id)
-        session.add(Watchlist(id, g.userID))
-        session.add(MovieReview(id, g.userID,
-                                request.json['rating'], request.json['review']
-                               )
-                   )
+        session.add_all([Watchlist(id, g.userID),
+                         MovieReview(id, g.userID, request.json['rating'],
+                                     request.json['review']
+                                    )
+                        ]
+                       )
         movie.ratings_sum += request.json['rating']
         movie.review_count += 1
         session.commit()
