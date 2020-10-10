@@ -5,3 +5,5 @@ server/filmfinder_tahelka.db
 server/dummy_data.py
 *.iml
 *.xml
+server/filmfinder_tahelka.db-journal
+server/filmfinder_tahelka.db-journal

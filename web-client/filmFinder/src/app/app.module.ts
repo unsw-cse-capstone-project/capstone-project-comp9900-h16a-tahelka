@@ -17,6 +17,7 @@ import { ReviewComponent } from './review/review.component';
 import { RecommendComponent } from './recommend/recommend.component';
 import { WishListComponent } from './wish-list/wish-list.component';
 import { WatchListComponent } from './watch-list/watch-list.component';
+import { ReviewListComponent } from './review-list/review-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { WatchListComponent } from './watch-list/watch-list.component';
     RecommendComponent,
     WishListComponent,
     WatchListComponent,
+    ReviewListComponent,
   ],
   imports: [
     BrowserModule,

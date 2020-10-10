@@ -5,6 +5,7 @@ import {Search} from '../models/Search';
 import {MovieDetails} from '../models/MovieDetails';
 import { EventEmitter } from '@angular/core';
 import {Recommendations} from '../models/Recommendations';
+import {MovieReview} from '../models/MovieReview';
 
 @Component({
   selector: 'app-movie-details',
@@ -17,6 +18,7 @@ export class MovieDetailsComponent implements OnInit {
   displayedColumns: string[] = ['title', 'year', 'rating', 'description', 'genre', 'director', 'cast'];
   dataSource: MovieDetails[];
   @Output() recommendations = new EventEmitter<Recommendations[]>();
+  @Output() reviews = new EventEmitter<MovieReview[]>();
   constructor(private webService: WebService) { }
 
   ngOnInit(): void {
@@ -24,14 +26,17 @@ export class MovieDetailsComponent implements OnInit {
   movieDetails(): void {
       this.webService.movieDetails(this.movie.movieID).subscribe(success => {
         this.movieDetailsObject = success;
-        console.log(this.movieDetailsObject);
         this.dataSource = [success];
         this.emitRecommendations(this.movieDetailsObject.recommendations);
+        this.emitMovieReviews(this.movieDetailsObject.reviews)
       }, err => {
         alert(JSON.stringify(err));
       });
     }
   emitRecommendations(recommendations: Recommendations[]): void {
     this.recommendations.emit(recommendations);
+  }
+  emitMovieReviews(movieReviews: MovieReview[]): void {
+    this.reviews.emit(movieReviews);
   }
 }
