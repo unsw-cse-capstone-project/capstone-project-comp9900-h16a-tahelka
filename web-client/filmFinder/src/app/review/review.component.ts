@@ -22,7 +22,7 @@ export class ReviewComponent implements OnInit {
   ngOnInit(): void {
   }
   saveClick(): void {
-    console.log('Review Saved');
+    console.log(this.movieId);
     this.review = this.reviewForm.value;
     this.webService.review(this.review, this.movieId).subscribe(success => {
       this.review = success;

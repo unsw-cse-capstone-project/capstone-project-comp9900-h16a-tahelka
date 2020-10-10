@@ -43,7 +43,9 @@ export class WebService {
   }
   review(review: Review, movieId: number): Observable<any> {
     const reviewUrl = this.API_URL + 'movies/' + movieId.toString() + '/reviews';
-    return this.http.post(reviewUrl, review, httpOptions);
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.post(reviewUrl, review, {headers});
   }
   // TODO: Remove this as we can get data from movie details but we will need this to get user-defined recommendations
   // recommend(id: number): Observable<any>{

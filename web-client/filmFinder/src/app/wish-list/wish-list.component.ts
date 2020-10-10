@@ -9,25 +9,24 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class WishListComponent implements OnInit {
 
-  @Input() public movie;
-  movieId: number;
+  @Input() public movieID: number;
   snackbarDuration = 2000;
   constructor(private webService: WebService, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
   onClick(message, action): void{
-    const snackbarRef =  this.snackbar.open(message, action, {duration: this.snackbarDuration});
-    snackbarRef.afterDismissed().subscribe(() => {
-      console.log('The snackbar was dismissed');
-    });
-
-    console.log('Added to wish-list');
-    this.movieId = this.movie;
-    this.webService.wishlist(this.movieId).subscribe(success => {
-      this.movieId = success;
+    this.webService.wishlist(this.movieID).subscribe(success => {
+      console.log(success);
+      this.successfulUpdateSnackbar(message, action);
     }, err => {
       alert(JSON.stringify(err));
+    });
+  }
+  private successfulUpdateSnackbar(message, action): void {
+    const snackbarRef = this.snackbar.open(message, action, {duration: this.snackbarDuration});
+    snackbarRef.afterDismissed().subscribe(() => {
+      console.log('The snackbar was dismissed');
     });
   }
 }
