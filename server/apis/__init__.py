@@ -6,6 +6,7 @@ from apis.tokens import api as tokens
 from apis.users import api as users
 from apis.movie_search import api as movie_search
 from apis.movie_details import api as movie_details
+from apis.movie_review import api as movie_review
 
 blueprint = Blueprint('apiv1', __name__, url_prefix='/api/v1')
 
@@ -29,6 +30,7 @@ api.add_namespace(tokens)
 api.add_namespace(users)
 api.add_namespace(movie_search)
 api.add_namespace(movie_details)
+api.add_namespace(movie_review)
 
 @api.errorhandler(BadRequest)
 def handle_bad_request(error):
