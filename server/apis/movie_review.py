@@ -43,10 +43,12 @@ class FilmReview(Resource):
                        )
             movie.ratings_sum += request.json['rating']
             movie.review_count += 1
-        else:  #FilmFinder is updating a previously left review.
-            movie.ratings_sum += request.json['rating'] - query.rating
-            query.rating = request.json['rating']
-            query.review = request.json['review']
-            query.timestamp = time()
+            session.commit()
+            return {'message': 'Review received.'}, 201
+        #FilmFinder is updating a previously left review.
+        movie.ratings_sum += request.json['rating'] - query.rating
+        query.rating = request.json['rating']
+        query.review = request.json['review']
+        query.timestamp = time()
         session.commit()
-        return {'message': 'Review received.'}, 201
+        return {'message': 'Review updated.'}, 201
