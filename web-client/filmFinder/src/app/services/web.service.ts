@@ -52,4 +52,12 @@ export class WebService {
   //   headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
   //   return this.http.get(moviesUrl, {headers});
   // }
+  wishlist(movieId: number): Observable<any> {
+    const wishlistUrl =  this.API_URL + 'wishlist/' + movieId.toString();
+    return this.http.post(wishlistUrl, movieId, httpOptions);
+  }
+  watchlist(movieId: number): Observable<any> {
+    const watchlistUrl = this.API_URL + 'watchlist/' + movieId.toString();
+    return this.http.post(watchlistUrl, movieId, httpOptions);
+  }
 }

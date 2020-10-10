@@ -12,6 +12,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 const MaterialComponents = [
@@ -27,7 +28,8 @@ const MaterialComponents = [
   MatNativeDateModule,
   MatSelectModule,
   MatTableModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

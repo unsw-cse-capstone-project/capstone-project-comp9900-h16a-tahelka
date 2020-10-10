@@ -26,8 +26,10 @@
               <app-movie-details (recommendations)="setRecommendations($event)" [movie]="element"></app-movie-details>
             </mat-tab>
             <mat-tab label="Add to Wishlist/Watchlist">
-              <button class="spacing" mat-raised-button color="accent">Add to Wishlist</button>
-              <button class="spacing" mat-raised-button color="accent">Add to Watchlist</button>
+              <app-wish-list [movie]="element.movieId"></app-wish-list>
+              <app-watch-list [movie]="element.movieID"></app-watch-list>
+<!--              <button class="spacing" mat-raised-button color="accent">Add to Wishlist</button>-->
+<!--              <button class="spacing" mat-raised-button color="accent">Add to Watchlist</button>-->
             </mat-tab>
             <mat-tab label="See all reviews">Reviews by users</mat-tab>
             <mat-tab label="Add a review">
