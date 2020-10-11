@@ -9,8 +9,8 @@ class MovieReview(Base):
     movieID = Column(Integer, ForeignKey("movies.movieID"), primary_key=True, index=True)
     userID = Column(Integer, ForeignKey("users.userID"), primary_key=True, index=True)
     rating = Column(Float, index=True)
-    review = Column(String)
-    timestemp = Column(Float)
+    review = Column(String, nullable=False)
+    timestamp = Column(Float)
 
     def __init__(self, movieID, userID, rating, review):
         self.movieID = movieID

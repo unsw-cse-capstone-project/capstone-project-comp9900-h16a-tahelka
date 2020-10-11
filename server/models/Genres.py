@@ -5,7 +5,7 @@ class Genres(Base):
     __tablename__ = "genres"
 
     genreID = Column(Integer, primary_key= True)
-    genre = Column(String)
+    genre = Column(String, nullable=False, unique=True)
 
     def __init__(self, genre):
         self.genre = genre

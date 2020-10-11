@@ -5,8 +5,8 @@ class Movie(Base):
     __tablename__ = 'movies'
 
     movieID = Column(Integer, primary_key=True)
-    title = Column(String)
-    year = Column(Integer)
+    title = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
     description = Column(String)
     ratings_sum = Column(Float)
     review_count = Column(Integer)
