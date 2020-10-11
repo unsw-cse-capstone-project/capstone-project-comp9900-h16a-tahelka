@@ -35,7 +35,7 @@
               <app-review-list [movieID]="element.movieID"></app-review-list>
             </mat-tab>
             <mat-tab label="Add a review">
-              <app-review [movieId]="element.movieID"></app-review>
+              <app-review (reviewAdded)="getMovieDetailsInChildComponent(element)" [movieId]="element.movieID"></app-review>
             </mat-tab>
             <mat-tab label="Recommendation">
               <app-recommend [recommendSource]="recommendations"></app-recommend>

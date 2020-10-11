@@ -4,6 +4,7 @@ import {WebService} from '../services/web.service';
 import {Review} from '../models/Review';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserMessageConstant} from '../constants/UserMessageConstant';
+import {Recommendations} from '../models/Recommendations';
 
 @Component({
   selector: 'app-review',
@@ -14,10 +15,8 @@ export class ReviewComponent implements OnInit {
 
   @Input() movieId: number;
   snackbarDuration = 2000;
-  reviewAddedMessage = UserMessageConstant.REVIEW_ADDED;
-  dismissMessage = UserMessageConstant.DISMISS;
-
   review: Review;
+  @Output() reviewAdded = new EventEmitter<boolean>();
   reviewForm = new FormGroup({
     rating: new FormControl(0, [Validators.required]),
     review: new FormControl('', [Validators.required])
@@ -30,11 +29,12 @@ export class ReviewComponent implements OnInit {
   saveClick(fData: any, formDirective: FormGroupDirective): void {
     this.review = this.reviewForm.value;
     this.webService.review(this.review, this.movieId).subscribe(success => {
-      this.successfulUpdateSnackbar(this.reviewAddedMessage, this.dismissMessage);
+      this.successfulUpdateSnackbar(UserMessageConstant.REVIEW_ADDED, UserMessageConstant.DISMISS);
       this.reviewForm.reset();
+      this.reviewAdded.emit(true);
       formDirective.resetForm();
     }, err => {
-      alert(JSON.stringify(err));
+      this.successfulUpdateSnackbar(UserMessageConstant.REVIEW_ADD_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });
   }
   private successfulUpdateSnackbar(message, action): void {
