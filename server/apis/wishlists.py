@@ -1,14 +1,14 @@
-from db_engine import Session
-from flask import Blueprint, request, g
+from flask import request, g
 from flask_restx import Namespace, fields, Resource
-from authentication.hash_generator import HashGenerator
-from authentication.token_authenticator import TokenAuthenticator
-from models.WishList import Wishlist
-from werkzeug.exceptions import BadRequest
 from sqlalchemy.exc import IntegrityError
+from werkzeug.exceptions import BadRequest
+
+from authentication.token_authenticator import TokenAuthenticator
+from db_engine import Session
+from models.WishList import Wishlist
 
 api = Namespace('Wishlist', path='/wishlists',
-                description='CRUD movies in Wishlist.')
+                description='Add movies in Wishlist.')
 
 wishlist_model = api.model('Wishlist', {
     'movieID': fields.Integer(description='Identifier of movie'),
@@ -16,7 +16,7 @@ wishlist_model = api.model('Wishlist', {
 
 @api.route('')
 class Wishlists(Resource):
-    
+
     @api.expect(wishlist_model)
     @api.response(201, "Movie added to Wishlist.")
     @api.response(400, "The parameters submitted are invalid.")
@@ -38,4 +38,10 @@ class Wishlists(Resource):
 
         response = {'message':'Movie added to Wishlist.'}
         return response, 201
+
+    def get(self):
+        TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        session = Session()
+
+        wishlistMovies = Session.query(Wishlist).filter(Wishlist.userID == g.userID)
 
