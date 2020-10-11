@@ -58,7 +58,7 @@ class MovieDetails(Resource):
                               Movie.year, Movie.description,
                               Movie.ratings_sum, Movie.review_count
                              ).filter(Movie.movieID == id).one_or_none()
-        if movie is None:
+        if not movie:
             raise NotFound
         query = session.query(Genres.genre).join(GenreOfFilm)\
                                            .filter(GenreOfFilm.movieID == id)
