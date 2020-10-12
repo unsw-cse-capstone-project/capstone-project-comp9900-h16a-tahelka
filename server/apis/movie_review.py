@@ -30,17 +30,16 @@ class FilmReview(Resource):
         movie = session.query(Movie).filter(Movie.movieID == id).one_or_none()
         if not movie:
             raise NotFound
-        query = session.query(Watchlist).filter(Watchlist.movieID == id,
-                                                Watchlist.userID == g.userID
-                                               ).one_or_none()
-        if not query:
-            session.add(Watchlist(id, g.userID))
         query = session.query(MovieReview).filter(MovieReview.movieID == id,
                                                   MovieReview.userID == g.userID
                                                  ).one_or_none()
         if query:
             raise Forbidden
-        print('Hello World!')
+        query = session.query(Watchlist).filter(Watchlist.movieID == id,
+                                                Watchlist.userID == g.userID
+                                               ).one_or_none()
+        if not query:
+            session.add(Watchlist(id, g.userID))
         request.json['rating'] = float(request.json['rating'])
         session.add(MovieReview(id, g.userID,
                                 request.json['rating'], request.json['review']
