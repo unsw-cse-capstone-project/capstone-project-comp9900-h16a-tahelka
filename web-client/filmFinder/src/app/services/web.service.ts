@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import { User } from '../models/User';
 import { NewUser } from '../models/NewUser';
 import {Search} from '../models/Search';
+import {Review} from '../models/Review';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -31,8 +32,34 @@ export class WebService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     const params = new HttpParams()
-      .set('name', searchObject.name)
-      .set('abc', 'def');
+      .set('name', searchObject.name);
     return this.http.get(moviesUrl, {params, headers});
+  }
+  movieDetails(id: number): Observable<any> {
+    const moviesUrl = this.API_URL + 'movies/' + id.toString();
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(moviesUrl, {headers});
+  }
+  review(review: Review, movieId: number): Observable<any> {
+    const reviewUrl = this.API_URL + 'movies/' + movieId.toString() + '/reviews';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.post(reviewUrl, review, {headers});
+  }
+  // TODO: Remove this as we can get data from movie details but we will need this to get user-defined recommendations
+  // recommend(id: number): Observable<any>{
+  //   const moviesUrl = this.API_URL + 'movies/' + id.toString();
+  //   let headers = new HttpHeaders();
+  //   headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+  //   return this.http.get(moviesUrl, {headers});
+  // }
+  wishlist(movieId: number): Observable<any> {
+    const wishlistUrl =  this.API_URL + 'wishlist/' + movieId.toString();
+    return this.http.post(wishlistUrl, movieId, httpOptions);
+  }
+  watchlist(movieId: number): Observable<any> {
+    const watchlistUrl = this.API_URL + 'watchlist/' + movieId.toString();
+    return this.http.post(watchlistUrl, movieId, httpOptions);
   }
 }

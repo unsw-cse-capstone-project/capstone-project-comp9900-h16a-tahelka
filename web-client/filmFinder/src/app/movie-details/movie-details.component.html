@@ -1,2 +1,51 @@
-<p>movie-details works!</p>
-{{desc}}
+<!--<mat-tab-group>-->
+<!--  <mat-tab label="Title">{{movieDetailsObject?.title}}</mat-tab>-->
+<!--  <mat-tab label="Year">{{movieDetailsObject?.year}}</mat-tab>-->
+<!--  <mat-tab label="Description">{{movieDetailsObject?.description}}</mat-tab>-->
+<!--  <mat-tab label="Genre">{{movieDetailsObject?.genre}}</mat-tab>-->
+<!--  <mat-tab label="Director">{{movieDetailsObject?.director}}</mat-tab>-->
+<!--  <mat-tab label="Cast">{{movieDetailsObject?.cast}}</mat-tab>-->
+<!--  <mat-tab label="Ratings">{{movieDetailsObject?.rating}}</mat-tab>-->
+<!--  <mat-tab label="Reviews">{{movieDetailsObject?.reviews}}</mat-tab>-->
+<!--  <mat-tab label="Recommendations">{{movieDetailsObject?.recommendations}}</mat-tab>-->
+<!--</mat-tab-group>-->
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Position Column -->
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.title}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.year}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="rating">
+    <mat-header-cell *matHeaderCellDef> Rating </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.rating}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.description}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="genre">
+    <mat-header-cell *matHeaderCellDef> Genre </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.genre}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="director">
+    <mat-header-cell *matHeaderCellDef> Director </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.director}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="cast">
+    <mat-header-cell *matHeaderCellDef> cast </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.cast}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

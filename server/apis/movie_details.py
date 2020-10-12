@@ -1,7 +1,7 @@
-from db_engine import Session
 from flask import request
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
+from db_engine import Session
 from models.FilmCast import FilmCast
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
@@ -58,7 +58,7 @@ class MovieDetails(Resource):
                               Movie.year, Movie.description,
                               Movie.ratings_sum, Movie.review_count
                              ).filter(Movie.movieID == id).one_or_none()
-        if movie is None:
+        if not movie:
             raise NotFound
         query = session.query(Genres.genre).join(GenreOfFilm)\
                                            .filter(GenreOfFilm.movieID == id)
