@@ -26,3 +26,8 @@ Week 3:
 8. Started sprint 1.
 9. Created Login Page with validations
 10. Created Signup page with validations
+
+Week 4:
+1. Multiple stories completed
+2. Recommendation engine discussions
+3. Code review 
