@@ -3,8 +3,8 @@ from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.FilmDirector import FilmDirector
-from models.Genres import Genres
 from models.GenreOfFilm import GenreOfFilm
+from models.Genres import Genres
 from models.Movie import Movie
 from models.Person import Person
 from operator import itemgetter
