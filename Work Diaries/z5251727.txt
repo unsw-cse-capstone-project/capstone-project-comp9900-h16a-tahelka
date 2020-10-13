@@ -30,3 +30,7 @@ contracts between the API and the UI for the first sprint.  The project proposal
 was completed and submitted.  The plan for the coming week is to complete the
 first sprint, which includes user stories on authentication, searching for
 movies by name and viewing a movie's full details.
+
+Week 4
+
+Began coding.  Worked primarily on code to allow a user to search for movies by name, to allow a user to view the full details of a movie, and to allow a user to leave a review for a movie, including testing and debugging.  The only thing from Sprint 1 that wasn't finished was a pair of User Stories on the recommendation system, which were probably a bit ambitious to have the first sprint, but are being worked on steadily.  The plan for the coming week is to complete the second sprint and to prepare for the first progressive demo.
