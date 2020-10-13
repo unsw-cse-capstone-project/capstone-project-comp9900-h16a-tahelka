@@ -23,7 +23,7 @@
         <div class="tabs-width-100">
           <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)"  backgroundColor="accent">
             <mat-tab label="Movie Details">
-              <app-movie-details (recommendations)="setRecommendations($event)" (reviews)="setReviewList($event)" [movie]="element"></app-movie-details>
+              <app-movie-details (recommendations)="setRecommendations($event)" (reviews)="setReviewList($event, element)" [movie]="element"></app-movie-details>
             </mat-tab>
             <mat-tab label="Add to Wishlist/Watchlist">
               <app-wish-list [movieID]="element.movieID"></app-wish-list>

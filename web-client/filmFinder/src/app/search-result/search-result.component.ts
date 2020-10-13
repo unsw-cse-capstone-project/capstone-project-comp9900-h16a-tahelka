@@ -47,9 +47,9 @@ export class SearchResultComponent implements OnInit {
   }
   tabChanged(event: any): void {
   }
-  setReviewList(event: any): void {
+  setReviewList(event: any, movie: MovieResult): void {
     this.movieReviewListComponents.forEach(component => {
-      if (component.movieID === this.expandedElement.movieID) {
+      if (component.movieID === movie.movieID) {
         component.setMovieReviews(event);
       }
     });
