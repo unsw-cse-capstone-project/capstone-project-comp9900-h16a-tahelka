@@ -1,7 +1,7 @@
-from db_engine import Session
 from flask import request
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
+from db_engine import Session
 from models.FilmCast import FilmCast
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
@@ -45,19 +45,20 @@ movie_details = api.model('Full Movie Details',
                          )
 
 @api.route('/<int:id>')
-@api.response(200, 'Success', movie_details)
-@api.response(404, 'Movie was not found')
 class MovieDetails(Resource):
+    @api.response(200, 'Success', movie_details)
+    @api.response(404, 'Movie was not found')
     def get(self, id):
         '''
         View a movie's full details.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
-        movie = session.query(Movie.movieID, Movie.title, Movie.year,
-                              Movie.description, Movie.avg_rating
+        movie = session.query(Movie.movieID, Movie.title,
+                              Movie.year, Movie.description,
+                              Movie.ratings_sum, Movie.review_count
                              ).filter(Movie.movieID == id).one_or_none()
-        if movie is None:
+        if not movie:
             raise NotFound
         query = session.query(Genres.genre).join(GenreOfFilm)\
                                            .filter(GenreOfFilm.movieID == id)
@@ -76,8 +77,10 @@ class MovieDetails(Resource):
                    } for userID, username, rating, review in query
                   ]
         recommendations = []
-        return {'movieID': id, 'title': movie.title, 'year': movie.year,
-                'description': movie.description, 'genre': genres,
-                'director': directors, 'cast': cast, 'rating': movie.avg_rating,
+        return {'movieID': id, 'title': movie.title,
+                'year': movie.year, 'description': movie.description,
+                'genre': genres, 'director': directors, 'cast': cast,
+                'rating': movie.ratings_sum / movie.review_count
+                              if movie.review_count else 0,
                 'reviews': reviews, 'recommendations': recommendations
                }, 200

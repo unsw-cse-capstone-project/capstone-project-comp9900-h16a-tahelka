@@ -14,4 +14,10 @@ from models.Watchlist import Watchlist
 from models.BannedList import Bannedlist
 from models.Subscription import Subscription
 
+import os
+if os.path.exists('filmfinder_tahelka.db'):
+    os.remove('filmfinder_tahelka.db')
+
 Base.metadata.create_all(Engine)
+seed_data_file = 'dummy_data.py'
+os.system('python3 ' + seed_data_file)
