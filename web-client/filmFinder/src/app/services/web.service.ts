@@ -96,4 +96,13 @@ export class WebService {
       .set('genre', browseGenreObject.genre);
     return this.http.get(moviesUrl, {params, headers});
   }
+  wishListDetails(id: number): Observable<any>{
+    let moviesUrl = this.API_URL + 'wishlist/';
+    if (id !== -1) {
+      moviesUrl = moviesUrl + id.toString();
+    }
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(moviesUrl, {headers});
+  }
 }

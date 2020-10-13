@@ -2,7 +2,7 @@
   <mat-toolbar color="primary">
     <span>FilmFinder</span>
     <a mat-button *ngIf="isLoggedIn" (click)="navigate('/browse')" class="left-right-spacing">Browse</a>
-    <a mat-button *ngIf="isLoggedIn">My Wishlist</a>
+    <a mat-button *ngIf="isLoggedIn" [routerLink]="['/wishlist']">My Wishlist</a>
     <span class="example-spacer"></span>
     <button *ngIf="isLoggedIn" (click)="navigate('/search')" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>search</mat-icon>

@@ -14,6 +14,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:  'wishlist',
+    component:  WishlistDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'browse',
     component: BrowseComponent,
     canActivate: [AuthGuard]
