@@ -12,18 +12,22 @@ export class WishListComponent implements OnInit {
 
   @Input() public movieID: number;
   snackbarDuration = 2000;
-  addedToWishlistMessage = UserMessageConstant.WISH_LIST_ADDED;
-  dismissMessage = UserMessageConstant.DISMISS;
   constructor(private webService: WebService, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
-  onClick(message, action): void{
-    this.webService.wishlist(this.movieID).subscribe(success => {
-      console.log(success);
-      this.successfulUpdateSnackbar(message, action);
+  addToWishlist(): void{
+    this.webService.wishlistAdd(this.movieID).subscribe(success => {
+      this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_ADDED, UserMessageConstant.DISMISS);
     }, err => {
-      alert(JSON.stringify(err));
+      this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_ADD_UNSUCCESSFUL, UserMessageConstant.DISMISS);
+    });
+  }
+  removeFromWishlist(): void{
+    this.webService.wishlistRemove(this.movieID).subscribe(success => {
+      this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_REMOVED, UserMessageConstant.DISMISS);
+    }, err => {
+      this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_REMOVE_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });
   }
   private successfulUpdateSnackbar(message, action): void {

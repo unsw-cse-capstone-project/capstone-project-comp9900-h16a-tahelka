@@ -56,13 +56,29 @@ export class WebService {
   //   headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
   //   return this.http.get(moviesUrl, {headers});
   // }
-  wishlist(movieId: number): Observable<any> {
-    const wishlistUrl =  this.API_URL + 'wishlist/' + movieId.toString();
-    return this.http.post(wishlistUrl, movieId, httpOptions);
+  wishlistAdd(movieId: number): Observable<any> {
+    const wishlistUrl =  this.API_URL + 'wishlists';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    const body = {
+      movieID: movieId
+    };
+    return this.http.post(wishlistUrl, body, {headers});
+  }
+  wishlistRemove(movieId: number): Observable<any> {
+    const wishlistUrl =  this.API_URL + 'wishlists/' + movieId.toString();
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.delete(wishlistUrl, {headers});
   }
   watchlist(movieId: number): Observable<any> {
-    const watchlistUrl = this.API_URL + 'watchlist/' + movieId.toString();
-    return this.http.post(watchlistUrl, movieId, httpOptions);
+    const watchlistUrl = this.API_URL + 'watchlists';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    const body = {
+      movieID: movieId
+    };
+    return this.http.post(watchlistUrl, body, {headers});
   }
   browseDirector(browseDirectorObject: BrowseDirector): Observable<any>{
     const moviesUrl = this.API_URL + 'browse';
