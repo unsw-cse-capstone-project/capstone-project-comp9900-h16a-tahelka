@@ -27,7 +27,6 @@ export class SearchResultComponent implements OnInit {
   columnsToDisplay = ['title', 'year', 'rating'];
   @Input() dataSource: MovieResult[];
   expandedElement: MovieResult | null;
-  @Input() movieSearchResult: MovieResult[];
   @ViewChildren(MovieDetailsComponent) movieDetailsComponents: QueryList<MovieDetailsComponent>;
   @ViewChildren(ReviewListComponent) movieReviewListComponents: QueryList<ReviewListComponent>;
   recommendations: Recommendations[];
