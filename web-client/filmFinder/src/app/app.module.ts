@@ -21,6 +21,7 @@ import { ReviewListComponent } from './review-list/review-list.component';
 import { BrowseDirectorComponent } from './browse-director/browse-director.component';
 import { BrowseComponent } from './browse/browse.component';
 import { BrowseGenreComponent } from './browse-genre/browse-genre.component';
+import { WishlistDetailsComponent } from './wishlist-details/wishlist-details.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { BrowseGenreComponent } from './browse-genre/browse-genre.component';
     BrowseDirectorComponent,
     BrowseComponent,
     BrowseGenreComponent,
+    WishlistDetailsComponent,
   ],
   imports: [
     BrowserModule,

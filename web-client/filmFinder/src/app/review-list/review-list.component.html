@@ -1,7 +1,7 @@
 <mat-table [dataSource]="movieReviewsSource" class="mat-elevation-z8">
   <ng-container matColumnDef="username">
     <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.username}} </mat-cell>
+    <mat-cell (click)="navigate(element?.userID)" *matCellDef="let element"> {{element?.username}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="rating">
