@@ -17,9 +17,9 @@ export class SearchComponent implements OnInit {
   searchObject: Search;
   searchResult: MovieResult[];
   searchForm: FormGroup = new FormGroup({
-    movieName: new FormControl(''),
-    movieDescription: new FormControl(''),
-    movieGenre: new FormControl(''),
+    name: new FormControl(''),
+    description: new FormControl(''),
+    genre: new FormControl(''),
     mood: new FormControl('')
   });
   constructor(private webService: WebService) {
@@ -63,7 +63,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
-    this.searchObject = new Search(this.searchForm.value.movieName);
+    this.searchObject = this.searchForm.value;
     this.webService.search(this.searchObject).subscribe(success => {
       this.searchResult = success;
     }, err => {

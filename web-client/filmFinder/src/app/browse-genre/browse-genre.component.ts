@@ -12,6 +12,7 @@ import {Search} from '../models/Search';
 })
 export class BrowseGenreComponent implements OnInit {
   genre: object[];
+  searchObject: Search;
   browseGenreObject: BrowseGenre;
   searchResult: MovieResult[];
   genreForm: FormGroup = new FormGroup({
@@ -49,8 +50,8 @@ export class BrowseGenreComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
-    this.browseGenreObject = new BrowseGenre(this.genreForm.value.genre);
-    this.webService.browseGenre(this.browseGenreObject).subscribe(success => {
+    this.searchObject = this.genreForm.value;
+    this.webService.search(this.searchObject).subscribe(success => {
       this.searchResult = success;
     }, err => {
       alert(JSON.stringify(err));

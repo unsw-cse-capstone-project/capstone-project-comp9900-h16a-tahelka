@@ -3,6 +3,7 @@ import {MovieResult} from '../models/MovieResult';
 import {FormControl, FormGroup} from '@angular/forms';
 import {WebService} from '../services/web.service';
 import {BrowseDirector} from '../models/BrowseDirector';
+import {Search} from '../models/Search';
 
 @Component({
   selector: 'app-browse-director',
@@ -10,6 +11,7 @@ import {BrowseDirector} from '../models/BrowseDirector';
   styleUrls: ['./browse-director.component.css']
 })
 export class BrowseDirectorComponent implements OnInit {
+  searchObject: Search;
   browseDirectorObject: BrowseDirector;
   searchResult: MovieResult[];
   directorForm: FormGroup = new FormGroup({
@@ -20,8 +22,8 @@ export class BrowseDirectorComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
-    this.browseDirectorObject = new BrowseDirector(this.directorForm.value.director);
-    this.webService.browseDirector(this.browseDirectorObject).subscribe(success => {
+    this.searchObject = this.directorForm.value;
+    this.webService.search(this.searchObject).subscribe(success => {
       this.searchResult = success;
     }, err => {
       alert(JSON.stringify(err));
