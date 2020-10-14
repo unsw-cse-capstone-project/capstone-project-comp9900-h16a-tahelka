@@ -6,6 +6,8 @@ from werkzeug.exceptions import BadRequest
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.WishList import Wishlist
+from models.Movie import Movie
+from models.User import User
 
 api = Namespace('Wishlist', path='/wishlists',
                 description='Add movies in Wishlist.')
@@ -42,6 +44,21 @@ class Wishlists(Resource):
     def get(self):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
+        limit = 10
+        results = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum, \
+                               Movie.review_count) \
+            .filter(Wishlist.userID == g.userID).filter(Wishlist.movieID == Movie.movieID) \
+            .limit(limit)
 
-        wishlistMovies = Session.query(Wishlist).filter(Wishlist.userID == g.userID)
+        username = session.query(User.username).filter(User.userID == g.userID).first()
+        movies = list()
+        for movieID, title, year, ratings_sum, review_count in results:
+            movies.append({'movieID': movieID, 'title': title, 'year': year,
+                 'rating': ratings_sum / review_count if review_count else 0
+                })
+
+        response = {'username': username}
+        response['Wishlist'] = movies
+
+        return response, 200
 

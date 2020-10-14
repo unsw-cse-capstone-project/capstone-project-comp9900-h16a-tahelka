@@ -1,7 +1,7 @@
 from flask import request, g
 from flask_restx import Namespace, fields, Resource
 from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
@@ -13,8 +13,8 @@ api = Namespace('Wishlist', path='/wishlists')
 @api.route('/<int:movieID>')
 class Wishlists_byId(Resource):
 
-    @api.response(201, "Movie removed from Wishlist.")
-    @api.response(400, "The parameters submitted are invalid.")
+    @api.response(204, "Movie removed from Wishlist.")
+    @api.response(404, "The parameters submitted are not found")
     def delete(self, movieID):
         '''
         Removes said movie from user's Wishlist.
@@ -22,15 +22,14 @@ class Wishlists_byId(Resource):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
 
-        try:
-            wishlistItem = session.query(Wishlist).filter(Wishlist.movieID == movieID)\
-                .filter(Wishlist.userID == g.userID).delete()
+        affectedRows = session.query(Wishlist).filter(Wishlist.movieID == movieID)\
+            .filter(Wishlist.userID == g.userID).delete()
+        # When 0, it means either of movieID or userID are not present in database.
+        if affectedRows == 0:
+            raise NotFound
+        else:
             session.commit()
-        except: #TODO: handle missing item from database.
-            print('Error')
-            pass
 
-        response = {'message': 'Movie removed from Wishlist.'}
-        return response, 200
+        return 204
 
 
