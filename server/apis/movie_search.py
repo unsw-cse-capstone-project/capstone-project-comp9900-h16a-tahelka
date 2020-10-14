@@ -27,6 +27,7 @@ film_summary = api.model('Film Summary',
 @api.param('director')
 class MovieSearch(Resource):
     @api.response(200, 'Success', [film_summary])
+    @api.response(401, 'Authentication token is missing')
     def get(self):
         '''
         Search for movies by name, description, genre or director.
@@ -35,8 +36,12 @@ class MovieSearch(Resource):
         # Commented out limit because browsing movies by director or
         # genre should return all films by that director or of that genre.
         # limit = 100  # TODO: change limit later as needed.
-        name_keywords = request.args.get('name') if 'name' in request.args else ''
-        description_keywords = request.args.get('description') if 'description' in request.args else ''
+        name_keywords = ' '.join(word for word in request.args.get('name').strip().split())\
+                            if 'name' in request.args\
+                            else ''
+        description_keywords = ' '.join(word for word in request.args.get('description').strip().split())\
+                                   if 'description' in request.args\
+                                   else ''
         search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
                                          Movie.ratings_sum, Movie.review_count
                                         ).join(GenreOfFilm).join(Genres)\
