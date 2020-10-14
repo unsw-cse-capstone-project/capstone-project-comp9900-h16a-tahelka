@@ -18,6 +18,7 @@ film_review = api.model('Movie Review',
 @api.route('/<int:id>/reviews')
 class FilmReview(Resource):
     @api.response(201, 'Success')
+    @api.response(401, 'Authentication token is missing')
     @api.response(403, 'This user has already reviewed this movie')
     @api.response(404, 'Movie was not found')
     @api.expect(film_review)

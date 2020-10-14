@@ -27,6 +27,7 @@ film_summary = api.model('Film Summary',
 @api.param('director')
 class MovieSearch(Resource):
     @api.response(200, 'Success', [film_summary])
+    @api.response(401, 'Authentication token is missing')
     def get(self):
         '''
         Search for movies by name, description, genre or director.
