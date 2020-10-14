@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {BrowseGenre} from '../models/BrowseGenre';
 import {MovieResult} from '../models/MovieResult';
 import {FormControl, FormGroup} from '@angular/forms';
 import {WebService} from '../services/web.service';
@@ -12,7 +11,6 @@ import {Search} from '../models/Search';
 })
 export class BrowseGenreComponent implements OnInit {
   genre: object[];
-  browseGenreObject: BrowseGenre;
   searchResult: MovieResult[];
   genreForm: FormGroup = new FormGroup({
     genre: new FormControl('')
@@ -49,8 +47,7 @@ export class BrowseGenreComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
-    this.browseGenreObject = new BrowseGenre(this.genreForm.value.genre);
-    this.webService.browseGenre(this.browseGenreObject).subscribe(success => {
+    this.webService.search(this.genreForm.value).subscribe(success => {
       this.searchResult = success;
     }, err => {
       alert(JSON.stringify(err));

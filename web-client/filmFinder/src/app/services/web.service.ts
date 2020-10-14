@@ -6,8 +6,6 @@ import { User } from '../models/User';
 import { NewUser } from '../models/NewUser';
 import {Search} from '../models/Search';
 import {Review} from '../models/Review';
-import {BrowseDirector} from '../models/BrowseDirector';
-import {BrowseGenre} from '../models/BrowseGenre';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -29,13 +27,13 @@ export class WebService {
     const signupUrl = this.API_URL + 'users';
     return this.http.post(signupUrl, user, httpOptions);
   }
-  search(searchObject: Search): Observable<any> {
+  search(searchObject: any): Observable<any> {
     const moviesUrl = this.API_URL + 'movies';
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
-    const params = new HttpParams()
-      .set('name', searchObject.name);
-    return this.http.get(moviesUrl, {params, headers});
+    // const params = new HttpParams()
+    //   .set('name', searchObject.name);
+    return this.http.get(moviesUrl, {params: searchObject, headers});
   }
   movieDetails(id: number): Observable<any> {
     const moviesUrl = this.API_URL + 'movies/' + id.toString();
@@ -80,20 +78,25 @@ export class WebService {
     };
     return this.http.post(watchlistUrl, body, {headers});
   }
-  browseDirector(browseDirectorObject: BrowseDirector): Observable<any>{
-    const moviesUrl = this.API_URL + 'browse';
+  browseDirector(browseDirectorObject: any): Observable<any>{
+    const moviesUrl = this.API_URL + 'movies';
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
-    const params = new HttpParams()
-      .set('director', browseDirectorObject.director);
-    return this.http.get(moviesUrl, {params, headers});
+    return this.http.get(moviesUrl, {params: browseDirectorObject, headers});
   }
-  browseGenre(browseGenreObject: BrowseGenre): Observable<any>{
-    const moviesUrl = this.API_URL + 'browse';
+  browseGenre(browseGenreObject: any): Observable<any>{
+    const moviesUrl = this.API_URL + 'movies';
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
-    const params = new HttpParams()
-      .set('genre', browseGenreObject.genre);
-    return this.http.get(moviesUrl, {params, headers});
+    return this.http.get(moviesUrl, {params: browseGenreObject, headers});
+  }
+  wishListDetails(id: number): Observable<any>{
+    let moviesUrl = this.API_URL + 'wishlists/';
+    if (id !== -1) {
+      moviesUrl = moviesUrl + id.toString();
+    }
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(moviesUrl, {headers});
   }
 }

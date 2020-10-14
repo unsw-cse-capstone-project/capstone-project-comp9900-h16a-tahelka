@@ -47,6 +47,7 @@ movie_details = api.model('Full Movie Details',
 @api.route('/<int:id>')
 class MovieDetails(Resource):
     @api.response(200, 'Success', movie_details)
+    @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
     def get(self, id):
         '''

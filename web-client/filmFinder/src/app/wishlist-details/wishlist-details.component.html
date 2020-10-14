@@ -1,1 +1,3 @@
-<p>wishlist-details works!</p>
+<app-navbar [isLoggedIn]="true"></app-navbar>
+<h2 class="left-padding">{{result?.username}}'s wishlist</h2>
+<app-search-result [dataSource]="result?.wishlist"></app-search-result>

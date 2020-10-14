@@ -1,6 +1,4 @@
-export class Search {
+export interface Search {
   name: string;
-  constructor(name: string) {
-    this.name = name;
-  }
+  director: string;
 }
