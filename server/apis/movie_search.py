@@ -3,8 +3,8 @@ from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.FilmDirector import FilmDirector
-from models.Genres import Genres
 from models.GenreOfFilm import GenreOfFilm
+from models.Genres import Genres
 from models.Movie import Movie
 from models.Person import Person
 from operator import itemgetter
@@ -32,7 +32,9 @@ class MovieSearch(Resource):
         Search for movies by name, description, genre or director.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
-        limit = 100  # TODO: change limit later as needed.
+        # Commented out limit because browsing movies by director or
+        # genre should return all films by that director or of that genre.
+        # limit = 100  # TODO: change limit later as needed.
         name_keywords = request.args.get('name') if 'name' in request.args else ''
         description_keywords = request.args.get('description') if 'description' in request.args else ''
         search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
@@ -43,7 +45,8 @@ class MovieSearch(Resource):
                                                  Person.name == request.args.get('director'),
                                                  Movie.title.ilike(f'%{name_keywords}%'),
                                                  Movie.description.ilike(f'%{description_keywords}%')
-                                                )[: limit]\
+        #                                       )[: limit]\
+                                                )\
             if 'genre' in request.args and 'director' in request.args\
             else Session().query(Movie.movieID, Movie.title, Movie.year,
                                  Movie.ratings_sum, Movie.review_count
@@ -51,7 +54,8 @@ class MovieSearch(Resource):
                                  .filter(Genres.genre == request.args.get('genre'),
                                          Movie.title.ilike(f'%{name_keywords}%'),
                                          Movie.description.ilike(f'%{description_keywords}%')
-                                        )[: limit]\
+        #                               )[: limit]\
+                                        )\
                      if 'genre' in request.args\
                      else Session().query(Movie.movieID, Movie.title, Movie.year,
                                           Movie.ratings_sum, Movie.review_count
@@ -59,13 +63,15 @@ class MovieSearch(Resource):
                                           .filter(Person.name == request.args.get('director'),
                                                   Movie.title.ilike(f'%{name_keywords}%'),
                                                   Movie.description.ilike(f'%{description_keywords}%')
-                                                 )[: limit]\
+        #                                        )[: limit]\
+                                                 )\
                               if 'director' in request.args\
                               else Session().query(Movie.movieID, Movie.title, Movie.year,
                                                    Movie.ratings_sum, Movie.review_count
                                                   ).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                                            Movie.description.ilike(f'%{description_keywords}%')
-                                                          )[: limit]
+        #                                                 )[: limit]
+                                                          )
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
                            'rating': ratings_sum / review_count if review_count else 0
                           } for movieID, title, year, ratings_sum, review_count in search_results
