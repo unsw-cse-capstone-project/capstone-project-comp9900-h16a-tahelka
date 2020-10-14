@@ -59,4 +59,8 @@ export class SearchResultComponent implements OnInit {
   wishlistMovieRemoved(wishlistRemoved: WishlistRemove, movie: MovieResult): void {
     this.dataSource = this.dataSource.filter(obj => obj !== movie);
   }
+  capitalize(s: string): string
+  {
+    return s && s[0].toUpperCase() + s.slice(1);
+  }
 }
