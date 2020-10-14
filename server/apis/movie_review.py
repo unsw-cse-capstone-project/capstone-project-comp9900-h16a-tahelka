@@ -7,6 +7,7 @@ from models.MovieReview import MovieReview
 from models.Watchlist import Watchlist
 from werkzeug.exceptions import Forbidden, NotFound
 
+
 api = Namespace('Movie Review', path = '/movies')
 
 film_review = api.model('Movie Review',
