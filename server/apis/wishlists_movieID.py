@@ -11,13 +11,13 @@ from models.WishList import Wishlist
 api = Namespace('Wishlist', path='/wishlists')
 
 @api.route('/<int:movieID>')
-class Wishlists_byId(Resource):
+class Wishlists_MovieID(Resource):
 
     @api.response(204, "Movie removed from Wishlist.")
     @api.response(404, "The parameters submitted are not found")
     def delete(self, movieID):
         '''
-        Removes said movie from user's Wishlist.
+        Removes said movie from current user's Wishlist.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
@@ -31,5 +31,4 @@ class Wishlists_byId(Resource):
             session.commit()
 
         return 204
-
 

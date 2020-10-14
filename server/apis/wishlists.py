@@ -41,24 +41,4 @@ class Wishlists(Resource):
         response = {'message':'Movie added to Wishlist.'}
         return response, 201
 
-    def get(self):
-        TokenAuthenticator(request.headers.get('Authorization')).authenticate()
-        session = Session()
-        limit = 10
-        results = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum, \
-                               Movie.review_count) \
-            .filter(Wishlist.userID == g.userID).filter(Wishlist.movieID == Movie.movieID) \
-            .limit(limit)
-
-        username = session.query(User.username).filter(User.userID == g.userID).first()
-        movies = list()
-        for movieID, title, year, ratings_sum, review_count in results:
-            movies.append({'movieID': movieID, 'title': title, 'year': year,
-                 'rating': ratings_sum / review_count if review_count else 0
-                })
-
-        response = {'username': username}
-        response['Wishlist'] = movies
-
-        return response, 200
 
