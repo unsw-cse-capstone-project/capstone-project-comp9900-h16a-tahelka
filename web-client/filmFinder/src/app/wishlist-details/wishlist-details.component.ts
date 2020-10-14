@@ -17,13 +17,13 @@ export class WishlistDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params.id;
     });
-    if (this.id === undefined) {
-      this.id = -1;
-    }
-    this.getData(this.id);
+    this.getData();
   }
-  getData(id: number): void {
-    this.webService.wishListDetails(id).subscribe(success => {
+  getData(): void {
+    if (this.id === undefined) {
+      this.id = this.authenticationService.currentUserValue.userID;
+    }
+    this.webService.wishListDetails(this.id).subscribe(success => {
       this.result = success;
     }, err => {
       alert(JSON.stringify(err));

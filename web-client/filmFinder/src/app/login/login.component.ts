@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.user = this.loginForm.value;
     this.webService.login(this.user).subscribe(success => {
-      const authUser = new AuthenticatedUser(success.username, success.email, success.token);
+      const authUser = new AuthenticatedUser(success.username, success.email, success.token, success.userID);
       this.authenticationService.login(authUser);
       this.navigate('/search');
     }, err => {
