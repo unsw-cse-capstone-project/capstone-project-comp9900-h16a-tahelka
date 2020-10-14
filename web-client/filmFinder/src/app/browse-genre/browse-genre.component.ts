@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {BrowseGenre} from '../models/BrowseGenre';
 import {MovieResult} from '../models/MovieResult';
 import {FormControl, FormGroup} from '@angular/forms';
 import {WebService} from '../services/web.service';

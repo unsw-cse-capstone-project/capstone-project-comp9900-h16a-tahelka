@@ -4,6 +4,8 @@ import {MovieDetailsComponent} from '../movie-details/movie-details.component';
 import {MovieResult} from '../models/MovieResult';
 import {Recommendations} from '../models/Recommendations';
 import {ReviewListComponent} from '../review-list/review-list.component';
+import {WishlistRemove} from '../models/WishlistRemove';
+import {constructExclusionsMap} from 'tslint/lib/rules/completed-docs/exclusions';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -53,5 +55,8 @@ export class SearchResultComponent implements OnInit {
         component.setMovieReviews(event);
       }
     });
+  }
+  wishlistMovieRemoved(wishlistRemoved: WishlistRemove, movie: MovieResult): void {
+    this.dataSource = this.dataSource.filter(obj => obj !== movie);
   }
 }

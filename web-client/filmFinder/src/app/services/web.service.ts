@@ -6,8 +6,6 @@ import { User } from '../models/User';
 import { NewUser } from '../models/NewUser';
 import {Search} from '../models/Search';
 import {Review} from '../models/Review';
-import {BrowseDirector} from '../models/BrowseDirector';
-import {BrowseGenre} from '../models/BrowseGenre';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -93,13 +91,12 @@ export class WebService {
     return this.http.get(moviesUrl, {params: browseGenreObject, headers});
   }
   wishListDetails(id: number): Observable<any>{
-    let moviesUrl = this.API_URL + 'wishlist/';
+    let moviesUrl = this.API_URL + 'wishlists/';
     if (id !== -1) {
       moviesUrl = moviesUrl + id.toString();
     }
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
-    headers.append('Access-Control-Allow-Origin', '*');
     return this.http.get(moviesUrl, {headers});
   }
 }

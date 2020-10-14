@@ -25,8 +25,8 @@
             <mat-tab label="Movie Details">
               <app-movie-details (recommendations)="setRecommendations($event)" (reviews)="setReviewList($event, element)" [movie]="element"></app-movie-details>
             </mat-tab>
-            <mat-tab label="Add to Wishlist/Watchlist">
-              <app-wish-list [movieID]="element.movieID"></app-wish-list>
+            <mat-tab label="Wishlist/Watchlist">
+              <app-wish-list (deleteFromWishlist)="wishlistMovieRemoved($event, element)" [movieID]="element.movieID"></app-wish-list>
 <!--              <app-watch-list [movieID]="element.movieID"></app-watch-list>-->
             </mat-tab>
             <mat-tab label="See all reviews">

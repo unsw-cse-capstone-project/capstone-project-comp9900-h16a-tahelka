@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {WebService} from '../services/web.service';
 import {AuthenticationService} from '../services/authentication.service';
+import {WishlistDetails} from '../models/WishlistDetails';
 
 @Component({
   selector: 'app-wishlist-details',
@@ -9,8 +10,7 @@ import {AuthenticationService} from '../services/authentication.service';
   styleUrls: ['./wishlist-details.component.css']
 })
 export class WishlistDetailsComponent implements OnInit {
-  // TODO: Create model
-  result: any;
+  result: WishlistDetails;
   constructor(private route: ActivatedRoute, private webService: WebService, private authenticationService: AuthenticationService) { }
   id: number;
   ngOnInit(): void {

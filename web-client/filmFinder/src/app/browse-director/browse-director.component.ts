@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {MovieResult} from '../models/MovieResult';
 import {FormControl, FormGroup} from '@angular/forms';
 import {WebService} from '../services/web.service';
-import {BrowseDirector} from '../models/BrowseDirector';
 import {Search} from '../models/Search';
 
 @Component({
@@ -12,7 +11,6 @@ import {Search} from '../models/Search';
 })
 export class BrowseDirectorComponent implements OnInit {
   searchObject: Search;
-  browseDirectorObject: BrowseDirector;
   searchResult: MovieResult[];
   directorForm: FormGroup = new FormGroup({
     director: new FormControl('')
