@@ -23,7 +23,7 @@ export class BrowseDirectorComponent implements OnInit {
   }
   search(): void {
     this.searchObject = this.directorForm.value;
-    this.webService.search(this.searchObject).subscribe(success => {
+    this.webService.search(this.directorForm.value).subscribe(success => {
       this.searchResult = success;
     }, err => {
       alert(JSON.stringify(err));

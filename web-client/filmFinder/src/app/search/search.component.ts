@@ -63,8 +63,8 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
-    this.searchObject = this.searchForm.value;
-    this.webService.search(this.searchObject).subscribe(success => {
+    // this.searchObject = this.searchForm.value;
+    this.webService.search(this.searchForm.value).subscribe(success => {
       this.searchResult = success;
     }, err => {
       alert(JSON.stringify(err));
