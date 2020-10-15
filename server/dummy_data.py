@@ -1,4 +1,5 @@
 from db_engine import Session
+from models.FilmCast import FilmCast
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
@@ -41,6 +42,15 @@ session.add_all([Movie('Dr. Strangelove or: How I Learned to Stop Worrying and L
                  Person('Jatin Gupta'),
                  Person('Theruni Pethiyagoda'),
                  Person('Yash Umeshkumar Tamakuwala'),
+                 Person('Peter Sellers'),
+                 Person('George C. Scott'),
+                 Person('Sterling Hayden'),
+                 Person('Keir Dullea'),
+                 Person('Gery Lockwood'),
+                 Person('William Sylvester'),
+                 Person('Malcolm McDowell'),
+                 Person('Patrick Magee'),
+                 Person('Michael Bates'),
                  FilmDirector(1, 1),
                  FilmDirector(2, 1),
                  FilmDirector(3, 1),
@@ -55,6 +65,15 @@ session.add_all([Movie('Dr. Strangelove or: How I Learned to Stop Worrying and L
                  FilmDirector(9, 6),
                  FilmDirector(10, 5),
                  FilmDirector(10, 6),
+                 FilmCast(1, 7),
+                 FilmCast(1, 8),
+                 FilmCast(1, 9),
+                 FilmCast(2, 10),
+                 FilmCast(2, 11),
+                 FilmCast(2, 12),
+                 FilmCast(3, 13),
+                 FilmCast(3, 14),
+                 FilmCast(3, 15)
                 ]
                )
 session.commit()
