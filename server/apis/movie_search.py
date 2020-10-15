@@ -42,45 +42,48 @@ class MovieSearch(Resource):
         description_keywords = ' '.join(word for word in request.args.get('description').strip().split())\
                                    if 'description' in request.args\
                                    else ''
-        search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
-                                         Movie.ratings_sum, Movie.review_count
-                                        ).join(GenreOfFilm).join(Genres)\
-                                         .join(FilmDirector).join(Person)\
-                                         .filter(Genres.genre == request.args.get('genre'),
-                                                 Person.name == request.args.get('director'),
-                                                 Movie.title.ilike(f'%{name_keywords}%'),
-                                                 Movie.description.ilike(f'%{description_keywords}%')
-        #                                       )[: limit]\
-                                                )\
-            if 'genre' in request.args and 'director' in request.args\
-            else Session().query(Movie.movieID, Movie.title, Movie.year,
-                                 Movie.ratings_sum, Movie.review_count
-                                ).join(GenreOfFilm).join(Genres)\
-                                 .filter(Genres.genre == request.args.get('genre'),
-                                         Movie.title.ilike(f'%{name_keywords}%'),
-                                         Movie.description.ilike(f'%{description_keywords}%')
-        #                               )[: limit]\
-                                        )\
-                     if 'genre' in request.args\
-                     else Session().query(Movie.movieID, Movie.title, Movie.year,
-                                          Movie.ratings_sum, Movie.review_count
-                                         ).join(FilmDirector).join(Person)\
-                                          .filter(Person.name == request.args.get('director'),
-                                                  Movie.title.ilike(f'%{name_keywords}%'),
-                                                  Movie.description.ilike(f'%{description_keywords}%')
-        #                                        )[: limit]\
-                                                 )\
-                              if 'director' in request.args\
-                              else Session().query(Movie.movieID, Movie.title, Movie.year,
-                                                   Movie.ratings_sum, Movie.review_count
-                                                  ).filter(Movie.title.ilike(f'%{name_keywords}%'),
-                                                           Movie.description.ilike(f'%{description_keywords}%')
-        #                                                 )[: limit]
-                                                          )
+        if 'director' in request.args:
+            director = ' '.join(word for word in request.args.get('director').strip().split())
+            if 'genre' in request.args:
+                search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
+                                                 Movie.ratings_sum, Movie.review_count
+                                                ).join(GenreOfFilm).join(Genres)\
+                                                 .join(FilmDirector).join(Person)\
+                                                 .filter(Genres.genre == request.args.get('genre'),
+                                                         Person.name.ilike(director),
+                                                         Movie.title.ilike(f'%{name_keywords}%'),
+                                                         Movie.description.ilike(f'%{description_keywords}%')
+                                                        )
+        #                                               )[: limit]
+            else:
+                search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
+                                                 Movie.ratings_sum, Movie.review_count
+                                                ).join(FilmDirector).join(Person)\
+                                                 .filter(Person.name.ilike(director),
+                                                         Movie.title.ilike(f'%{name_keywords}%'),
+                                                         Movie.description.ilike(f'%{description_keywords}%')
+                                                        )
+        #                                               )[: limit]
+        elif 'genre' in request.args:
+            search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
+                                             Movie.ratings_sum, Movie.review_count
+                                            ).join(GenreOfFilm).join(Genres)\
+                                             .filter(Genres.genre == request.args.get('genre'),
+                                                     Movie.title.ilike(f'%{name_keywords}%'),
+                                                     Movie.description.ilike(f'%{description_keywords}%')
+                                                    )
+        #                                           )[: limit]
+        else:
+            search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
+                                             Movie.ratings_sum, Movie.review_count
+                                            ).filter(Movie.title.ilike(f'%{name_keywords}%'),
+                                                     Movie.description.ilike(f'%{description_keywords}%')
+                                                    )
+        #                                           )[: limit]
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
                            'rating': ratings_sum / review_count if review_count else 0
                           } for movieID, title, year, ratings_sum, review_count in search_results
                          ]
-        return sorted(sorted(search_results, key = itemgetter('title')),
-                      key = itemgetter('rating'), reverse = True
-                     ), 200
+        search_results.sort(key = itemgetter('title'))
+        search_results.sort(key = itemgetter('rating'), reverse = True)
+        return search_results, 200
