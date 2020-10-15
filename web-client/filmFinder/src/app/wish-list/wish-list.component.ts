@@ -5,6 +5,7 @@ import {UserMessageConstant} from '../constants/UserMessageConstant';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Recommendations} from '../models/Recommendations';
 import {WishlistRemove} from '../models/WishlistRemove';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-wish-list',
@@ -18,15 +19,21 @@ export class WishListComponent implements OnInit {
   @Output() deleteFromWishlist = new EventEmitter<WishlistRemove>();
   isWishlistDetails = false;
   id: number;
-  constructor(private webService: WebService, private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
+  showDelete = true;
+  constructor(private webService: WebService,
+              private snackbar: MatSnackBar,
+              private router: Router,
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     if (this.router.url.startsWith('/wishlist')) {
       this.isWishlistDetails = true;
     }
     this.route.params.subscribe(params => {
-      this.id = params.id;
+      this.id = params?.id;
     });
+    this.setRemoveButtonView();
   }
   addToWishlist(): void{
     this.webService.wishlistAdd(this.movieID).subscribe(success => {
@@ -48,5 +55,10 @@ export class WishListComponent implements OnInit {
   private successfulUpdateSnackbar(message, action): void {
     const snackbarRef = this.snackbar.open(message, action, {duration: this.snackbarDuration});
     snackbarRef.afterDismissed().subscribe(() => {});
+  }
+  setRemoveButtonView(): void {
+    if (this.id === undefined || this.id === this.authenticationService.currentUserValue.userID) {
+      this.showDelete = false;
+    }
   }
 }
