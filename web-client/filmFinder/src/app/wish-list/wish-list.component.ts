@@ -1,7 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {WebService} from '../services/web.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserMessageConstant} from '../constants/UserMessageConstant';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Recommendations} from '../models/Recommendations';
+import {WishlistRemove} from '../models/WishlistRemove';
 
 @Component({
   selector: 'app-wish-list',
@@ -12,9 +15,14 @@ export class WishListComponent implements OnInit {
 
   @Input() public movieID: number;
   snackbarDuration = 2000;
-  constructor(private webService: WebService, private snackbar: MatSnackBar) { }
+  @Output() deleteFromWishlist = new EventEmitter<WishlistRemove>();
+  isWishlistDetails = false;
+  constructor(private webService: WebService, private snackbar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.router.url.startsWith('/wishlist')) {
+      this.isWishlistDetails = true;
+    }
   }
   addToWishlist(): void{
     this.webService.wishlistAdd(this.movieID).subscribe(success => {
@@ -26,6 +34,9 @@ export class WishListComponent implements OnInit {
   removeFromWishlist(): void{
     this.webService.wishlistRemove(this.movieID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_REMOVED, UserMessageConstant.DISMISS);
+      if (this.isWishlistDetails) {
+        this.deleteFromWishlist.emit({movieID: this.movieID, route: 'wishlist'});
+      }
     }, err => {
       this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_REMOVE_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });

@@ -17,10 +17,10 @@ export class SearchComponent implements OnInit {
   searchObject: Search;
   searchResult: MovieResult[];
   searchForm: FormGroup = new FormGroup({
-    movieName: new FormControl(''),
-    movieDescription: new FormControl(''),
-    movieGenre: new FormControl(''),
-    mood: new FormControl('')
+    name: new FormControl(),
+    description: new FormControl(),
+    genre: new FormControl(),
+    mood: new FormControl()
   });
   constructor(private webService: WebService) {
     this.genre = [
@@ -63,11 +63,20 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
-    this.searchObject = new Search(this.searchForm.value.movieName);
-    this.webService.search(this.searchObject).subscribe(success => {
+    const queryCopy = (JSON.parse(JSON.stringify(this.searchForm.value)));
+    this.webService.search(this.clean(queryCopy)).subscribe(success => {
       this.searchResult = success;
     }, err => {
       alert(JSON.stringify(err));
     });
   }
+  clean(obj: any): any {
+    for (const propName in obj) {
+      if (obj[propName] === null || obj[propName] === undefined || obj[propName] === '') {
+        delete obj[propName];
+      }
+    }
+    return obj;
+  }
+
 }

@@ -4,6 +4,8 @@ import {MovieDetailsComponent} from '../movie-details/movie-details.component';
 import {MovieResult} from '../models/MovieResult';
 import {Recommendations} from '../models/Recommendations';
 import {ReviewListComponent} from '../review-list/review-list.component';
+import {WishlistRemove} from '../models/WishlistRemove';
+import {constructExclusionsMap} from 'tslint/lib/rules/completed-docs/exclusions';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -27,7 +29,6 @@ export class SearchResultComponent implements OnInit {
   columnsToDisplay = ['title', 'year', 'rating'];
   @Input() dataSource: MovieResult[];
   expandedElement: MovieResult | null;
-  @Input() movieSearchResult: MovieResult[];
   @ViewChildren(MovieDetailsComponent) movieDetailsComponents: QueryList<MovieDetailsComponent>;
   @ViewChildren(ReviewListComponent) movieReviewListComponents: QueryList<ReviewListComponent>;
   recommendations: Recommendations[];
@@ -48,11 +49,18 @@ export class SearchResultComponent implements OnInit {
   }
   tabChanged(event: any): void {
   }
-  setReviewList(event: any): void {
+  setReviewList(event: any, movie: MovieResult): void {
     this.movieReviewListComponents.forEach(component => {
-      if (component.movieID === this.expandedElement.movieID) {
+      if (component.movieID === movie.movieID) {
         component.setMovieReviews(event);
       }
     });
+  }
+  wishlistMovieRemoved(wishlistRemoved: WishlistRemove, movie: MovieResult): void {
+    this.dataSource = this.dataSource.filter(obj => obj !== movie);
+  }
+  capitalize(s: string): string
+  {
+    return s && s[0].toUpperCase() + s.slice(1);
   }
 }
