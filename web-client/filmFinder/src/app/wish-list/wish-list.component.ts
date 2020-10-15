@@ -17,12 +17,16 @@ export class WishListComponent implements OnInit {
   snackbarDuration = 2000;
   @Output() deleteFromWishlist = new EventEmitter<WishlistRemove>();
   isWishlistDetails = false;
-  constructor(private webService: WebService, private snackbar: MatSnackBar, private router: Router) { }
+  id: number;
+  constructor(private webService: WebService, private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     if (this.router.url.startsWith('/wishlist')) {
       this.isWishlistDetails = true;
     }
+    this.route.params.subscribe(params => {
+      this.id = params.id;
+    });
   }
   addToWishlist(): void{
     this.webService.wishlistAdd(this.movieID).subscribe(success => {
