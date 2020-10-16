@@ -31,3 +31,10 @@ Week 4
 5. Made Swagger docs for those 2 services.
 5. Held meetings with Ian and Jatin regarding implementation and integration.
 6. Maintained a service contract outlining REST endpoint, sample request and responses.
+
+Week 5
+1. Made API to add movie to Wishlist.
+2. Made API to remove movie from Wishlist
+3. Made API to view a user's Wishlist.
+4. Managed JIRA board.
+5. Held technical discussions with the group.
