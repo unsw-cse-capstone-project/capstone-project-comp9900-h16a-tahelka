@@ -7,7 +7,6 @@ from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
 from models.Movie import Movie
 from models.Person import Person
-from operator import itemgetter
 
 
 api = Namespace('Movie Search', path = '/movies')
@@ -44,46 +43,44 @@ class MovieSearch(Resource):
                                    else ''
         if 'director' in request.args:
             director = ' '.join(word for word in request.args.get('director').strip().split())
-            if 'genre' in request.args:
-                search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
-                                                 Movie.ratings_sum, Movie.review_count
-                                                ).join(GenreOfFilm).join(Genres)\
-                                                 .join(FilmDirector).join(Person)\
-                                                 .filter(Genres.genre == request.args.get('genre'),
-                                                         Person.name.ilike(director),
-                                                         Movie.title.ilike(f'%{name_keywords}%'),
-                                                         Movie.description.ilike(f'%{description_keywords}%')
-                                                        )
-        #                                               )[: limit]
-            else:
-                search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
-                                                 Movie.ratings_sum, Movie.review_count
-                                                ).join(FilmDirector).join(Person)\
-                                                 .filter(Person.name.ilike(director),
-                                                         Movie.title.ilike(f'%{name_keywords}%'),
-                                                         Movie.description.ilike(f'%{description_keywords}%')
-                                                        )
-        #                                               )[: limit]
-        elif 'genre' in request.args:
+            search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
+                                             Movie.ratings_sum, Movie.review_count
+                                            ).join(GenreOfFilm).join(Genres)\
+                                             .join(FilmDirector).join(Person)\
+                                             .filter(Genres.genre == request.args.get('genre'),
+                                                     Person.name.ilike(director),
+                                                     Movie.title.ilike(f'%{name_keywords}%'),
+                                                     Movie.description.ilike(f'%{description_keywords}%')
+        #                                           ).limit(limit)\
+                                                    )\
+                                 if 'genre' in request.args\
+                                 else Session().query(Movie.movieID, Movie.title, Movie.year,
+                                                      Movie.ratings_sum, Movie.review_count
+                                                     ).join(FilmDirector).join(Person)\
+                                                      .filter(Person.name.ilike(director),
+                                                              Movie.title.ilike(f'%{name_keywords}%'),
+                                                              Movie.description.ilike(f'%{description_keywords}%')
+        #                                                    ).limit(limit)
+                                                             )
+        else:
             search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
                                              Movie.ratings_sum, Movie.review_count
                                             ).join(GenreOfFilm).join(Genres)\
                                              .filter(Genres.genre == request.args.get('genre'),
                                                      Movie.title.ilike(f'%{name_keywords}%'),
                                                      Movie.description.ilike(f'%{description_keywords}%')
-                                                    )
-        #                                           )[: limit]
-        else:
-            search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
-                                             Movie.ratings_sum, Movie.review_count
-                                            ).filter(Movie.title.ilike(f'%{name_keywords}%'),
-                                                     Movie.description.ilike(f'%{description_keywords}%')
-                                                    )
-        #                                           )[: limit]
+        #                                           ).limit(limit)\
+                                                    )\
+                                 if 'genre' in request.args\
+                                 else Session().query(Movie.movieID, Movie.title, Movie.year,
+                                                      Movie.ratings_sum, Movie.review_count
+                                                     ).filter(Movie.title.ilike(f'%{name_keywords}%'),
+                                                              Movie.description.ilike(f'%{description_keywords}%')
+        #                                                    ).limit(limit)
+                                                             )
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
                            'rating': ratings_sum / review_count if review_count else 0
                           } for movieID, title, year, ratings_sum, review_count in search_results
                          ]
-        search_results.sort(key = itemgetter('title'))
-        search_results.sort(key = itemgetter('rating'), reverse = True)
+        search_results.sort(key = lambda film: (-film['rating'], film['title']))
         return search_results, 200
