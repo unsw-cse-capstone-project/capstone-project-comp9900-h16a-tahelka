@@ -10,4 +10,10 @@ Completed majority of combining the three databases but had an issue with the nu
   
 
 Week 4 (05/10 - 11/10)
-My task for the week is to complete the database creation that was incomplete from Week 3. I will clean up the code and have it commented and uploaded onto GitHub. Also have the final datasets ready for download. Carried out literature and video review of movie recommendation system algorithm choices and decided to use a Hybrid system but the main system to be k-NN. Plan to finish initial recommendation system for demo A. 
+Completed the datasets to be uploaded to the database. Completed one set of 1.2million ratings but then redid the code to create a dataset with 96k ratings for ease of demonstration. Cleaned, commented the 6 notebooks of code for dataset creation, but files were too large so they were deleted and will be uploaded the last week of the project. Carried out literature and video review of movie recommendation system algorithm choices and decided to use a Hybrid system but the main system to be k-NN. 
+
+Week 5 (12/10 - 19/10)
+Worked on exploring the system and organizing stories to be presented in demo A. Practiced and presented demo A. Conducted more in-depth literature review for recommendation system and created diagrams to explain to the team and get team opinion on the backend structure and execution time allowed for the recommendation system. Finalized the algorithms to be used in the rec system (knn, Pearson correlation and an addition matrix). 
+
+Week 6 (20/10 - 27/10)
+Will create the recommendation system (at least 2/4 parts) in python and hand it over to the backend team to have it integrated with the system. 
