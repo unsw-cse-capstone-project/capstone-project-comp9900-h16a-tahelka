@@ -19,7 +19,7 @@ export class WishListComponent implements OnInit {
   @Output() deleteFromWishlist = new EventEmitter<WishlistRemove>();
   isWishlistDetails = false;
   id: number;
-  showDelete = true;
+  showDelete = false;
   constructor(private webService: WebService,
               private snackbar: MatSnackBar,
               private router: Router,
@@ -32,6 +32,7 @@ export class WishListComponent implements OnInit {
     }
     this.route.params.subscribe(params => {
       this.id = params?.id;
+      console.log(params);
     });
     this.setRemoveButtonView();
   }
@@ -57,8 +58,8 @@ export class WishListComponent implements OnInit {
     snackbarRef.afterDismissed().subscribe(() => {});
   }
   setRemoveButtonView(): void {
-    if (this.id === undefined || this.id === this.authenticationService.currentUserValue.userID) {
-      this.showDelete = false;
+    if (this.id === undefined || +this.id === this.authenticationService.currentUserValue.userID) {
+      this.showDelete = true;
     }
   }
 }
