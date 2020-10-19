@@ -8,6 +8,8 @@ from models.Movie import Movie
 from models.User import User
 from models.WishList import Wishlist
 
+from util.IntValidations import is_valid_integer
+
 api = Namespace('Wishlist', path='/wishlists')
 
 @api.route('/<int:userID>')
@@ -18,6 +20,8 @@ class Wishlists_UserID(Resource):
     def get(self, userID):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
+
+        is_valid_integer(userID)
 
         limit = 10
         results = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum, \

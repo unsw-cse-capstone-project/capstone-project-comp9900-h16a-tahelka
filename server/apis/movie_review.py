@@ -6,7 +6,7 @@ from models.Movie import Movie
 from models.MovieReview import MovieReview
 from models.Watchlist import Watchlist
 from werkzeug.exceptions import Forbidden, NotFound
-
+from util.IntValidations import is_valid_integer
 
 api = Namespace('Movie Review', path = '/movies')
 
@@ -29,6 +29,9 @@ class FilmReview(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
+
+        is_valid_integer(id)
+
         movie = session.query(Movie).filter(Movie.movieID == id).one_or_none()
         if not movie:
             raise NotFound

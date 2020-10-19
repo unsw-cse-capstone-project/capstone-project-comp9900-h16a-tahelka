@@ -1,7 +1,8 @@
 from flask import Blueprint, request, g
 from flask_restx import Namespace, fields, Resource
 from authentication.credentials_authenticator import CredentialsAuthenticator
-
+from util.StringValidations import isValidEmail
+from werkzeug.exceptions import BadRequest
 
 api = Namespace('Authentication', path='/tokens',
                 description='User authentication and JWT token creation')
@@ -22,11 +23,17 @@ class Tokens(Resource):
     @api.expect(credential)
     @api.response(201, "User authenticated. JWT token sucessfully created.")
     @api.response(401, "The credentials provided are incorrect.")
+    @api.response(400, 'Invalid Parameters.')
     def post(self):
         '''
         Authenticates a user and creates a JWT token for the user
         '''
+
         email = request.json['email']
+
+        if not isValidEmail(email):
+            raise BadRequest
+
         password = request.json['password']
         authenticator = CredentialsAuthenticator(email, password)
         user, token = authenticator.authenticate()

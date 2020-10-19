@@ -9,6 +9,8 @@ from models.WishList import Wishlist
 from models.Movie import Movie
 from models.User import User
 
+from util.IntValidations import is_valid_integer
+
 api = Namespace('Wishlist', path='/wishlists',
                 description='Add movies in Wishlist.')
 
@@ -28,6 +30,8 @@ class Wishlists(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         movieID = request.json.get('movieID')
+
+        is_valid_integer(movieID)
 
         new_wishlist = Wishlist(movieID, g.userID)
         session = Session()
