@@ -1,4 +1,4 @@
 <app-navbar [isLoggedIn]="true"></app-navbar>
 <h2 class="left-padding">{{result?.username}}'s wishlist</h2>
-<app-subscribe></app-subscribe>
+<app-subscribe [userID]="id"></app-subscribe>
 <app-search-result [dataSource]="result?.wishlist"></app-search-result>
