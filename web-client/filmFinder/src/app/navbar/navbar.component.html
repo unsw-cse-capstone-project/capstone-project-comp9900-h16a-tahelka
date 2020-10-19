@@ -1,12 +1,13 @@
 <p>
   <mat-toolbar color="primary">
     <span>FilmFinder</span>
-    <span *ngIf="isLoggedIn" class="left-right-spacing">Browse</span>
-    <span *ngIf="isLoggedIn">My Wishlist</span>
+    <a mat-button *ngIf="isLoggedIn" (click)="navigate('/browse')" class="left-right-spacing">Browse</a>
+    <a mat-button *ngIf="isLoggedIn" [routerLink]="['/wishlist']">My Wishlist</a>
     <span class="example-spacer"></span>
-    <button *ngIf="isLoggedIn" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <button *ngIf="isLoggedIn" (click)="navigate('/search')" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>search</mat-icon>
     </button>
+    <span *ngIf="isLoggedIn && username">{{username}}</span>
     <button *ngIf="isLoggedIn" mat-icon-button [mat-menu-trigger-for]="userMenu" class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>person</mat-icon>
     </button>

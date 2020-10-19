@@ -1,0 +1,14 @@
+<mat-table [dataSource]="recommendSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.title}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.year}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+</mat-table>

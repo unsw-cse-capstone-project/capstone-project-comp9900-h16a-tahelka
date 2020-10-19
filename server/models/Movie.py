@@ -10,16 +10,10 @@ class Movie(Base):
     description = Column(String)
     ratings_sum = Column(Float)
     review_count = Column(Integer)
-    duration = Column(Integer)
-    language = Column(String)
 
-    def __init__(self, title, year, description,
-                 ratings_sum, review_count, duration, language
-                ):
+    def __init__(self, title, year, description, ratings_sum, review_count):
         self.title = title
         self.year = year
         self.description = description
         self.ratings_sum = ratings_sum
         self.review_count = review_count
-        self.duration = duration
-        self.language = language

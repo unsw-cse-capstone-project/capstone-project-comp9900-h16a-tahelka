@@ -1,7 +1,7 @@
-from db_engine import Session
 from flask import request
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
+from db_engine import Session
 from models.FilmCast import FilmCast
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
@@ -47,6 +47,7 @@ movie_details = api.model('Full Movie Details',
 @api.route('/<int:id>')
 class MovieDetails(Resource):
     @api.response(200, 'Success', movie_details)
+    @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
     def get(self, id):
         '''
@@ -58,7 +59,7 @@ class MovieDetails(Resource):
                               Movie.year, Movie.description,
                               Movie.ratings_sum, Movie.review_count
                              ).filter(Movie.movieID == id).one_or_none()
-        if movie is None:
+        if not movie:
             raise NotFound
         query = session.query(Genres.genre).join(GenreOfFilm)\
                                            .filter(GenreOfFilm.movieID == id)

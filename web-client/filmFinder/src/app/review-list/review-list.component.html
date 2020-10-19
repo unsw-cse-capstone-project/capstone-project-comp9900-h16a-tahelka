@@ -1,0 +1,20 @@
+<mat-table [dataSource]="movieReviewsSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-cell [routerLink]="['/wishlist', element?.userID]" *matCellDef="let element"> {{element?.username}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="rating">
+    <mat-header-cell *matHeaderCellDef> Rating </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.rating}} </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="review">
+    <mat-header-cell *matHeaderCellDef> Review </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.review}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+</mat-table>

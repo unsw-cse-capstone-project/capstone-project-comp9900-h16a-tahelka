@@ -1,0 +1,30 @@
+<form [formGroup]="reviewForm"  #formDirective="ngForm" (ngSubmit)="saveClick(reviewForm,formDirective)">
+  <div>
+    <mat-form-field floatLabel="auto" appearance="fill" legacy="standard">
+      <mat-label>Select Rating</mat-label>
+      <mat-select required formControlName="rating">
+        <mat-option value=0.0>0.0</mat-option>
+        <mat-option value=0.5>0.5</mat-option>
+        <mat-option value=1.0>1.0</mat-option>
+        <mat-option value=1.5>1.5</mat-option>
+        <mat-option value=2.0>2.0</mat-option>
+        <mat-option value=2.5>2.5</mat-option>
+        <mat-option value=3.0>3.0</mat-option>
+        <mat-option value=3.5>3.5</mat-option>
+        <mat-option value=4.0>4.0</mat-option>
+        <mat-option value=4.5>4.5</mat-option>
+        <mat-option value=5.0>5.0</mat-option>
+      </mat-select>
+    </mat-form-field>
+    {{reviewForm.value.givenRating}}
+  </div>
+
+  <div>
+    <mat-form-field floatLabel="auto" appearance="outline" legacy="standard">
+      <mat-label>Enter the Review</mat-label>
+      <textarea formControlName="review" matInput required></textarea>
+    </mat-form-field>
+  </div>
+  <button type="submit" [disabled]="!reviewForm.valid" mat-raised-button color="accent">Save</button>
+</form>
+
