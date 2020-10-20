@@ -11,3 +11,14 @@ def isValidEmail(email: str):
 
     if not (re.search(email_regex, email)):
         raise BadRequest
+
+def validate_rating(rating):
+    if type(rating) is not str\
+    or not re.fullmatch('\.[05]0?|[0-4](\.[05]?)?|5(\.0?)?|0[0-5]\.?|00[0-5]',
+                        rating
+                       ):
+        raise BadRequest
+
+def validate_review(review):
+    if type(review) is not str or len(review) > 1_000:
+        raise BadRequest
