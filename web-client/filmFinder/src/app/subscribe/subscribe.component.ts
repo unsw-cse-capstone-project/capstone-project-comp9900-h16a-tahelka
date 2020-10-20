@@ -15,7 +15,7 @@ export class SubscribeComponent implements OnInit {
   ngOnInit(): void {
   }
   subscribe(): void {
-    if (!this.subscribed) {
+    if (this.subscribed) {
       this.webService.subscribeUser(this.userID).subscribe(success => {
         this.subscribed = success;
         console.log(this.userID, 'User Id subscribed');
