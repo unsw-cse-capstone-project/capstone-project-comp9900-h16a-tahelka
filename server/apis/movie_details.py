@@ -81,7 +81,7 @@ class MovieDetails(Resource):
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
-                'rating': movie.ratings_sum / movie.review_count
-                              if movie.review_count else 0,
+                'rating': round(movie.ratings_sum / movie.review_count, 1)
+                              if movie.review_count else 0.0,
                 'reviews': reviews, 'recommendations': recommendations
                }, 200
