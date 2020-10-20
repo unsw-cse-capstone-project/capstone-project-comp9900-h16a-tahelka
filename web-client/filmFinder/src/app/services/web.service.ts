@@ -98,14 +98,10 @@ export class WebService {
     return this.http.get(moviesUrl, {headers});
   }
   unsubscribeUser(userId: number): Observable<any> {
-    const subscribeUrl =  this.API_URL + 'subscribeUsers';
+    const subscribeUrl =  this.API_URL + 'subscribeUsers/' + userId.toString();
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
-    const body = {
-      userID: userId
-    };
-    // @ts-ignore
-    return this.http.delete(subscribeUrl, body, {headers});
+    return this.http.delete(subscribeUrl,  {headers});
   }
   subscribeUser(userId: number): Observable<any> {
     const subscribeUrl =  this.API_URL + 'subscribeUsers';
@@ -116,5 +112,10 @@ export class WebService {
     };
     return this.http.post(subscribeUrl, body, {headers});
   }
-
+  getSubscriptionList(): Observable<any>{
+    const moviesUrl = this.API_URL + 'subscribeUsers';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(moviesUrl, {headers});
+  }
 }

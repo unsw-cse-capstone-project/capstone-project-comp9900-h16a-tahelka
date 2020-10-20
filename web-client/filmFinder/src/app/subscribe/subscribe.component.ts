@@ -26,13 +26,6 @@ export class SubscribeComponent implements OnInit {
       });
       this.subscribed = false;
     }
-    unsubscribe(): void {
-      this.webService.unsubscribeUser(this.userID).subscribe(success => {
-        this.successfulUpdateSnackbar(UserMessageConstant.UNSUBSCRIBED_USER, UserMessageConstant.DISMISS);
-      }, err => {
-        this.successfulUpdateSnackbar(UserMessageConstant.UNSUBSCRIBED_USER_UNSUCCESSFUL, UserMessageConstant.DISMISS);
-      });
-    }
   private successfulUpdateSnackbar(message, action): void {
     const snackbarRef = this.snackbar.open(message, action, {duration: this.snackbarDuration});
     snackbarRef.afterDismissed().subscribe(() => {});
