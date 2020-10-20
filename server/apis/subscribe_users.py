@@ -6,6 +6,7 @@ from werkzeug.exceptions import BadRequest, NotFound
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.Subscription import Subscription
+from models.User import User
 
 api = Namespace('Subscribe', path='/subscribeUsers')
 
@@ -43,3 +44,24 @@ class SubscribeUsers(Resource):
 
         response = {'message':'Subscribed to User'}
         return response, 201
+
+    def get(self):
+        '''
+        Show list of subscribed users
+        '''
+
+        TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        session = Session()
+        limit = 10
+
+        results = session.query(Subscription.subscribedUserID, User.username) \
+            .filter(Subscription.userID == g.userID) \
+            .filter(User.userID == Subscription.subscribedUserID).limit(limit)
+
+        users = list()
+        for id, username in results:
+            users.append({'userID': id, 'username': username})
+
+        response = {'subscribedUsers':users}
+        return response, 200
+
