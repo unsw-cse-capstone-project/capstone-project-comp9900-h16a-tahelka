@@ -10,7 +10,7 @@ from models.Movie import Movie
 from models.MovieReview import MovieReview
 from models.Person import Person
 from models.User import User
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import BadRequest, NotFound
 
 
 api = Namespace('Movie Details', path = '/movies')
@@ -47,6 +47,7 @@ movie_details = api.model('Full Movie Details',
 @api.route('/<int:id>')
 class MovieDetails(Resource):
     @api.response(200, 'Success', movie_details)
+    @api.response(400, 'id must be a non-negative integer')
     @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
     def get(self, id):
@@ -54,6 +55,8 @@ class MovieDetails(Resource):
         View a movie's full details.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        if type(id) is not int or id < 0:
+            raise BadRequest
         session = Session()
         movie = session.query(Movie.movieID, Movie.title,
                               Movie.year, Movie.description,
