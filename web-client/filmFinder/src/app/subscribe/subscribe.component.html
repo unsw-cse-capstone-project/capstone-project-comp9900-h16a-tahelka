@@ -1,8 +1,2 @@
-<h2 *ngIf="subscribed; else nameElseBlock">
-  <button class="follow" mat-raised-button color="accent" (click)="subscribe()">Follow</button>
-</h2>
-<ng-template #nameElseBlock>
-  <h2>
-    <button class="unfollow" mat-raised-button color="colorbutton" (click)="subscribe()">Unfollow</button>
-  </h2>
-</ng-template>
+<button class="follow" mat-raised-button color="accent" (click)="subscribe()">Subscribe</button>
+<button class="unfollow" mat-raised-button color="warn" (click)="unsubscribe()">Unsubscribe</button>
