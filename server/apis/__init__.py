@@ -15,6 +15,7 @@ from apis.wishlists import api as wishlists
 from apis.wishlists_movieID import api as wishlists_movieID
 from apis.wishlists_userID import api as wishlists_userID
 from apis.subscribe_users import api as subscribe_users
+from apis.subscribe_userID import api as subscribe_userID
 
 blueprint = Blueprint('apiv1', __name__, url_prefix='/api/v1')
 
@@ -38,13 +39,12 @@ api.add_namespace(tokens)
 api.add_namespace(users)
 api.add_namespace(movie_search)
 api.add_namespace(movie_details)
-
 api.add_namespace(movie_review)
-
 api.add_namespace(wishlists)
 api.add_namespace(wishlists_movieID)
 api.add_namespace(wishlists_userID)
 api.add_namespace(subscribe_users)
+api.add_namespace(subscribe_userID)
 
 @api.errorhandler(BadRequest)
 def handle_bad_request(error):

@@ -4,29 +4,28 @@ from werkzeug.exceptions import NotFound
 
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
-from models.WishList import Wishlist
+from models.Subscription import Subscription
 
-api = Namespace('Wishlist', path='/wishlists')
+api = Namespace('Subscribe', path='/subscribeUsers')
 
-@api.route('/<int:movieID>')
-class Wishlists_MovieID(Resource):
-
-    @api.response(204, "Movie removed from Wishlist.")
+@api.route('/<int:userID>')
+class SubscribeUsersID(Resource):
+    @api.response(204, "User unsubscribed.")
     @api.response(404, "The parameters submitted are not found")
-    def delete(self, movieID):
+    def delete(self, userID):
         '''
-        Removes said movie from current user's Wishlist.
+        Unsubscribe to said user.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
 
-        affectedRows = session.query(Wishlist).filter(Wishlist.movieID == movieID)\
-            .filter(Wishlist.userID == g.userID).delete()
-        # When 0, it means either of movieID or userID are not present in database.
+        affectedRows = session.query(Subscription).filter(Subscription.userID == g.userID) \
+            .filter(Subscription.subscribedUserID == userID).delete()
+
+        # When 0, it means userIDs are not present in database.
         if affectedRows == 0:
             raise NotFound
         else:
             session.commit()
 
         return 204
-

@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey
+
 from models.Common import Base
+
 
 class Subscription(Base):
     __tablename__ = "subscriptions"

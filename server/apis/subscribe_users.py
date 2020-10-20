@@ -6,6 +6,7 @@ from werkzeug.exceptions import BadRequest, NotFound
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.Subscription import Subscription
+from models.User import User
 
 api = Namespace('Subscribe', path='/subscribeUsers')
 
@@ -44,23 +45,23 @@ class SubscribeUsers(Resource):
         response = {'message':'Subscribed to User'}
         return response, 201
 
-    @api.response(204, "User unsubscribed.")
-    @api.response(404, "The parameters submitted are not found")
-    @api.expect(subscribe_model)
-    def delete(self):
+    def get(self):
         '''
-        Unsubscribe to said user.
+        Show list of subscribed users
         '''
+
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
-        subscribedUserID = request.json.get('userID')
+        limit = 10
 
-        affectedRows = session.query(Subscription).filter(Subscription.userID == g.userID) \
-            .filter(Subscription.subscribedUserID == subscribedUserID).delete()
-        # When 0, it means userIDs are not present in database.
-        if affectedRows == 0:
-            raise NotFound
-        else:
-            session.commit()
+        results = session.query(Subscription.subscribedUserID, User.username) \
+            .filter(Subscription.userID == g.userID) \
+            .filter(User.userID == Subscription.subscribedUserID).limit(limit)
 
-        return 204
+        users = list()
+        for id, username in results:
+            users.append({'userID': id, 'username': username})
+
+        response = {'subscribedUsers':users}
+        return response, 200
+
