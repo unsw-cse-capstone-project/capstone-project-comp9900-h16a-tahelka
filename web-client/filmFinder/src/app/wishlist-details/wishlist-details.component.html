@@ -2,6 +2,6 @@
 <h2 class="left-padding">{{result?.username}}'s wishlist</h2>
 <div *ngIf="showSubscribeButtons">
   <app-subscribe [userID]="id"></app-subscribe>
-  <app-unsubscribe [userID]="id"></app-unsubscribe>
+  <app-unsubscribe class="unfollow" [userID]="id"></app-unsubscribe>
 </div>
 <app-search-result [dataSource]="result?.wishlist"></app-search-result>

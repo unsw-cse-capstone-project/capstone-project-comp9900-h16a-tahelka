@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserMessageConstant} from '../constants/UserMessageConstant';
 import {WebService} from '../services/web.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -13,12 +13,13 @@ export class UnsubscribeComponent implements OnInit {
   @Input() userID: number;
   constructor(private webService: WebService,
               private snackbar: MatSnackBar) { }
-
+  @Output() unsubscribedUserID = new EventEmitter<number>();
   ngOnInit(): void {
   }
   unsubscribe(): void {
     this.webService.unsubscribeUser(this.userID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.UNSUBSCRIBED_USER, UserMessageConstant.DISMISS);
+      this.unsubscribedUserID.emit(this.userID);
     }, err => {
       this.successfulUpdateSnackbar(UserMessageConstant.UNSUBSCRIBED_USER_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });
