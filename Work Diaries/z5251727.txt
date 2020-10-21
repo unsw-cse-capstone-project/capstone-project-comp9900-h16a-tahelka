@@ -33,4 +33,22 @@ movies by name and viewing a movie's full details.
 
 Week 4
 
-Began coding.  Worked primarily on code to allow a user to search for movies by name, to allow a user to view the full details of a movie, and to allow a user to leave a review for a movie, including testing and debugging.  The only thing from Sprint 1 that wasn't finished was a pair of User Stories on the recommendation system, which were probably a bit ambitious to have the first sprint, but are being worked on steadily.  The plan for the coming week is to complete the second sprint and to prepare for the first progressive demo.
+Began coding.  Worked primarily on code to allow a user to search for movies by
+name, to allow a user to view the full details of a movie, and to allow a user
+to leave a review for a movie, including testing and debugging.  The only thing
+from Sprint 1 that wasn't finished was a pair of User Stories on the
+recommendation system, which were probably a bit ambitious to have the first
+sprint, but are being worked on steadily.  The plan for the coming week is to
+complete the second sprint and to prepare for the first progressive demo.
+
+Week 5
+
+Continued coding.  Added the ability for a user to search for movies by
+description and genre in addition to name; wrote code to allow a user to browse
+movies by either director or genre; made some updates and improvements to code
+previously written.  Also had our first progressive demo and corresponding
+retrospective.  Again, unfinished User Stories from Sprint 2 were all on the
+recommendation system, which is still underway; had a meeting to continue
+working out the details of this aspect of the project.  The plan for the coming
+week is to complete the third sprint, which includes stories on searching by
+mood and subscribing to other users.
