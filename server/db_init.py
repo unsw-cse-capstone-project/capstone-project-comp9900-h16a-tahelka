@@ -19,5 +19,5 @@ if os.path.exists('filmfinder_tahelka.db'):
     os.remove('filmfinder_tahelka.db')
 
 Base.metadata.create_all(Engine)
-seed_data_file = 'dummy_data.py'
+seed_data_file = 'data.py'
 os.system('python3 ' + seed_data_file)
