@@ -110,14 +110,14 @@ if records:
     Engine.execute(GenreOfFilm.__table__.insert().values(records))
     records.clear()
 
-# with open(data_dirname / 'MovieReview.csv') as file:
-#     file = csv.reader(file)
-#     degree = len(next(file))
-#     for line in file:
-#         if (len(records) + 1) * degree <= VARIABLE_LIMIT:
-#             records.append(line)
-#         else:
-#             Engine.execute(MovieReview.__table__.insert().values(records))
-#             records.clear()
-# if records:
-#     Engine.execute(MovieReview.__table__.insert().values(records))
+with open(data_dirname / 'MovieReview.csv') as file:
+    file = csv.reader(file)
+    degree = len(next(file))
+    for line in file:
+        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+            records.append(line)
+        else:
+            Engine.execute(MovieReview.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(MovieReview.__table__.insert().values(records))
