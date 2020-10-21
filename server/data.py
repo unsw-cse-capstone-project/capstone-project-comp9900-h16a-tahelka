@@ -12,65 +12,112 @@ from pathlib import Path
 import csv
 
 
+VARIABLE_LIMIT = 999
+
 data_dirname = Path('final')
+
+records = []
 
 with open(data_dirname / 'Genres.csv') as file:
     file = csv.reader(file)
-    next(file)
-    Engine.execute(Genres.__table__.insert().values([line for line in file]))
+    degree = len(next(file))
+    for line in file:
+        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+            records.append(line)
+        else:
+            Engine.execute(Genres.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(Genres.__table__.insert().values(records))
+    records.clear()
 
-# with open(data_dirname / 'Movie.csv') as file:
-#     file = csv.reader(file)
-#     next(file)
-#     Engine.execute(Movie.__table__.insert().values([line for line in file]))
+with open(data_dirname / 'Movie.csv') as file:
+    file = csv.reader(file)
+    degree = len(next(file))
+    for line in file:
+        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+            records.append(line)
+        else:
+            Engine.execute(Movie.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(Movie.__table__.insert().values(records))
+    records.clear()
 
-# The above and the below each produce:
-# sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) too many SQL variables
-
-# with open(data_dirname / 'Person.csv') as file:
-#     file = csv.reader(file)
-#     next(file)
-#     Engine.execute(Person.__table__.insert().values([line for line in file]))
-
-# This takes forever:
 with open(data_dirname / 'Person.csv') as file:
     file = csv.reader(file)
-    next(file)
+    degree = len(next(file))
     for line in file:
-        Engine.execute(Person.__table__.insert().values(line))
-
-# From Googling, the SQLite variable limit seems to be 999 by default.  I guess
-# I can just append lines from the file to a list and insert periodically,
-# before the list contains more than 999 variables.  I feel like there should
-# be a nicer way of doing this, though.
+        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+            records.append(line)
+        else:
+            Engine.execute(Person.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(Person.__table__.insert().values(records))
+    records.clear()
 
 password_hash = HashGenerator('COMP9900').generate()
 with open(data_dirname / 'User.csv') as file:
     file = csv.reader(file)
     next(file)
-    Engine.execute(User.__table__.insert().values([(line[0], line[1], line[2],
-                                                    password_hash, 2001
-                                                   ) for line in file
-                                                  ]
-                                                 )
-                  )
+    for line in file:
+        if (len(records) + 1) * 5 <= VARIABLE_LIMIT:
+            records.append((line[0], line[1], line[2], password_hash, 2001))
+        else:
+            Engine.execute(User.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(User.__table__.insert().values(records))
+    records.clear()
 
 with open(data_dirname / 'FilmCast.csv') as file:
     file = csv.reader(file)
-    next(file)
-    Engine.execute(FilmCast.__table__.insert().values([line for line in file]))
+    degree = len(next(file))
+    for line in file:
+        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+            records.append(line)
+        else:
+            Engine.execute(FilmCast.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(FilmCast.__table__.insert().values(records))
+    records.clear()
 
 with open(data_dirname / 'FilmDirector.csv') as file:
     file = csv.reader(file)
-    next(file)
-    Engine.execute(FilmDirector.__table__.insert().values([line for line in file]))
+    degree = len(next(file))
+    for line in file:
+        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+            records.append(line)
+        else:
+            Engine.execute(FilmDirector.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(FilmDirector.__table__.insert().values(records))
+    records.clear()
 
 with open(data_dirname / 'GenreOfFilm.csv') as file:
     file = csv.reader(file)
-    next(file)
-    Engine.execute(GenreOfFilm.__table__.insert().values([line for line in file]))
+    degree = len(next(file))
+    for line in file:
+        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+            records.append(line)
+        else:
+            Engine.execute(GenreOfFilm.__table__.insert().values(records))
+            records.clear()
+if records:
+    Engine.execute(GenreOfFilm.__table__.insert().values(records))
+    records.clear()
 
-with open(data_dirname / 'MovieReview.csv') as file:
-    file = csv.reader(file)
-    next(file)
-    Engine.execute(MovieReview.__table__.insert().values([line for line in file]))
+# with open(data_dirname / 'MovieReview.csv') as file:
+#     file = csv.reader(file)
+#     degree = len(next(file))
+#     for line in file:
+#         if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+#             records.append(line)
+#         else:
+#             Engine.execute(MovieReview.__table__.insert().values(records))
+#             records.clear()
+# if records:
+#     Engine.execute(MovieReview.__table__.insert().values(records))
