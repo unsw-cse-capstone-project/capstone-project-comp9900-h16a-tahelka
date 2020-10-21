@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {WebService} from '../services/web.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserMessageConstant} from '../constants/UserMessageConstant';
@@ -11,8 +11,9 @@ import {UserMessageConstant} from '../constants/UserMessageConstant';
 export class SubscribeComponent implements OnInit {
 
   @Input() public userID;
-  public subscribed = true;
   snackbarDuration = 2000;
+  @Output() subscribed = new EventEmitter<boolean>();
+  showSubscribeButton: boolean;
   constructor(private webService: WebService,
               private snackbar: MatSnackBar) { }
 
@@ -21,11 +22,14 @@ export class SubscribeComponent implements OnInit {
   subscribe(): void {
       this.webService.subscribeUser(this.userID).subscribe(success => {
         this.successfulUpdateSnackbar(UserMessageConstant.SUBSCRIBED_USER, UserMessageConstant.DISMISS);
+        this.subscribed.emit(true);
       }, err => {
         this.successfulUpdateSnackbar(UserMessageConstant.SUBSCRIBED_USER_UNSUCCESSFUL, UserMessageConstant.DISMISS);
       });
-      this.subscribed = false;
-    }
+  }
+  removeSubscribeButton(hide: boolean): void {
+
+  }
   private successfulUpdateSnackbar(message, action): void {
     const snackbarRef = this.snackbar.open(message, action, {duration: this.snackbarDuration});
     snackbarRef.afterDismissed().subscribe(() => {});

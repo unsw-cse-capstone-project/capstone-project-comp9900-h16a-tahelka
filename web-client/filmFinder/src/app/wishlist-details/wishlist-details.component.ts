@@ -14,6 +14,8 @@ export class WishlistDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private webService: WebService, private authenticationService: AuthenticationService) { }
   id: number;
   showSubscribeButtons = true;
+  showSubscribeButton = true;
+  showUnsubscribeButton = true;
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params.id;
@@ -27,8 +29,24 @@ export class WishlistDetailsComponent implements OnInit {
     }
     this.webService.wishListDetails(this.id).subscribe(success => {
       this.result = success;
+      this.checkButtons();
     }, err => {
       alert(JSON.stringify(err));
     });
+  }
+  checkButtons(): void {
+    if (this.result.isSubscribed === true) {
+      this.subscribeSuccessful();
+    } else if (this.result.isSubscribed === false) {
+      this.unsubscribeSuccessful();
+    }
+  }
+  subscribeSuccessful(): void {
+      this.showSubscribeButton = false;
+      this.showUnsubscribeButton = true;
+  }
+  unsubscribeSuccessful(): void {
+      this.showSubscribeButton = true;
+      this.showUnsubscribeButton = false;
   }
 }
