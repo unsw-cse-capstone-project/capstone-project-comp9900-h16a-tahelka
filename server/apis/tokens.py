@@ -31,8 +31,7 @@ class Tokens(Resource):
 
         email = request.json['email']
 
-        if not isValidEmail(email):
-            raise BadRequest
+        isValidEmail(email)
 
         password = request.json['password']
         authenticator = CredentialsAuthenticator(email, password)

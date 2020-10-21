@@ -38,8 +38,7 @@ class Users(Resource):
 
         email = request.json['email']
         email = cleanString(email)
-        if not isValidEmail(email):
-            raise BadRequest
+        isValidEmail(email)
 
         password = request.json['password']
 
