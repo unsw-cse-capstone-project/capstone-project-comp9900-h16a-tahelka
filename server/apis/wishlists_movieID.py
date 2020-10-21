@@ -13,6 +13,7 @@ class Wishlists_MovieID(Resource):
 
     @api.response(204, "Movie removed from Wishlist.")
     @api.response(404, "The parameters submitted are not found")
+    @api.doc(params={'movieID': 'Identifier of movie'})
     def delete(self, movieID):
         '''
         Removes said movie from current user's Wishlist.

@@ -16,6 +16,7 @@ class Wishlists_UserID(Resource):
 
     @api.response(200, "Movies in user's Wishlist.")
     @api.response(404, "User not found")
+    @api.doc(params={'userID': 'Identifier of user'})
     def get(self, userID):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()

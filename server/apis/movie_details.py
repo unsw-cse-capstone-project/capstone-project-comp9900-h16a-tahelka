@@ -49,6 +49,7 @@ class MovieDetails(Resource):
     @api.response(200, 'Success', movie_details)
     @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
+    @api.doc(params={'id': 'Identifier of movie'})
     def get(self, id):
         '''
         View a movie's full details.

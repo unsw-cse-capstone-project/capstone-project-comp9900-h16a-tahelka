@@ -12,6 +12,7 @@ api = Namespace('Subscribe', path='/subscribeUsers')
 class SubscribeUsersID(Resource):
     @api.response(204, "User unsubscribed.")
     @api.response(404, "The parameters submitted are not found")
+    @api.doc(params={'userID': 'Identifier of user'})
     def delete(self, userID):
         '''
         Unsubscribe to said user.
