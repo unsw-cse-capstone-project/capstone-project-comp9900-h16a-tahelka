@@ -6,7 +6,7 @@ from werkzeug.exceptions import BadRequest, NotFound
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.WishList import Wishlist
-
+from util.IntValidations import is_valid_integer
 
 api = Namespace('Wishlist', path='/wishlists')
 
@@ -21,6 +21,8 @@ class Wishlists_MovieID(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
+
+        is_valid_integer(movieID)
 
         affectedRows = session.query(Wishlist).filter(Wishlist.movieID == movieID)\
             .filter(Wishlist.userID == g.userID).delete()

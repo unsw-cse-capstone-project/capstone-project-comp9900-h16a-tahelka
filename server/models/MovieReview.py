@@ -10,6 +10,7 @@ class MovieReview(Base):
     rating = Column(Float, index=True)
     review = Column(String)
 
+
     def __init__(self, movieID, userID, rating, review):
         self.movieID = movieID
         self.userID = userID

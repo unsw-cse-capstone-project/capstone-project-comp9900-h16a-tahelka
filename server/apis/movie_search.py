@@ -7,6 +7,7 @@ from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
 from models.Movie import Movie
 from models.Person import Person
+from util.StringValidations import validate_search_keywords, validate_director, validate_genre, validate_mood
 
 
 api = Namespace('Movie Search', path = '/movies')
@@ -27,45 +28,41 @@ film_summary = api.model('Film Summary',
 @api.param('director')
 class MovieSearch(Resource):
     @api.response(200, 'Success', [film_summary])
+    @api.response(400, 'Name and description keyword strings must each be no more than 250 characters long\n'
+                       "Genre must be one of the following: 'Western', 'Thriller', 'Musical', 'War',"
+                       "                                    'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery',"
+                       "                                    'Fantasy', 'Adventure', 'Sci-Fi', 'Animation',"
+                       "                                    'Biography', 'Action', 'Comedy', 'Family', 'Romance'\n"
+                       "Mood must be one of the following: 'Indifferent', 'Sad and Rejected', 'Flirty',"
+                       "                                   'Energetic and Excited', 'Stressed', 'Weird'\n"
+                       'Director must match the name of a director'
+                 )
     @api.response(401, 'Authentication token is missing')
     def get(self):
         '''
         Search for movies by name, description, mood, genre or director.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        name_keywords = validate_search_keywords(request.args.get('name'))
+        description_keywords = validate_search_keywords(request.args.get('description'))
+        director = validate_director(request.args.get('director'))
+        genre = validate_genre(request.args.get('genre'))
+        genres = validate_mood(request.args.get('mood'))
+        if genres:
+            if genre:
+                genres.add(genre)
+        elif genre:
+            genres = {genre}
         # Commented out limit because browsing movies by director or
         # genre should return all films by that director or of that genre.
         # limit = 100  # TODO: change limit later as needed.
-        moods = {'Indifferent': {'Western', 'War', 'Biography', 'Family'},
-                 'Sad and Rejected': {'Musical', 'Comedy', 'Romance'},
-                 'Flirty': {'Musical', 'Drama', 'Fantasy', 'Romance'},
-                 'Energetic and Excited': {'Thriller', 'Musical', 'Crime', 'Drama',
-                                           'Fantasy', 'Adventure', 'Sci-Fi', 'Action', 'Comedy'
-                                          },
-                 'Stressed': {'Animation'},
-                 'Weird': {'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery'}
-                }
-        genres = {request.args.get('genre')} & moods[request.args.get('mood')]\
-                     if 'genre' in request.args and 'mood' in request.args\
-                     else {request.args.get('genre')}\
-                              if 'genre' in request.args\
-                              else moods[request.args.get('mood')]\
-                                       if 'mood' in request.args\
-                                       else None
-        name_keywords = ' '.join(word for word in request.args.get('name').split())\
-                            if 'name' in request.args\
-                            else ''
-        description_keywords = ' '.join(word for word in request.args.get('description').split())\
-                                   if 'description' in request.args\
-                                   else ''
-        if 'director' in request.args:
-            director = ' '.join(word for word in request.args.get('director').split())
+        if director:
             search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
                                              Movie.ratings_sum, Movie.review_count
                                             ).join(GenreOfFilm).join(Genres)\
                                              .join(FilmDirector).join(Person)\
                                              .filter(Genres.genre.in_(genres),
-                                                     Person.name.ilike(director),
+                                                     Person.name == director,
                                                      Movie.title.ilike(f'%{name_keywords}%'),
                                                      Movie.description.ilike(f'%{description_keywords}%')
         #                                           ).distinct().limit(limit)\
@@ -74,7 +71,7 @@ class MovieSearch(Resource):
                                  else Session().query(Movie.movieID, Movie.title, Movie.year,
                                                       Movie.ratings_sum, Movie.review_count
                                                      ).join(FilmDirector).join(Person)\
-                                                      .filter(Person.name.ilike(director),
+                                                      .filter(Person.name == director,
                                                               Movie.title.ilike(f'%{name_keywords}%'),
                                                               Movie.description.ilike(f'%{description_keywords}%')
         #                                                    ).limit(limit)

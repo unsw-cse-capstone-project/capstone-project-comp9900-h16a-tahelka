@@ -6,7 +6,7 @@ class Person(Base):
     __tablename__ = "persons"
 
     personID = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, nullable=False)
 
     def __init__(self, name):
         self.name = name
