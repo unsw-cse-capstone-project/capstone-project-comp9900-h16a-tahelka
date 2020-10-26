@@ -52,3 +52,12 @@ recommendation system, which is still underway; had a meeting to continue
 working out the details of this aspect of the project.  The plan for the coming
 week is to complete the third sprint, which includes stories on searching by
 mood and subscribing to other users.
+
+Week 6
+
+Continued coding.  Figured out how to migrate our dataset from its .csv files to
+our database and wrote a script to do so.  Added the ability for a user to
+search for movies by mood.  Also added input validations for all the services
+I'd coded previously.  User Stories on the recommendation system are all still
+in progress.  The plan for the coming week is to complete the fourth sprint,
+which includes stories relating to banning other FilmFinders.
