@@ -38,3 +38,12 @@ Week 5
 3. Made API to view a user's Wishlist.
 4. Managed JIRA board.
 5. Held technical discussions with the group.
+
+Week 6
+1. Made API to allow FilmFinder to subscribe to other filmfinders.
+2. Made API to allow FilmFinder to unsubscribe to other filmfinders.
+3. Made API to allow FilmFinder to view the list of filmfinders he is subscribed to.
+4. Made API to allow FilmFinder to view the subscribed Wishlist.
+5. Made API to allow FilmFinder to integrate Wishlist of other filmfinders into his own.
+6. Managed JIRA.
+7. Held group meeting.
