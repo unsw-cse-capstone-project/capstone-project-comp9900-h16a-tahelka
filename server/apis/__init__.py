@@ -15,6 +15,8 @@ from apis.wishlists import api as wishlists
 from apis.wishlists_movieID import api as wishlists_movieID
 from apis.wishlists_userID import api as wishlists_userID
 
+from apis.banned_list import api as banned_list
+
 
 blueprint = Blueprint('apiv1', __name__, url_prefix='/api/v1')
 
@@ -44,6 +46,8 @@ api.add_namespace(movie_review)
 api.add_namespace(wishlists)
 api.add_namespace(wishlists_movieID)
 api.add_namespace(wishlists_userID)
+
+api.add_namespace(banned_list)
 
 
 @api.errorhandler(BadRequest)

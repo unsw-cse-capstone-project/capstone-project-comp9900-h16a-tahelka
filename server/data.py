@@ -14,6 +14,7 @@ import csv
 
 VARIABLE_LIMIT = 999
 
+
 data_dirname = Path('final')
 
 records = []
