@@ -11,6 +11,7 @@ from models.MovieReview import MovieReview
 from models.Person import Person
 from models.User import User
 from werkzeug.exceptions import NotFound
+from util.IntValidations import is_valid_integer
 
 
 api = Namespace('Movie Details', path = '/movies')
@@ -47,6 +48,7 @@ movie_details = api.model('Full Movie Details',
 @api.route('/<int:id>')
 class MovieDetails(Resource):
     @api.response(200, 'Success', movie_details)
+    @api.response(400, 'id must be a non-negative integer')
     @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
     def get(self, id):
@@ -54,6 +56,7 @@ class MovieDetails(Resource):
         View a movie's full details.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        is_valid_integer(id)
         session = Session()
         movie = session.query(Movie.movieID, Movie.title,
                               Movie.year, Movie.description,
@@ -81,7 +84,7 @@ class MovieDetails(Resource):
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
-                'rating': movie.ratings_sum / movie.review_count
-                              if movie.review_count else 0,
+                'rating': round(movie.ratings_sum / movie.review_count, 1)
+                              if movie.review_count else 0.0,
                 'reviews': reviews, 'recommendations': recommendations
                }, 200

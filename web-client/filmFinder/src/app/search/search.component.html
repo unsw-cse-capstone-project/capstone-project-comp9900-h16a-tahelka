@@ -24,7 +24,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select formControlName="genre" placeholder="Select mood">
+          <mat-select formControlName="mood" placeholder="Select mood">
             <ng-container *ngFor="let m of mood">
               <mat-option value="{{m.value}}">{{m.value}}</mat-option>
             </ng-container>

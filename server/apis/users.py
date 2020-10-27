@@ -4,7 +4,7 @@ from flask_restx import Namespace, fields, Resource
 from authentication.hash_generator import HashGenerator
 from models.User import User
 from werkzeug.exceptions import BadRequest
-
+from util.StringValidations import cleanString, isValidEmail
 
 api = Namespace('Registration', path='/users',
                 description='New FilmFinder registration')
@@ -32,8 +32,14 @@ class Users(Resource):
     def post(self):
         # Get params
         username = request.json.get('username')
+        username = cleanString(username)
+
         yob = request.json.get('yob')
+
         email = request.json['email']
+        email = cleanString(email)
+        isValidEmail(email)
+
         password = request.json['password']
 
         session = Session()

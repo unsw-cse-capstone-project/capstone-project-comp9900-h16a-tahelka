@@ -6,9 +6,9 @@ class User(Base):
     __tablename__ = "users"
 
     userID = Column(Integer, primary_key=True)
-    username = Column(String)
-    email = Column(String)
-    password = Column(String)
+    username = Column(String, nullable=False, unique=True)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
     yob = Column(Integer)
 
     def __init__(self, username, email, password, yob):
