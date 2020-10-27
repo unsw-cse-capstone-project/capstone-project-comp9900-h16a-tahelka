@@ -6,6 +6,7 @@ from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.User import User
 from models.WishList import Wishlist
+from util.IntValidations import is_valid_integer
 
 api = Namespace('WishlistImport', path='/wishlists',
                 description='Import Wishlist of said user')
@@ -20,6 +21,8 @@ class Wishlists_UserID(Resource):
     def post(self, userID):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
+
+        is_valid_integer(userID)
 
         # User not Found
         if not session.query(User).filter(User.userID == userID).first():
