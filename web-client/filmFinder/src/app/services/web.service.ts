@@ -118,4 +118,10 @@ export class WebService {
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     return this.http.get(moviesUrl, {headers});
   }
+  wishlistImport(userId: number): Observable<any> {
+    const subscribeUrl =  this.API_URL + `wishlists/${userId}/import`;
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.post(subscribeUrl, {}, {headers});
+  }
 }
