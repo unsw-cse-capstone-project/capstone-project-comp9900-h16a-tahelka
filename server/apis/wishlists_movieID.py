@@ -1,12 +1,13 @@
 from flask import request, g
-from flask_restx import Namespace, fields, Resource
-from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import BadRequest, NotFound
+from flask_restx import Namespace, Resource
+from werkzeug.exceptions import NotFound
 
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.WishList import Wishlist
+
 from util.IntValidations import is_valid_integer
+
 
 api = Namespace('Wishlist', path='/wishlists')
 
@@ -15,6 +16,7 @@ class Wishlists_MovieID(Resource):
 
     @api.response(204, "Movie removed from Wishlist.")
     @api.response(404, "The parameters submitted are not found")
+    @api.doc(params={'movieID': 'Identifier of movie'})
     def delete(self, movieID):
         '''
         Removes said movie from current user's Wishlist.

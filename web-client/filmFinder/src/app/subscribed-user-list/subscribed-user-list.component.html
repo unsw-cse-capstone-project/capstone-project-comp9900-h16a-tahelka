@@ -1,0 +1,17 @@
+<app-navbar [isLoggedIn]="true"></app-navbar>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Name Column -->
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.username}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="userID">
+    <mat-header-cell *matHeaderCellDef> Unsubscribe </mat-header-cell>
+    <mat-cell *matCellDef="let element"><app-unsubscribe (unsubscribedUserID)="unsubscribed($event)" [userID]="element?.userID"></app-unsubscribe></mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+

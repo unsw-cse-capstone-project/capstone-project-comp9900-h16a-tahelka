@@ -6,8 +6,14 @@ import {SearchComponent} from './search/search.component';
 import {AuthGuard} from './_helpers/auth.guard';
 import {BrowseComponent} from './browse/browse.component';
 import {WishlistDetailsComponent} from './wishlist-details/wishlist-details.component';
+import {SubscribedUserListComponent} from './subscribed-user-list/subscribed-user-list.component';
 
 const routes: Routes = [
+  {
+    path:  'subscribed-users',
+    component:  SubscribedUserListComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path:  'wishlist/:id',
     component:  WishlistDetailsComponent,

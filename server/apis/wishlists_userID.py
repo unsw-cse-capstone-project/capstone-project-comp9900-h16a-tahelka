@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, g
 from flask_restx import Namespace, Resource
 from werkzeug.exceptions import NotFound
 
@@ -7,6 +7,7 @@ from db_engine import Session
 from models.Movie import Movie
 from models.User import User
 from models.WishList import Wishlist
+from models.Subscription import Subscription
 
 from util.IntValidations import is_valid_integer
 
@@ -17,6 +18,7 @@ class Wishlists_UserID(Resource):
 
     @api.response(200, "Movies in user's Wishlist.")
     @api.response(404, "User not found")
+    @api.doc(params={'userID': 'Identifier of user'})
     def get(self, userID):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
@@ -39,7 +41,13 @@ class Wishlists_UserID(Resource):
                            'rating': ratings_sum / review_count if review_count else 0
                            })
 
-        response = {'username': username}
-        response['wishlist'] = movies
+        # Check if current user is subscribed to said user
+        res = session.query(Subscription).filter(Subscription.userID == g.userID) \
+            .filter(Subscription.subscribedUserID == userID).first()
 
+        isSubscribed = False
+        if res:
+            isSubscribed = True
+
+        response = {'username': username, 'wishlist': movies, 'isSubscribed': isSubscribed}
         return response, 200

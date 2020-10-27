@@ -1,3 +1,16 @@
 <app-navbar [isLoggedIn]="true"></app-navbar>
 <h2 class="left-padding">{{result?.username}}'s wishlist</h2>
+<div *ngIf="showSubscribeButtons">
+  <app-subscribe
+    (subscribed)="subscribeSuccessful()"
+    *ngIf="showSubscribeButton" [userID]="id"
+    class="margin-1rem">
+  </app-subscribe>
+  <app-unsubscribe
+    (unsubscribedUserID)="unsubscribeSuccessful()"
+    *ngIf="showUnsubscribeButton"
+    class="margin-1rem"
+    [userID]="id">
+  </app-unsubscribe>
+</div>
 <app-search-result [dataSource]="result?.wishlist"></app-search-result>

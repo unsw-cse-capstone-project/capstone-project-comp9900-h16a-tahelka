@@ -1,4 +1,10 @@
 export class UserMessageConstant {
+  public static get SUBSCRIBED_USER(): string { return 'Subscribed to user'; }
+  public static get SUBSCRIBED_USER_UNSUCCESSFUL(): string {
+    return 'Could not subscribed to user, either already subscribed or try again!';
+  }
+  public static get UNSUBSCRIBED_USER(): string { return 'Unsubscribed to user'; }
+  public static get UNSUBSCRIBED_USER_UNSUCCESSFUL(): string { return 'Could not unsubscribed to user, either already unsubscribed or try again!'; }
   public static get WISHLIST_ADDED(): string { return 'Added to wishlist'; }
   public static get WISHLIST_REMOVED(): string { return 'Removed from wishlist'; }
   public static get WATCH_LIST_ADDED(): string { return 'Added to watchlist'; }
