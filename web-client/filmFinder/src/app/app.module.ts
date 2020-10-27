@@ -28,6 +28,7 @@ import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
 import { IntegrateWishlistComponent } from './integrate-wishlist/integrate-wishlist.component';
 import { SubscribedWishlistMoviesComponent } from './subscribed-wishlist-movies/subscribed-wishlist-movies.component';
 import { RemoveMovieWatchlistComponent } from './remove-movie-watchlist/remove-movie-watchlist.component';
+import { WatchedMoviesComponent } from './watched-movies/watched-movies.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { RemoveMovieWatchlistComponent } from './remove-movie-watchlist/remove-m
     IntegrateWishlistComponent,
     SubscribedWishlistMoviesComponent,
     RemoveMovieWatchlistComponent,
+    WatchedMoviesComponent,
   ],
   imports: [
     BrowserModule,

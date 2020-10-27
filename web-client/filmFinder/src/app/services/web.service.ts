@@ -67,6 +67,12 @@ export class WebService {
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     return this.http.delete(wishlistUrl, {headers});
   }
+  getWatchlist(): Observable<any> {
+    const watchlistUrl = this.API_URL + 'watchlists';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(watchlistUrl, {headers});
+  }
   watchlist(movieId: number): Observable<any> {
     const watchlistUrl = this.API_URL + 'watchlists';
     let headers = new HttpHeaders();
