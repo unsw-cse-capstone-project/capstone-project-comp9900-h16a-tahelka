@@ -6,6 +6,7 @@ from werkzeug.exceptions import BadRequest
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.Watchlist import Watchlist
+from models.Movie import Movie
 
 from util.IntValidations import is_valid_integer
 
@@ -43,4 +44,25 @@ class Watchlists(Resource):
         response = {'message':'Movie added to Watchlist.'}
         return response, 201
 
+    @api.response(200, "Movies in user's Watchlist.")
+    @api.response(404, "User not found")
+    def get(self):
+        TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        session = Session()
+        userID = g.userID
 
+        is_valid_integer(userID)
+
+        limit = 10
+        results = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum, \
+                                Movie.review_count).filter(Watchlist.userID == userID) \
+            .filter(Watchlist.movieID == Movie.movieID).limit(limit)
+
+        movies = list()
+        for movieID, title, year, ratings_sum, review_count in results:
+            movies.append({'movieID': movieID, 'title': title, 'year': year,
+                           'rating': ratings_sum / review_count if review_count else 0
+                           })
+
+        response = {'watchlist': movies}
+        return response, 200

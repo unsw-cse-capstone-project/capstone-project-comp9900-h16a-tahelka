@@ -20,7 +20,7 @@ from apis.subscribed_wishlist_movies import api as subscribed_wishlist_movies
 from apis.wishlists_userID_import import api as wishlists_userID_import
 from apis.watchlists import api as watchlists
 from apis.watchlists_movieID import api as watchlists_movieID
-from apis.watchlists_userID import api as watchlists_userID
+
 
 blueprint = Blueprint('apiv1', __name__, url_prefix='/api/v1')
 
@@ -54,7 +54,7 @@ api.add_namespace(subscribed_wishlist_movies)
 api.add_namespace(wishlists_userID_import)
 api.add_namespace(watchlists)
 api.add_namespace(watchlists_movieID)
-api.add_namespace(watchlists_userID)
+
 
 @api.errorhandler(BadRequest)
 def handle_bad_request(error):
