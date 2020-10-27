@@ -7,7 +7,7 @@ class MovieReview(Base):
 
     movieID = Column(Integer, ForeignKey("movies.movieID"), primary_key=True, index=True)
     userID = Column(Integer, ForeignKey("users.userID"), primary_key=True, index=True)
-    rating = Column(Float, index=True)
+    rating = Column(Float, index=True, nullable=False)
     review = Column(String)
 
 

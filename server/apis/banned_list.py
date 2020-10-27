@@ -53,3 +53,23 @@ class BannedList(Resource):
         session.add(Bannedlist(g.userID, request.json['userID']))
         session.commit()
         return {'message': 'Reviewer banned.'}, 201
+
+    @api.response(200, 'Success')
+    @api.response(400, 'userID must be a non-negative integer')
+    @api.response(401, 'Authentication token is missing')
+    @api.response(404, 'Reviewer was not found in Banned List')
+    @api.expect(banned_user)
+    def delete(self):
+        '''
+        Remove a FilmFinder from your Banned List.
+        '''
+        TokenAuthenticator(request.headers.get('Authorization')).authenticate()
+        is_valid_integer(request.json['userID'])
+        session = Session()
+        if not session.query(Bannedlist).filter(Bannedlist.userID == g.userID,
+                                                Bannedlist.bannedUserID == request.json['userID']
+                                               ).delete():
+            session.commit()
+            raise NotFound
+        session.commit()
+        return {'message': 'Reviewer unbanned.'}, 200
