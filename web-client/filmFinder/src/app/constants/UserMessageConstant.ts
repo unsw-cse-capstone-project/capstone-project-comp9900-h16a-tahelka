@@ -8,6 +8,7 @@ export class UserMessageConstant {
   public static get WISHLIST_ADDED(): string { return 'Added to wishlist'; }
   public static get WISHLIST_REMOVED(): string { return 'Removed from wishlist'; }
   public static get WATCH_LIST_ADDED(): string { return 'Added to watchlist'; }
+  public static get WATCH_LIST_ADD_UNSUCCESSFUL(): string { return 'Add to watchlist was not successful, already added or try again!'; }
   public static get WATCHLIST_REMOVED(): string { return 'Removed from watchlist'; }
   public static get REVIEW_ADDED(): string { return 'Added review'; }
   public static get REVIEW_ADD_UNSUCCESSFUL(): string { return 'Could not add review, review is already present or try again!'; }
