@@ -15,3 +15,7 @@ Week 3:
 1.) Learnt Typescript basics for better understanding of angular. Completed half of the angular courses on youtube.
 2.) Made the required changes to the UI diagrams based on the changes made to the project proposal and the novel ideas.
 3.) Contributed to the project proposal by updating the story boards and creating few of the user stories.
+
+Week 4:
+1.) Completed learning angular.
+2.) Began coding, for the user stories of sprint 1 assigned to me. Was able to build and test the code. 

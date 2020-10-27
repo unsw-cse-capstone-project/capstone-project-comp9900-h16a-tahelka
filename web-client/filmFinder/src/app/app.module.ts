@@ -22,6 +22,9 @@ import { BrowseDirectorComponent } from './browse-director/browse-director.compo
 import { BrowseComponent } from './browse/browse.component';
 import { BrowseGenreComponent } from './browse-genre/browse-genre.component';
 import { WishlistDetailsComponent } from './wishlist-details/wishlist-details.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
+import { SubscribedUserListComponent } from './subscribed-user-list/subscribed-user-list.component';
+import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { WishlistDetailsComponent } from './wishlist-details/wishlist-details.co
     BrowseComponent,
     BrowseGenreComponent,
     WishlistDetailsComponent,
+    SubscribeComponent,
+    SubscribedUserListComponent,
+    UnsubscribeComponent,
   ],
   imports: [
     BrowserModule,
