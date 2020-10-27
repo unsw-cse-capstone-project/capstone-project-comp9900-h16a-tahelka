@@ -76,6 +76,12 @@ export class WebService {
     };
     return this.http.post(watchlistUrl, body, {headers});
   }
+  removeWatchlist(movieId: number): Observable<any> {
+    const watchlistUrl = this.API_URL + `watchlists/${movieId}`;
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.delete(watchlistUrl,  {headers});
+  }
   browseDirector(browseDirectorObject: any): Observable<any>{
     const moviesUrl = this.API_URL + 'movies';
     let headers = new HttpHeaders();
