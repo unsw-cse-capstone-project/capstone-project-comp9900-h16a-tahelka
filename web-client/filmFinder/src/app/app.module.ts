@@ -29,6 +29,7 @@ import { IntegrateWishlistComponent } from './integrate-wishlist/integrate-wishl
 import { SubscribedWishlistMoviesComponent } from './subscribed-wishlist-movies/subscribed-wishlist-movies.component';
 import { RemoveMovieWatchlistComponent } from './remove-movie-watchlist/remove-movie-watchlist.component';
 import { WatchedMoviesComponent } from './watched-movies/watched-movies.component';
+import { BannedUserListComponent } from './banned-user-list/banned-user-list.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { WatchedMoviesComponent } from './watched-movies/watched-movies.componen
     SubscribedWishlistMoviesComponent,
     RemoveMovieWatchlistComponent,
     WatchedMoviesComponent,
+    BannedUserListComponent,
   ],
   imports: [
     BrowserModule,

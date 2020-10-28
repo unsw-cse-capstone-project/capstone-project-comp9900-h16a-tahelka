@@ -20,5 +20,6 @@ export class UserMessageConstant {
   public static get WISHLIST_IMPORT_SUCCESSFUL(): string { return 'Wishlist import successful.'; }
   public static get WISHLIST_IMPORT_UNSUCCESSFUL(): string { return 'Wishlist import unsuccessful, already imported or try again!'; }
   public static get DISMISS(): string { return 'Dismiss'; }
-
+  public static get UNBAN_SUCCESSFUL(): string { return 'User have been unbanned'; }
+  public static get UNBAN_UNSUCCESSFUL(): string { return 'User unbanned unsuccessful, try again!'; }
 }
