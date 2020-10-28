@@ -19,7 +19,7 @@
             <mat-tab label="Wishlist/Watchlist">
               <app-wish-list (deleteFromWishlist)="wishlistMovieRemoved($event, element)" [movieID]="element.movieID"></app-wish-list>
               <app-watch-list [movieID]="element.movieID"></app-watch-list>
-              <app-remove-movie-watchlist [movieID]="element.movieID"></app-remove-movie-watchlist>
+              <app-remove-movie-watchlist (deleteFromWatchlist)="watchlistMovieRemoved($event, element)" [movieID]="element.movieID"></app-remove-movie-watchlist>
             </mat-tab>
             <mat-tab label="See all reviews">
               <app-review-list [movieID]="element.movieID"></app-review-list>
