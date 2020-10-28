@@ -19,7 +19,7 @@ data_dirname = Path('final')
 
 records = []
 
-with open(data_dirname / 'Genres.csv') as file:
+with open(data_dirname / 'Genres.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -32,7 +32,7 @@ if records:
     Engine.execute(Genres.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'Movie.csv') as file:
+with open(data_dirname / 'Movie.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -45,21 +45,24 @@ if records:
     Engine.execute(Movie.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'Person.csv') as file:
+with open(data_dirname / 'Person.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
-        if (len(records) + 1) * degree <= VARIABLE_LIMIT:
-            records.append(line)
-        else:
-            Engine.execute(Person.__table__.insert().values(records))
-            records.clear()
+        try:
+            if (len(records) + 1) * degree <= VARIABLE_LIMIT:
+                records.append(line)
+            else:
+                Engine.execute(Person.__table__.insert().values(records))
+                records.clear()
+        except:
+            continue
 if records:
     Engine.execute(Person.__table__.insert().values(records))
     records.clear()
 
 password_hash = HashGenerator('COMP9900').generate()
-with open(data_dirname / 'User.csv') as file:
+with open(data_dirname / 'User.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     next(file)
     for line in file:
@@ -72,7 +75,7 @@ if records:
     Engine.execute(User.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'FilmCast.csv') as file:
+with open(data_dirname / 'FilmCast.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -85,7 +88,7 @@ if records:
     Engine.execute(FilmCast.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'FilmDirector.csv') as file:
+with open(data_dirname / 'FilmDirector.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -98,7 +101,7 @@ if records:
     Engine.execute(FilmDirector.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'GenreOfFilm.csv') as file:
+with open(data_dirname / 'GenreOfFilm.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -111,7 +114,7 @@ if records:
     Engine.execute(GenreOfFilm.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'MovieReview.csv') as file:
+with open(data_dirname / 'MovieReview.csv', encoding='utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:

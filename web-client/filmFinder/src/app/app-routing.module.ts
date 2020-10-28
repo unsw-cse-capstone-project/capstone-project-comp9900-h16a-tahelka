@@ -7,8 +7,20 @@ import {AuthGuard} from './_helpers/auth.guard';
 import {BrowseComponent} from './browse/browse.component';
 import {WishlistDetailsComponent} from './wishlist-details/wishlist-details.component';
 import {SubscribedUserListComponent} from './subscribed-user-list/subscribed-user-list.component';
+import {SubscribedWishlistMoviesComponent} from './subscribed-wishlist-movies/subscribed-wishlist-movies.component';
+import {WatchedMoviesComponent} from './watched-movies/watched-movies.component';
 
 const routes: Routes = [
+  {
+    path:  'watched-movies',
+    component:  WatchedMoviesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:  'subscribed-wishlist-movies',
+    component:  SubscribedWishlistMoviesComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path:  'subscribed-users',
     component:  SubscribedUserListComponent,
