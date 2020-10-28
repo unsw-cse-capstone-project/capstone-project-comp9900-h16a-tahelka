@@ -55,7 +55,7 @@ class MovieSearch(Resource):
             genres = {genre}
         # Commented out limit because browsing movies by director or
         # genre should return all films by that director or of that genre.
-        # limit = 100  # TODO: change limit later as needed.
+        limit = 100  # TODO: change limit later as needed.
         if director:
             search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
                                              Movie.ratings_sum, Movie.review_count
@@ -65,8 +65,7 @@ class MovieSearch(Resource):
                                                      Person.name == director,
                                                      Movie.title.ilike(f'%{name_keywords}%'),
                                                      Movie.description.ilike(f'%{description_keywords}%')
-        #                                           ).distinct().limit(limit)\
-                                                    ).distinct()\
+                                                    ).distinct().limit(limit)\
                                  if genres\
                                  else Session().query(Movie.movieID, Movie.title, Movie.year,
                                                       Movie.ratings_sum, Movie.review_count
@@ -74,8 +73,7 @@ class MovieSearch(Resource):
                                                       .filter(Person.name == director,
                                                               Movie.title.ilike(f'%{name_keywords}%'),
                                                               Movie.description.ilike(f'%{description_keywords}%')
-        #                                                    ).limit(limit)
-                                                             )
+                                                             ).limit(limit)
         else:
             search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
                                              Movie.ratings_sum, Movie.review_count
@@ -83,15 +81,13 @@ class MovieSearch(Resource):
                                              .filter(Genres.genre.in_(genres),
                                                      Movie.title.ilike(f'%{name_keywords}%'),
                                                      Movie.description.ilike(f'%{description_keywords}%')
-        #                                           ).distinct().limit(limit)\
-                                                    ).distinct()\
+                                                    ).distinct().limit(limit)\
                                  if genres\
                                  else Session().query(Movie.movieID, Movie.title, Movie.year,
                                                       Movie.ratings_sum, Movie.review_count
                                                      ).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                                               Movie.description.ilike(f'%{description_keywords}%')
-        #                                                    ).limit(limit)
-                                                             )
+                                                             ).limit(limit)
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
                            'rating': round(ratings_sum / review_count, 1) if review_count else 0.0
                           } for movieID, title, year, ratings_sum, review_count in search_results
