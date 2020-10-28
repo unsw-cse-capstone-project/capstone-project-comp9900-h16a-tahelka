@@ -3,6 +3,7 @@ import {MovieResult} from '../models/MovieResult';
 import {FormControl, FormGroup} from '@angular/forms';
 import {WebService} from '../services/web.service';
 import {Search} from '../models/Search';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-browse-genre',
@@ -12,11 +13,13 @@ import {Search} from '../models/Search';
 export class BrowseGenreComponent implements OnInit {
   genre: object[];
   showBrowse: false;
+  errorMsg = 'An error occured. Select another Genre';
+  snackBarDuaration: 3000;
   searchResult: MovieResult[];
   genreForm: FormGroup = new FormGroup({
     genre: new FormControl('')
   });
-  constructor(private webService: WebService) {
+  constructor(private webService: WebService, private snackBar: MatSnackBar) {
     this.genre = [
       {value: 'Action'},
       {value: 'Thriller'},
@@ -38,7 +41,7 @@ export class BrowseGenreComponent implements OnInit {
       {value: 'Comedy'},
       {value: 'Adventure'},
       {value: 'Fantasy'},
-      {value: 'Film-Noir'}
+      {value: 'Film-Noir'},
     ];
   }
   ngOnInit(): void {
@@ -47,7 +50,8 @@ export class BrowseGenreComponent implements OnInit {
     this.webService.search(this.genreForm.value).subscribe(success => {
       this.searchResult = success;
     }, err => {
-      alert(JSON.stringify(err));
+      this.snackBar.open(this.errorMsg, 'Dismiss',{duration: this.snackBarDuaration});
+      // alert(JSON.stringify(err));
     });
   }
 }
