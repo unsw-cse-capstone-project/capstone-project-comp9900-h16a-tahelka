@@ -37,3 +37,8 @@ Week 5:
 2. Prepared for demo.
 3. Recommendation engine discussions
 4. Code review 
+
+Week 6:
+1. Multiple stories completed. (search by mood and wishlist add and remove)
+2. Recommendation engine discussions
+3. Code review 
