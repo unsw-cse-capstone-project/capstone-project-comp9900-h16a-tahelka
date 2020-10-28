@@ -16,6 +16,7 @@ from apis.wishlists_movieID import api as wishlists_movieID
 from apis.wishlists_userID import api as wishlists_userID
 
 from apis.banned_list import api as banned_list
+from apis.banned_list_delete import api as banned_list_delete
 
 from apis.subscribe_users import api as subscribe_users
 from apis.subscribe_userID import api as subscribe_userID
@@ -53,6 +54,7 @@ api.add_namespace(wishlists_movieID)
 api.add_namespace(wishlists_userID)
 
 api.add_namespace(banned_list)
+api.add_namespace(banned_list_delete)
 
 api.add_namespace(subscribe_users)
 api.add_namespace(subscribe_userID)

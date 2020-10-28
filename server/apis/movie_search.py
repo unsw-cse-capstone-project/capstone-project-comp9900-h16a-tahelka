@@ -10,7 +10,7 @@ from models.Person import Person
 from util.StringValidations import validate_search_keywords, validate_director, validate_genre, validate_mood
 
 
-api = Namespace('Movie Search', path = '/movies')
+api = Namespace('Movies', path = '/movies')
 
 film_summary = api.model('Film Summary',
                          {'movieID': fields.Integer,

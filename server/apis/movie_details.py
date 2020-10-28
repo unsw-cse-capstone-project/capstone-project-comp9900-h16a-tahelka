@@ -14,7 +14,7 @@ from werkzeug.exceptions import NotFound
 from util.IntValidations import is_valid_integer
 
 
-api = Namespace('Movie Details', path = '/movies')
+api = Namespace('Movies', path = '/movies')
 
 movie_review = api.model('Movie Review',
                          {'userID': fields.Integer,

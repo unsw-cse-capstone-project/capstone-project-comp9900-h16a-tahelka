@@ -10,7 +10,7 @@ from util.IntValidations import is_valid_integer
 from util.StringValidations import validate_rating, validate_review
 
 
-api = Namespace('Movie Review', path = '/movies')
+api = Namespace('Movies', path = '/movies')
 
 film_review = api.model('Movie Review',
                         {'rating': fields.String(description = 'A rating from 0 to 5.'),
