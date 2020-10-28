@@ -8,3 +8,4 @@ server/dummy_data.py
 *.xml
 server/filmfinder_tahelka.db-journal
 server/filmfinder_tahelka.db-journal
+web-client/filmFinder/package-lock.json
