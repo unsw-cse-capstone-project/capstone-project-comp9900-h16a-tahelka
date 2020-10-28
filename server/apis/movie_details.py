@@ -1,7 +1,8 @@
-from flask import request
+from flask import request, g
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
+from models.BannedList import Bannedlist
 from models.FilmCast import FilmCast
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
@@ -76,7 +77,12 @@ class MovieDetails(Resource):
         cast = [member for member, in query]
         query = session.query(User.userID, User.username,
                               MovieReview.rating, MovieReview.review
-                             ).join(MovieReview).filter(MovieReview.movieID == id)
+                             ).join(MovieReview)\
+                              .filter(MovieReview.movieID == id,
+                                      User.userID.notin_(session.query(Bannedlist.bannedUserID)
+                                                                .filter(Bannedlist.userID == g.userID)
+                                                        )
+                                     )
         reviews = [{'userID': userID, 'username': username,
                     'rating': rating, 'review': review
                    } for userID, username, rating, review in query
