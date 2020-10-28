@@ -4,6 +4,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {WebService} from '../services/web.service';
 import {Search} from '../models/Search';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { UserMessageConstant } from '../constants/UserMessageConstant';
 
 @Component({
   selector: 'app-browse-genre',
@@ -13,7 +14,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class BrowseGenreComponent implements OnInit {
   genre: object[];
   showBrowse: false;
-  errorMsg = 'An error occured. Select another Genre';
   snackBarDuaration: 3000;
   searchResult: MovieResult[];
   genreForm: FormGroup = new FormGroup({
@@ -50,8 +50,10 @@ export class BrowseGenreComponent implements OnInit {
     this.webService.search(this.genreForm.value).subscribe(success => {
       this.searchResult = success;
     }, err => {
-      this.snackBar.open(this.errorMsg, 'Dismiss',{duration: this.snackBarDuaration});
-      // alert(JSON.stringify(err));
+      this.snackBar.open(
+        UserMessageConstant.BROWSE_GENRE_ERROR,
+        UserMessageConstant.DISMISS,
+        { duration: this.snackBarDuaration});
     });
   }
 }

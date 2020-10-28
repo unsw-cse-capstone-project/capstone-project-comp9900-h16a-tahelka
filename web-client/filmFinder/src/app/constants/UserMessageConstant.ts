@@ -22,4 +22,5 @@ export class UserMessageConstant {
   public static get DISMISS(): string { return 'Dismiss'; }
   public static get UNBAN_SUCCESSFUL(): string { return 'User have been unbanned'; }
   public static get UNBAN_UNSUCCESSFUL(): string { return 'User unbanned unsuccessful, try again!'; }
+  public static get BROWSE_GENRE_ERROR(): string { return 'An error occurred. Select another Genre'; }
 }
