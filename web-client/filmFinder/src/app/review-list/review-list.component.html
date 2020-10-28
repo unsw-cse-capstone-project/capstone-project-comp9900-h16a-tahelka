@@ -15,6 +15,13 @@
     <mat-cell *matCellDef="let element"> {{element?.review}} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="block">
+    <mat-header-cell *matHeaderCellDef> Block User </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-raised-button (click)="blockUser(element)" color="warn">Block</button>
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
   <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
 </mat-table>
