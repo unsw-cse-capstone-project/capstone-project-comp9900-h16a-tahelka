@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from models.Common import Base
 
-class Bannedlist(Base):
+class BannedList(Base):
     __tablename__ = "bannedlists"
 
     userID = Column(Integer, ForeignKey("users.userID"), primary_key=True,

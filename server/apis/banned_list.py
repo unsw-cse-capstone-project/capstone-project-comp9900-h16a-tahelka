@@ -2,7 +2,7 @@ from flask import request, g
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
-from models.BannedList import Bannedlist
+from models.BannedList import BannedList
 from models.User import User
 from werkzeug.exceptions import Forbidden, NotFound
 from util.IntValidations import is_valid_integer
@@ -13,7 +13,7 @@ api = Namespace('Banned List', path = '/bannedlists')
 banned_user = api.model('Banned Reviewer', {'userID': fields.Integer})
 
 @api.route('')
-class BannedList(Resource):
+class BannedLists(Resource):
     @api.response(200, 'Success', [banned_user])
     @api.response(401, 'Authentication token is missing')
     def get(self):
@@ -22,8 +22,8 @@ class BannedList(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         banned_list = Session().query(User.userID, User.username)\
-                               .join(Bannedlist, User.userID == Bannedlist.bannedUserID)\
-                               .filter(Bannedlist.userID == g.userID)
+                               .join(BannedList, User.userID == BannedList.bannedUserID)\
+                               .filter(BannedList.userID == g.userID)
         return [{'userID': userID, 'username': username} for userID, username in banned_list], 200
     
     @api.response(201, 'Success')
@@ -45,11 +45,11 @@ class BannedList(Resource):
         query = session.query(User).filter(User.userID == request.json['userID']).one_or_none()
         if not query:
             raise NotFound
-        query = session.query(Bannedlist).filter(Bannedlist.userID == g.userID,
-                                                 Bannedlist.bannedUserID == request.json['userID']
+        query = session.query(BannedList).filter(BannedList.userID == g.userID,
+                                                 BannedList.bannedUserID == request.json['userID']
                                                 ).one_or_none()
         if query or g.userID == request.json['userID']:
             raise Forbidden
-        session.add(Bannedlist(g.userID, request.json['userID']))
+        session.add(BannedList(g.userID, request.json['userID']))
         session.commit()
         return {'message': 'Reviewer banned.'}, 201

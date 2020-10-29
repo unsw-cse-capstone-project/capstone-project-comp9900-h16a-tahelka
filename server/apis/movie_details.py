@@ -2,7 +2,7 @@ from flask import request, g
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
-from models.BannedList import Bannedlist
+from models.BannedList import BannedList
 from models.FilmCast import FilmCast
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
@@ -66,35 +66,45 @@ class MovieDetails(Resource):
                              ).filter(Movie.movieID == id).one_or_none()
         if not movie:
             raise NotFound
-        query = session.query(Genres.genre).join(GenreOfFilm)\
-                                           .filter(GenreOfFilm.movieID == id)
-        genres = [genre for genre, in query]
-        query = session.query(Person.name).join(FilmDirector)\
-                                          .filter(FilmDirector.movieID == id)
-        directors = [director for director, in query]
-        query = session.query(Person.name).join(FilmCast)\
-                                          .filter(FilmCast.movieID == id)
-        cast = [member for member, in query]
-        query = session.query(User.userID, User.username,
-                              MovieReview.rating, MovieReview.review
-                             ).join(MovieReview)\
-                              .filter(MovieReview.movieID == id,
-                                      User.userID.notin_(session.query(Bannedlist.bannedUserID)
-                                                                .filter(Bannedlist.userID == g.userID)
-                                                        )
-                                     )
+        genres = [genre for genre, in session.query(Genres.genre).join(GenreOfFilm)
+                                                                 .filter(GenreOfFilm.movieID == id)
+                 ]
+        directors = [director for director, in session.query(Person.name)
+                                                      .join(FilmDirector)
+                                                      .filter(FilmDirector.movieID == id)
+                    ]
+        cast = [member for member, in session.query(Person.name).join(FilmCast)
+                                                                .filter(FilmCast.movieID == id)
+               ]
+        banned_users = session.query(BannedList.bannedUserID).filter(BannedList.userID == g.userID)
+        banned_user_ratings\
+            = session.query(MovieReview.rating).filter(MovieReview.movieID == id,
+                                                       MovieReview.userID.in_(banned_users)
+                                                      ).all()
+        review_count = movie.review_count - len(banned_user_ratings)
+        reviews = session.query(User.userID, User.username,
+                                MovieReview.rating, MovieReview.review
+                               ).join(MovieReview).filter(MovieReview.movieID == id,
+                                                          User.userID.notin_(banned_users)
+                                                         )
         reviews = [{'userID': userID, 'username': username,
                     'rating': rating, 'review': review
-                   } for userID, username, rating, review in query
+                   } for userID, username, rating, review in reviews
                   ]
-        recommendations = [{'movieID': 57012, 'title': 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb', 'year': 1964},
+        recommendations = [{'movieID': 57012,
+                            'title': 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
+                            'year': 1964
+                           },
                            {'movieID': 62622, 'title': '2001: A Space Odyssey', 'year': 1968},
                            {'movieID': 66921, 'title': 'A Clockwork Orange', 'year': 1971}
                           ]
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
-                'rating': round(movie.ratings_sum / movie.review_count, 1)
-                              if movie.review_count else 0.0,
+                'rating': round((movie.ratings_sum - sum(rating for rating, in banned_user_ratings))
+                                / review_count,
+                                1
+                               )
+                              if review_count else 0.0,
                 'reviews': reviews, 'recommendations': recommendations
                }, 200

@@ -20,7 +20,7 @@ film_review = api.model('Movie Review',
 
 @api.route('/<int:id>/reviews')
 @api.param('id', 'The Movie identifier')
-class FilmReview(Resource):
+class MovieReviews(Resource):
     @api.response(201, 'Success')
     @api.response(400,
                   'id must be a non-negative integer\n'

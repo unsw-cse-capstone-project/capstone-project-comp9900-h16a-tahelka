@@ -2,7 +2,7 @@ from flask import request, g
 from flask_restx import Namespace, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
-from models.BannedList import Bannedlist
+from models.BannedList import BannedList
 from werkzeug.exceptions import NotFound
 from util.IntValidations import is_valid_integer
 
@@ -11,7 +11,7 @@ api = Namespace('Banned List', path = '/bannedlists')
 
 @api.route('/<int:id>')
 @api.param('id', 'The User identifier')
-class BannedList(Resource):
+class BannedLists(Resource):
     @api.response(200, 'Success')
     @api.response(400, 'userID must be a non-negative integer')
     @api.response(401, 'Authentication token is missing')
@@ -23,8 +23,8 @@ class BannedList(Resource):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         is_valid_integer(id)
         session = Session()
-        if not session.query(Bannedlist).filter(Bannedlist.userID == g.userID,
-                                                Bannedlist.bannedUserID == id
+        if not session.query(BannedList).filter(BannedList.userID == g.userID,
+                                                BannedList.bannedUserID == id
                                                ).delete():
             session.commit()
             raise NotFound
