@@ -47,12 +47,12 @@ movie_details = api.model('Full Movie Details',
                          )
 
 @api.route('/<int:id>')
+@api.param('id', 'The Movie identifier')
 class MovieDetails(Resource):
     @api.response(200, 'Success', movie_details)
     @api.response(400, 'id must be a non-negative integer')
     @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
-    @api.doc(params={'id': 'Identifier of movie'})
     def get(self, id):
         '''
         View a movie's full details.
@@ -87,7 +87,10 @@ class MovieDetails(Resource):
                     'rating': rating, 'review': review
                    } for userID, username, rating, review in query
                   ]
-        recommendations = []
+        recommendations = [{'movieID': 57012, 'title': 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb', 'year': 1964},
+                           {'movieID': 62622, 'title': '2001: A Space Odyssey', 'year': 1968},
+                           {'movieID': 66921, 'title': 'A Clockwork Orange', 'year': 1971}
+                          ]
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,

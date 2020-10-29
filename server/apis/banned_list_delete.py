@@ -10,6 +10,7 @@ from util.IntValidations import is_valid_integer
 api = Namespace('Banned List', path = '/bannedlists')
 
 @api.route('/<int:id>')
+@api.param('id', 'The User identifier')
 class BannedList(Resource):
     @api.response(200, 'Success')
     @api.response(400, 'userID must be a non-negative integer')

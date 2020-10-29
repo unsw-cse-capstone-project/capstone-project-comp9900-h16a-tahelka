@@ -61,7 +61,8 @@ class Watchlists(Resource):
         movies = list()
         for movieID, title, year, ratings_sum, review_count in results:
             movies.append({'movieID': movieID, 'title': title, 'year': year,
-                           'rating': ratings_sum / review_count if review_count else 0
+                           'rating': round(ratings_sum / review_count, 1)
+                                         if review_count else 0.0
                            })
 
         response = {'watchlist': movies}

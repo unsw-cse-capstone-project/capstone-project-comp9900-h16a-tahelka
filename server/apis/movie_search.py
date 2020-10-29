@@ -55,7 +55,7 @@ class MovieSearch(Resource):
             genres = {genre}
         # Commented out limit because browsing movies by director or
         # genre should return all films by that director or of that genre.
-        limit = 40  # TODO: change limit later as needed.
+        limit = 30  # TODO: change limit later as needed.
         if director:
             search_results = Session().query(Movie.movieID, Movie.title, Movie.year,
                                              Movie.ratings_sum, Movie.review_count

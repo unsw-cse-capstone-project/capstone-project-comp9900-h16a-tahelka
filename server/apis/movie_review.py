@@ -19,6 +19,7 @@ film_review = api.model('Movie Review',
                        )
 
 @api.route('/<int:id>/reviews')
+@api.param('id', 'The Movie identifier')
 class FilmReview(Resource):
     @api.response(201, 'Success')
     @api.response(400,
@@ -30,7 +31,6 @@ class FilmReview(Resource):
     @api.response(403, 'This user has already reviewed this movie')
     @api.response(404, 'Movie was not found')
     @api.expect(film_review)
-    @api.doc(params={'id': 'Identifier of movie'})
     def post(self, id):
         '''
         Leave a movie review
