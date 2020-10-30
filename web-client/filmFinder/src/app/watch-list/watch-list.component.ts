@@ -12,19 +12,15 @@ export class WatchListComponent implements OnInit {
 
   @Input() public movieID: number;
   snackbarDuration = 2000;
-  addedToWatchlistMessage = UserMessageConstant.WATCH_LIST_ADDED;
-  dismissMessage = UserMessageConstant.DISMISS;
   constructor(private webService: WebService, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
-  onClick(message, action): void{
-
+  onClick(): void{
     this.webService.watchlist(this.movieID).subscribe(success => {
-      console.log(success);
-      this.successfulUpdateSnackbar(message, action);
+      this.successfulUpdateSnackbar(UserMessageConstant.WATCH_LIST_ADDED, UserMessageConstant.DISMISS);
     }, err => {
-      alert(JSON.stringify(err));
+      this.successfulUpdateSnackbar(UserMessageConstant.WATCH_LIST_ADD_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });
   }
 

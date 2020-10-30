@@ -67,6 +67,12 @@ export class WebService {
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     return this.http.delete(wishlistUrl, {headers});
   }
+  getWatchlist(): Observable<any> {
+    const watchlistUrl = this.API_URL + 'watchlists';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(watchlistUrl, {headers});
+  }
   watchlist(movieId: number): Observable<any> {
     const watchlistUrl = this.API_URL + 'watchlists';
     let headers = new HttpHeaders();
@@ -75,6 +81,12 @@ export class WebService {
       movieID: movieId
     };
     return this.http.post(watchlistUrl, body, {headers});
+  }
+  removeWatchlist(movieId: number): Observable<any> {
+    const watchlistUrl = this.API_URL + `watchlists/${movieId}`;
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.delete(watchlistUrl,  {headers});
   }
   browseDirector(browseDirectorObject: any): Observable<any>{
     const moviesUrl = this.API_URL + 'movies';
@@ -114,6 +126,18 @@ export class WebService {
   }
   getSubscriptionList(): Observable<any>{
     const moviesUrl = this.API_URL + 'subscribeUsers';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(moviesUrl, {headers});
+  }
+  wishlistImport(userId: number): Observable<any> {
+    const subscribeUrl =  this.API_URL + `wishlists/${userId}/import`;
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.post(subscribeUrl, {}, {headers});
+  }
+  getSubscribedWishlistMovies(): Observable<any>{
+    const moviesUrl = this.API_URL + 'subscribedWishlistMovies';
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     return this.http.get(moviesUrl, {headers});
