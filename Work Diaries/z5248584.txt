@@ -54,4 +54,4 @@ Week 7
 3. Made API to remove a movie from user's watchlist.
 4. Testing of the system.
 5. Held meeting with team to discuss strategy.
-6. Added swagges documenation of a few APIs.
+6. Added swagger documenation of a few APIs.
