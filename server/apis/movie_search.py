@@ -1,5 +1,5 @@
 from flask import request, g
-from flask_restx import Namespace, fields, Resource
+from flask_restx import Namespace, fields, reqparse, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.FilmDirector import FilmDirector
@@ -7,9 +7,19 @@ from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
 from models.Movie import Movie
 from models.Person import Person
-from util.StringValidations import validate_search_keywords, validate_director, validate_genre, validate_mood
+from util.StringValidations import validate_search_keywords, validate_director
 from util.RatingCalculator import compute
 
+
+mood_mappings = {'Indifferent': {'Western', 'War', 'Biography', 'Family'},
+                 'Sad and Rejected': {'Musical', 'Comedy', 'Romance'},
+                 'Flirty': {'Musical', 'Drama', 'Fantasy', 'Romance'},
+                 'Energetic and Excited': {'Thriller', 'Musical', 'Crime', 'Drama',
+                                           'Fantasy', 'Adventure', 'Sci-Fi', 'Action', 'Comedy'
+                                          },
+                 'Stressed': {'Animation'},
+                 'Weird': {'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery'}
+                }
 
 api = Namespace('Movies', path = '/movies')
 
@@ -21,34 +31,38 @@ film_summary = api.model('Film Summary',
                          }
                         )
 
+parser = reqparse.RequestParser()
+parser.add_argument('name')
+parser.add_argument('description')
+parser.add_argument('mood', choices = tuple(mood_mappings.keys()))
+parser.add_argument('genre',
+                    choices = ('Western', 'Thriller', 'Musical', 'War', 'Film-Noir', 'Crime',
+                               'Drama', 'Horror', 'Mystery', 'Fantasy', 'Adventure', 'Sci-Fi',
+                               'Animation', 'Biography', 'Action', 'Comedy', 'Family', 'Romance'
+                              )
+                   )
+parser.add_argument('director')
+
 @api.route('')
-@api.param('name', 'Name keywords')
-@api.param('description', 'Description keywords')
-@api.param('mood')
-@api.param('genre')
-@api.param('director')
 class MovieSearch(Resource):
     @api.response(200, 'Success', [film_summary])
     @api.response(400, 'Name and description keyword strings must each be no more than 250 characters long\n'
-                       "Genre must be one of the following: 'Western', 'Thriller', 'Musical', 'War',"
-                       "                                    'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery',"
-                       "                                    'Fantasy', 'Adventure', 'Sci-Fi', 'Animation',"
-                       "                                    'Biography', 'Action', 'Comedy', 'Family', 'Romance'\n"
-                       "Mood must be one of the following: 'Indifferent', 'Sad and Rejected', 'Flirty',"
-                       "                                   'Energetic and Excited', 'Stressed', 'Weird'\n"
                        'Director must match the name of a director'
                  )
     @api.response(401, 'Authentication token is missing')
+    @api.expect(parser, validate = True)
     def get(self):
         '''
         Search for movies by name, description, mood, genre or director.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
-        name_keywords = validate_search_keywords(request.args.get('name'))
-        description_keywords = validate_search_keywords(request.args.get('description'))
-        director = validate_director(request.args.get('director'))
-        genre = validate_genre(request.args.get('genre'))
-        genres = validate_mood(request.args.get('mood'))
+        args = parser.parse_args()
+        name_keywords = validate_search_keywords(args.get('name'))
+        description_keywords = validate_search_keywords(args.get('description'))
+        director = validate_director(args.get('director'))
+        genre = args.get('genre')
+        mood = args.get('mood')
+        genres = mood_mappings[mood] if mood else None
         if genres:
             if genre:
                 genres.add(genre)
