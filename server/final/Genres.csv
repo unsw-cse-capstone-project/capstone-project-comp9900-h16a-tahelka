@@ -1,22 +1,3 @@
-genreID,genre
-0.0,Action
-1.0,Thriller
-2.0,Romance
-3.0,Sci-Fi
-4.0,War
-5.0,Drama
-6.0,Mystery
-7.0,Crime
-8.0,Horror
-9.0,Musical
-10.0,Western
-11.0,Sport
-12.0,Music
-13.0,History
-14.0,Family
-15.0,Animation
-16.0,Biography
-17.0,Comedy
-18.0,Adventure
-19.0,Fantasy
-20.0,Film-Noir
+version https://git-lfs.github.com/spec/v1
+oid sha256:9e4ac8e75a7c7a69642fdea39ac944e5fbec25b054e62224b93feb9a67da8129
+size 269
