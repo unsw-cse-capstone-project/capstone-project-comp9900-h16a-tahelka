@@ -2,14 +2,13 @@ from flask import request, g
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
-from models.BannedList import BannedList
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
 from models.Movie import Movie
-from models.MovieReview import MovieReview
 from models.Person import Person
 from util.StringValidations import validate_search_keywords, validate_director, validate_genre, validate_mood
+from util.RatingCalculator import compute
 
 
 api = Namespace('Movies', path = '/movies')
@@ -91,22 +90,10 @@ class MovieSearch(Resource):
                                           ).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                                    Movie.description.ilike(f'%{description_keywords}%')
                                                   ).limit(limit)
-        banned_users = session.query(BannedList.bannedUserID).filter(BannedList.userID == g.userID)
-        search_results = []
-        for movieID, title, year, ratings_sum, review_count in query:
-            banned_user_ratings = session.query(MovieReview.rating).filter(MovieReview.movieID == movieID,
-                                                                           MovieReview.userID.in_(banned_users)
-                                                                          ).all()
-            review_count -= len(banned_user_ratings)
-            search_results.append({'movieID': movieID, 'title': title, 'year': year,
-                                   'rating': round((ratings_sum - sum(rating for rating, in banned_user_ratings))
-                                                   / review_count,
-                                                   1
-                                                  )
-                                                 if review_count
-                                                 else 0.0
-                                  }
-                                 )
+        search_results = [{'movieID': movieID, 'title': title, 'year': year,
+                           'rating': compute(movieID, g.userID, ratings_sum, review_count)
+                          } for movieID, title, year, ratings_sum, review_count in query
+                         ]
         search_results.sort(key = lambda film: (-film['rating'], film['title']))
         for film in search_results:
             film['rating'] = str(film['rating'])

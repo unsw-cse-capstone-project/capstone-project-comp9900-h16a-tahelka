@@ -13,6 +13,7 @@ from models.Person import Person
 from models.User import User
 from werkzeug.exceptions import NotFound
 from util.IntValidations import is_valid_integer
+from util.RatingCalculator import compute
 
 
 api = Namespace('Movies', path = '/movies')
@@ -76,17 +77,14 @@ class MovieDetails(Resource):
         cast = [member for member, in session.query(Person.name).join(FilmCast)
                                                                 .filter(FilmCast.movieID == id)
                ]
-        banned_users = session.query(BannedList.bannedUserID).filter(BannedList.userID == g.userID)
-        banned_user_ratings\
-            = session.query(MovieReview.rating).filter(MovieReview.movieID == id,
-                                                       MovieReview.userID.in_(banned_users)
-                                                      ).all()
-        review_count = movie.review_count - len(banned_user_ratings)
         reviews = session.query(User.userID, User.username,
                                 MovieReview.rating, MovieReview.review
-                               ).join(MovieReview).filter(MovieReview.movieID == id,
-                                                          User.userID.notin_(banned_users)
-                                                         )
+                               ).join(MovieReview)\
+                                .filter(MovieReview.movieID == id,
+                                        User.userID.notin_(session.query(BannedList.bannedUserID)
+                                                                  .filter(BannedList.userID == g.userID)
+                                                          )
+                                       )
         reviews = [{'userID': userID, 'username': username,
                     'rating': str(rating), 'review': review
                    } for userID, username, rating, review in reviews
@@ -101,12 +99,6 @@ class MovieDetails(Resource):
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
-                'rating': str(round((movie.ratings_sum - sum(rating for rating, in banned_user_ratings))
-                                    / review_count,
-                                    1
-                                   )
-                                  if review_count
-                                  else 0.0
-                             ),
+                'rating': str(compute(id, g.userID, movie.ratings_sum, movie.review_count)),
                 'reviews': reviews, 'recommendations': recommendations
                }, 200
