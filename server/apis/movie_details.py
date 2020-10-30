@@ -20,7 +20,7 @@ api = Namespace('Movies', path = '/movies')
 movie_review = api.model('Movie Review',
                          {'userID': fields.Integer,
                           'username': fields.String(description = 'The FilmFinder that left this review'),
-                          'rating': fields.Float(description = 'A rating out of 5'),
+                          'rating': fields.String(description = 'A rating out of 5'),
                           'review': fields.String(description = "The FilmFinder's review of the movie")
                          }
                         )
@@ -40,7 +40,7 @@ movie_details = api.model('Full Movie Details',
                            'genre': fields.List(fields.String),
                            'director': fields.List(fields.String),
                            'cast': fields.List(fields.String),
-                           'rating': fields.Float(description = 'Average rating out of 5'),
+                           'rating': fields.String(description = 'Average rating out of 5'),
                            'reviews': fields.List(fields.Nested(movie_review)),
                            'recommendations': fields.List(fields.Nested(movie_recommendation))
                           }
@@ -88,7 +88,7 @@ class MovieDetails(Resource):
                                                           User.userID.notin_(banned_users)
                                                          )
         reviews = [{'userID': userID, 'username': username,
-                    'rating': rating, 'review': review
+                    'rating': str(rating), 'review': review
                    } for userID, username, rating, review in reviews
                   ]
         recommendations = [{'movieID': 57012,
@@ -101,10 +101,12 @@ class MovieDetails(Resource):
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
-                'rating': round((movie.ratings_sum - sum(rating for rating, in banned_user_ratings))
-                                / review_count,
-                                1
-                               )
-                              if review_count else 0.0,
+                'rating': str(round((movie.ratings_sum - sum(rating for rating, in banned_user_ratings))
+                                    / review_count,
+                                    1
+                                   )
+                                  if review_count
+                                  else 0.0
+                             ),
                 'reviews': reviews, 'recommendations': recommendations
                }, 200

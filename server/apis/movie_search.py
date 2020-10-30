@@ -18,7 +18,7 @@ film_summary = api.model('Film Summary',
                          {'movieID': fields.Integer,
                           'title': fields.String,
                           'year': fields.Integer,
-                          'rating': fields.Float(description = 'Average rating out of 5')
+                          'rating': fields.String(description = 'Average rating out of 5')
                          }
                         )
 
@@ -103,8 +103,11 @@ class MovieSearch(Resource):
                                                    / review_count,
                                                    1
                                                   )
-                                                 if review_count else 0.0
+                                                 if review_count
+                                                 else 0.0
                                   }
                                  )
         search_results.sort(key = lambda film: (-film['rating'], film['title']))
+        for film in search_results:
+            film['rating'] = str(film['rating'])
         return search_results, 200
