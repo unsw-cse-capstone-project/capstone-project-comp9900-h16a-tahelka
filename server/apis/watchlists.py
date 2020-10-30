@@ -9,6 +9,7 @@ from models.Watchlist import Watchlist
 from models.Movie import Movie
 
 from util.IntValidations import is_valid_integer
+from util.RatingCalculator import compute
 
 api = Namespace('Watchlist', path='/watchlists',
                 description='Operations on Watchlist.')
@@ -61,7 +62,7 @@ class Watchlists(Resource):
         movies = list()
         for movieID, title, year, ratings_sum, review_count in results:
             movies.append({'movieID': movieID, 'title': title, 'year': year,
-                           'rating': ratings_sum / review_count if review_count else 0
+                           'rating': str(compute(movieID, userID, ratings_sum, review_count))
                            })
 
         response = {'watchlist': movies}

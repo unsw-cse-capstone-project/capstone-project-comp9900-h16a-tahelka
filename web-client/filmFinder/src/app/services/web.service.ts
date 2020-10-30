@@ -142,4 +142,22 @@ export class WebService {
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     return this.http.get(moviesUrl, {headers});
   }
+  blockUser(userID: number): Observable<any> {
+    const subscribeUrl =  this.API_URL + 'bannedlists';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.post(subscribeUrl, {userID}, {headers});
+  }
+  getBannedUserList(): Observable<any>{
+    const moviesUrl = this.API_URL + 'bannedlists';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.get(moviesUrl, {headers});
+  }
+  unBannedUser(userID: number): Observable<any>{
+    const moviesUrl = this.API_URL + `bannedlists/${userID}`;
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    return this.http.delete(moviesUrl, {headers});
+  }
 }

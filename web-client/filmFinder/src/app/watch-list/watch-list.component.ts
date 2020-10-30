@@ -23,7 +23,6 @@ export class WatchListComponent implements OnInit {
       this.successfulUpdateSnackbar(UserMessageConstant.WATCH_LIST_ADD_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });
   }
-
   private successfulUpdateSnackbar(message, action): void {
     const snackbarRef = this.snackbar.open(message, action, {duration: this.snackbarDuration});
     snackbarRef.afterDismissed().subscribe(() => {});

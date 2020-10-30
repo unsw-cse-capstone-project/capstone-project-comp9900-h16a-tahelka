@@ -11,7 +11,7 @@ from models.User import User
 from models.Person import Person
 from models.WishList import Wishlist
 from models.Watchlist import Watchlist
-from models.BannedList import Bannedlist
+from models.BannedList import BannedList
 from models.Subscription import Subscription
 
 import os

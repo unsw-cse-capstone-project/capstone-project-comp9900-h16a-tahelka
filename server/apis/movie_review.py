@@ -10,7 +10,7 @@ from util.IntValidations import is_valid_integer
 from util.StringValidations import validate_rating, validate_review
 
 
-api = Namespace('Movie Review', path = '/movies')
+api = Namespace('Movies', path = '/movies')
 
 film_review = api.model('Movie Review',
                         {'rating': fields.String(description = 'A rating from 0 to 5.'),
@@ -19,7 +19,8 @@ film_review = api.model('Movie Review',
                        )
 
 @api.route('/<int:id>/reviews')
-class FilmReview(Resource):
+@api.param('id', 'The Movie identifier')
+class MovieReviews(Resource):
     @api.response(201, 'Success')
     @api.response(400,
                   'id must be a non-negative integer\n'
@@ -30,7 +31,6 @@ class FilmReview(Resource):
     @api.response(403, 'This user has already reviewed this movie')
     @api.response(404, 'Movie was not found')
     @api.expect(film_review)
-    @api.doc(params={'id': 'Identifier of movie'})
     def post(self, id):
         '''
         Leave a movie review

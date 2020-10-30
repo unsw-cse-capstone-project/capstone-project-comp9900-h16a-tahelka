@@ -10,6 +10,7 @@ from models.WishList import Wishlist
 from models.Subscription import Subscription
 
 from util.IntValidations import is_valid_integer
+from util.RatingCalculator import compute
 
 api = Namespace('Wishlist', path='/wishlists')
 
@@ -38,7 +39,7 @@ class Wishlists_UserID(Resource):
         movies = list()
         for movieID, title, year, ratings_sum, review_count in results:
             movies.append({'movieID': movieID, 'title': title, 'year': year,
-                           'rating': ratings_sum / review_count if review_count else 0
+                           'rating': str(compute(movieID, g.userID, ratings_sum, review_count))
                            })
 
         # Check if current user is subscribed to said user

@@ -1,7 +1,8 @@
-from flask import request
+from flask import request, g
 from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
+from models.BannedList import BannedList
 from models.FilmCast import FilmCast
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
@@ -12,14 +13,15 @@ from models.Person import Person
 from models.User import User
 from werkzeug.exceptions import NotFound
 from util.IntValidations import is_valid_integer
+from util.RatingCalculator import compute
 
 
-api = Namespace('Movie Details', path = '/movies')
+api = Namespace('Movies', path = '/movies')
 
 movie_review = api.model('Movie Review',
                          {'userID': fields.Integer,
                           'username': fields.String(description = 'The FilmFinder that left this review'),
-                          'rating': fields.Float(description = 'A rating out of 5'),
+                          'rating': fields.String(description = 'A rating out of 5'),
                           'review': fields.String(description = "The FilmFinder's review of the movie")
                          }
                         )
@@ -39,19 +41,19 @@ movie_details = api.model('Full Movie Details',
                            'genre': fields.List(fields.String),
                            'director': fields.List(fields.String),
                            'cast': fields.List(fields.String),
-                           'rating': fields.Float(description = 'Average rating out of 5'),
+                           'rating': fields.String(description = 'Average rating out of 5'),
                            'reviews': fields.List(fields.Nested(movie_review)),
                            'recommendations': fields.List(fields.Nested(movie_recommendation))
                           }
                          )
 
 @api.route('/<int:id>')
+@api.param('id', 'The Movie identifier')
 class MovieDetails(Resource):
     @api.response(200, 'Success', movie_details)
     @api.response(400, 'id must be a non-negative integer')
     @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
-    @api.doc(params={'id': 'Identifier of movie'})
     def get(self, id):
         '''
         View a movie's full details.
@@ -65,27 +67,38 @@ class MovieDetails(Resource):
                              ).filter(Movie.movieID == id).one_or_none()
         if not movie:
             raise NotFound
-        query = session.query(Genres.genre).join(GenreOfFilm)\
-                                           .filter(GenreOfFilm.movieID == id)
-        genres = [genre for genre, in query]
-        query = session.query(Person.name).join(FilmDirector)\
-                                          .filter(FilmDirector.movieID == id)
-        directors = [director for director, in query]
-        query = session.query(Person.name).join(FilmCast)\
-                                          .filter(FilmCast.movieID == id)
-        cast = [member for member, in query]
-        query = session.query(User.userID, User.username,
-                              MovieReview.rating, MovieReview.review
-                             ).join(MovieReview).filter(MovieReview.movieID == id)
+        genres = [genre for genre, in session.query(Genres.genre).join(GenreOfFilm)
+                                                                 .filter(GenreOfFilm.movieID == id)
+                 ]
+        directors = [director for director, in session.query(Person.name)
+                                                      .join(FilmDirector)
+                                                      .filter(FilmDirector.movieID == id)
+                    ]
+        cast = [member for member, in session.query(Person.name).join(FilmCast)
+                                                                .filter(FilmCast.movieID == id)
+               ]
+        reviews = session.query(User.userID, User.username,
+                                MovieReview.rating, MovieReview.review
+                               ).join(MovieReview)\
+                                .filter(MovieReview.movieID == id,
+                                        User.userID.notin_(session.query(BannedList.bannedUserID)
+                                                                  .filter(BannedList.userID == g.userID)
+                                                          )
+                                       )
         reviews = [{'userID': userID, 'username': username,
-                    'rating': rating, 'review': review
-                   } for userID, username, rating, review in query
+                    'rating': str(rating), 'review': review
+                   } for userID, username, rating, review in reviews
                   ]
-        recommendations = []
+        recommendations = [{'movieID': 57012,
+                            'title': 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
+                            'year': 1964
+                           },
+                           {'movieID': 62622, 'title': '2001: A Space Odyssey', 'year': 1968},
+                           {'movieID': 66921, 'title': 'A Clockwork Orange', 'year': 1971}
+                          ]
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
-                'rating': round(movie.ratings_sum / movie.review_count, 1)
-                              if movie.review_count else 0.0,
+                'rating': str(compute(id, g.userID, movie.ratings_sum, movie.review_count)),
                 'reviews': reviews, 'recommendations': recommendations
                }, 200

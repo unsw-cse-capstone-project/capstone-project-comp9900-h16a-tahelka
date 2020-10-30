@@ -9,8 +9,14 @@ import {WishlistDetailsComponent} from './wishlist-details/wishlist-details.comp
 import {SubscribedUserListComponent} from './subscribed-user-list/subscribed-user-list.component';
 import {SubscribedWishlistMoviesComponent} from './subscribed-wishlist-movies/subscribed-wishlist-movies.component';
 import {WatchedMoviesComponent} from './watched-movies/watched-movies.component';
+import {BannedUserListComponent} from './banned-user-list/banned-user-list.component';
 
 const routes: Routes = [
+  {
+    path:  'banned-user',
+    component:  BannedUserListComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path:  'watched-movies',
     component:  WatchedMoviesComponent,

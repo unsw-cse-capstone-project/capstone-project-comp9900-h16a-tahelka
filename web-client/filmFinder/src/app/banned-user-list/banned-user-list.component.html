@@ -1,0 +1,23 @@
+<app-navbar [isLoggedIn]="true"></app-navbar>
+<h2 class="left-padding">Your banned user list</h2>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.username}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="unblock">
+    <mat-header-cell *matHeaderCellDef> Unban User </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button class="spacing"
+        (click)="onClick(element)"
+        mat-raised-button color="accent">
+      Unban User
+    </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+

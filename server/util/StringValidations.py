@@ -35,32 +35,6 @@ def validate_director(director):
             raise BadRequest
         return director[0]
 
-def validate_genre(genre):
-    if genre is not None\
-       and genre not in {'Western', 'Thriller', 'Musical', 'War',
-                         'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery',
-                         'Fantasy', 'Adventure', 'Sci-Fi', 'Animation',
-                         'Biography', 'Action', 'Comedy', 'Family', 'Romance'
-                        }:
-        raise BadRequest
-    return genre
-
-def validate_mood(mood):
-    moods = {'Indifferent': {'Western', 'War', 'Biography', 'Family'},
-             'Sad and Rejected': {'Musical', 'Comedy', 'Romance'},
-             'Flirty': {'Musical', 'Drama', 'Fantasy', 'Romance'},
-             'Energetic and Excited': {'Thriller', 'Musical', 'Crime',
-                                       'Drama', 'Fantasy', 'Adventure',
-                                       'Sci-Fi', 'Action', 'Comedy'
-                                      },
-             'Stressed': {'Animation'},
-             'Weird': {'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery'}
-            }
-    if mood is not None:
-        if mood not in moods:
-            raise BadRequest
-        return moods[mood]
-
 def validate_rating(rating):
     if type(rating) is not str\
     or not re.fullmatch('\.[05]0?|[0-4](\.[05]?)?|5(\.0?)?|0[0-5]\.?|00[0-5]',

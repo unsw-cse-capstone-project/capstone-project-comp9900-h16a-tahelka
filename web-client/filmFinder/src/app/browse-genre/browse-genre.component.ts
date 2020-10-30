@@ -3,6 +3,8 @@ import {MovieResult} from '../models/MovieResult';
 import {FormControl, FormGroup} from '@angular/forms';
 import {WebService} from '../services/web.service';
 import {Search} from '../models/Search';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { UserMessageConstant } from '../constants/UserMessageConstant';
 
 @Component({
   selector: 'app-browse-genre',
@@ -11,37 +13,35 @@ import {Search} from '../models/Search';
 })
 export class BrowseGenreComponent implements OnInit {
   genre: object[];
+  showBrowse: false;
+  snackBarDuaration: 3000;
   searchResult: MovieResult[];
   genreForm: FormGroup = new FormGroup({
     genre: new FormControl('')
   });
-  constructor(private webService: WebService) {
+  constructor(private webService: WebService, private snackBar: MatSnackBar) {
     this.genre = [
-      {value: 'Animation'},
-      {value: 'Adult'},
-      {value: 'Documentary'},
-      {value: 'Mystery'},
-      {value: 'Fantasy'},
-      {value: 'Family'},
-      {value: 'Drama'},
-      {value: 'Biography'},
-      {value: 'Adventure'},
-      {value: 'Sci-Fi'},
-      {value: 'Comedy'},
-      {value: 'Western'},
       {value: 'Action'},
-      {value: 'Musical'},
-      {value: 'News'},
-      {value: 'Sport'},
-      {value: 'Horror'},
-      {value: 'Romance'},
-      {value: 'Reality-TV'},
-      {value: 'Music'},
-      {value: 'Film-Noir'},
       {value: 'Thriller'},
+      {value: 'Romance'},
+      {value: 'Sci-Fi'},
       {value: 'War'},
+      {value: 'Drama'},
+      {value: 'Mystery'},
+      {value: 'Crime'},
+      {value: 'Horror'},
+      {value: 'Musical'},
+      {value: 'Western'},
+      {value: 'Sport'},
+      {value: 'Music'},
       {value: 'History'},
-      {value: 'Crime'}
+      {value: 'Family'},
+      {value: 'Animation'},
+      {value: 'Biography'},
+      {value: 'Comedy'},
+      {value: 'Adventure'},
+      {value: 'Fantasy'},
+      {value: 'Film-Noir'},
     ];
   }
   ngOnInit(): void {
@@ -50,7 +50,10 @@ export class BrowseGenreComponent implements OnInit {
     this.webService.search(this.genreForm.value).subscribe(success => {
       this.searchResult = success;
     }, err => {
-      alert(JSON.stringify(err));
+      this.snackBar.open(
+        UserMessageConstant.BROWSE_GENRE_ERROR,
+        UserMessageConstant.DISMISS,
+        { duration: this.snackBarDuaration});
     });
   }
 }
