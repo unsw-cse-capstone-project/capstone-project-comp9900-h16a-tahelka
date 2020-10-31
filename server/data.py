@@ -15,11 +15,11 @@ import csv
 VARIABLE_LIMIT = 999
 
 
-data_dirname = Path('final')
+data_dirname = Path('dataset')
 
 records = []
 
-with open(data_dirname / 'Genres.csv', encoding='utf-8') as file:
+with open(data_dirname / 'Genres.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -32,7 +32,7 @@ if records:
     Engine.execute(Genres.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'Movie.csv', encoding='utf-8') as file:
+with open(data_dirname / 'Movie.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -45,7 +45,7 @@ if records:
     Engine.execute(Movie.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'Person.csv', encoding='utf-8') as file:
+with open(data_dirname / 'Person.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
@@ -62,7 +62,7 @@ if records:
     records.clear()
 
 password_hash = HashGenerator('COMP9900').generate()
-with open(data_dirname / 'User.csv', encoding='utf-8') as file:
+with open(data_dirname / 'User.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     next(file)
     for line in file:
@@ -75,53 +75,69 @@ if records:
     Engine.execute(User.__table__.insert().values(records))
     records.clear()
 
-with open(data_dirname / 'FilmCast.csv', encoding='utf-8') as file:
+with open(data_dirname / 'FilmCast.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
         if (len(records) + 1) * degree <= VARIABLE_LIMIT:
             records.append(line)
         else:
-            Engine.execute(FilmCast.__table__.insert().values(records))
+            try:
+                Engine.execute(FilmCast.__table__.insert().values(records))
+            except: pass
             records.clear()
 if records:
-    Engine.execute(FilmCast.__table__.insert().values(records))
+    try:
+        Engine.execute(FilmCast.__table__.insert().values(records))
+    except: pass
     records.clear()
 
-with open(data_dirname / 'FilmDirector.csv', encoding='utf-8') as file:
+with open(data_dirname / 'FilmDirector.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
         if (len(records) + 1) * degree <= VARIABLE_LIMIT:
             records.append(line)
         else:
-            Engine.execute(FilmDirector.__table__.insert().values(records))
+            try:
+                Engine.execute(FilmDirector.__table__.insert().values(records))
+            except: pass
             records.clear()
 if records:
-    Engine.execute(FilmDirector.__table__.insert().values(records))
+    try:
+        Engine.execute(FilmDirector.__table__.insert().values(records))
+    except: pass
     records.clear()
 
-with open(data_dirname / 'GenreOfFilm.csv', encoding='utf-8') as file:
+with open(data_dirname / 'GenreOfFilm.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
         if (len(records) + 1) * degree <= VARIABLE_LIMIT:
             records.append(line)
         else:
-            Engine.execute(GenreOfFilm.__table__.insert().values(records))
+            try:
+                Engine.execute(GenreOfFilm.__table__.insert().values(records))
+            except: pass
             records.clear()
 if records:
-    Engine.execute(GenreOfFilm.__table__.insert().values(records))
+    try:
+        Engine.execute(GenreOfFilm.__table__.insert().values(records))
+    except: pass
     records.clear()
 
-with open(data_dirname / 'MovieReview.csv', encoding='utf-8') as file:
+with open(data_dirname / 'MovieReview.csv', encoding = 'utf-8') as file:
     file = csv.reader(file)
     degree = len(next(file))
     for line in file:
         if (len(records) + 1) * degree <= VARIABLE_LIMIT:
             records.append(line)
         else:
-            Engine.execute(MovieReview.__table__.insert().values(records))
+            try:
+                Engine.execute(MovieReview.__table__.insert().values(records))
+            except: pass
             records.clear()
 if records:
-    Engine.execute(MovieReview.__table__.insert().values(records))
+    try:
+        Engine.execute(MovieReview.__table__.insert().values(records))
+    except: pass
