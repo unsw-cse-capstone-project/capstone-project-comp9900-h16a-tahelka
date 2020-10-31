@@ -17,8 +17,6 @@ def isValidEmail(email: str):
         raise BadRequest
 
 def validate_search_keywords(keywords):
-    if keywords is None:
-        return ''
     if type(keywords) is not str or len(keywords) > 250:
         raise BadRequest
     return ' '.join(word for word in keywords.split())
