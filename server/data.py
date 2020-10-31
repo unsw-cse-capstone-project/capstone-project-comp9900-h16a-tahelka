@@ -52,10 +52,10 @@ except: pass
 if records:
     Engine.execute(User.__table__.insert().values(records))
 
-import_data('Genres.csv', Genres)
-import_data('Movie.csv', Movie)
-import_data('Person.csv', Person)
-import_data('FilmCast.csv', FilmCast)
-import_data('FilmDirector.csv', FilmDirector)
-import_data('GenreOfFilm.csv', GenreOfFilm)
-import_data('MovieReview.csv', MovieReview)
+for file, table in (('Genres.csv', Genres), ('Movie.csv', Movie),
+                    ('Person.csv', Person), ('FilmCast.csv', FilmCast),
+                    ('FilmDirector.csv', FilmDirector),
+                    ('GenreOfFilm.csv', GenreOfFilm),
+                    ('MovieReview.csv', MovieReview)
+                   ):
+    import_data(file, table)
