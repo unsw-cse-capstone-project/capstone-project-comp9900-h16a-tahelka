@@ -12,9 +12,9 @@ def compute(movieID, userID, ratings_sum = None, review_count = None, banned_use
                              ).filter(Movie.movieID == movieID).one_or_none()
         ratings_sum, review_count = query if query else (0, 0)
     if banned_users is None:
-        banned_users = (banned_user for banned_user, in session.query(BannedList.bannedUserID)
-                                                               .filter(BannedList.userID == userID)
-                       )
+        banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)
+                                                                    .filter(BannedList.userID == userID)
+                            )
     banned_user_ratings = session.query(MovieReview.rating)\
                                  .filter(MovieReview.movieID == movieID,
                                          MovieReview.userID.in_(banned_users)
