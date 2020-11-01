@@ -27,12 +27,12 @@ export class WebService {
     const signupUrl = this.API_URL + 'users';
     return this.http.post(signupUrl, user, httpOptions);
   }
-  search(searchObject: any, offset: number, limit: number): Observable<any> {
+  search(searchObject: any, page: number, size: number): Observable<any> {
     const moviesUrl = this.API_URL + 'movies';
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
-    searchObject.offset = offset;
-    searchObject.limit = limit;
+    searchObject.page_index = page;
+    searchObject.page_size = size;
     return this.http.get(moviesUrl, {params: searchObject, headers});
   }
   movieDetails(id: number): Observable<any> {

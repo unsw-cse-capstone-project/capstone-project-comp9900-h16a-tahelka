@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {Search} from '../models/Search';
-import {AuthenticatedUser} from '../models/AuthenticatedUser';
 import {WebService} from '../services/web.service';
 import {MovieResult} from '../models/MovieResult';
+import {PageChangedModel} from '../models/PageChangedModel';
 
 
 @Component({
@@ -23,6 +23,8 @@ export class SearchComponent implements OnInit {
     genre: new FormControl(),
     mood: new FormControl()
   });
+  loading = false;
+  searchClicked = false;
   constructor(private webService: WebService) {
     this.genre = [
       {value: 'Action'},
@@ -59,11 +61,14 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  search(offset= 0, limit= 15): void {
+  search(page= 0, size= 10): void {
+    this.loading = true;
+    this.searchClicked = true;
     const queryCopy = (JSON.parse(JSON.stringify(this.searchForm.value)));
-    this.webService.search(this.clean(queryCopy), offset, limit).subscribe(success => {
+    this.webService.search(this.clean(queryCopy), page, size).subscribe(success => {
       this.searchResult = success.data;
       this.searchResultLength = success.count;
+      this.loading = false;
     }, err => {
       alert(JSON.stringify(err));
     });
@@ -76,7 +81,16 @@ export class SearchComponent implements OnInit {
     }
     return obj;
   }
-  pageChangedEvent(event: any): void {
-    this.search(10, 5);
+  pageChangedEvent(event: PageChangedModel): void {
+    this.loading = true;
+    const queryCopy = (JSON.parse(JSON.stringify(this.searchForm.value)));
+    this.webService.search(this.clean(queryCopy), event.pageIndex, event.pageSize).subscribe(success => {
+      this.searchResult.length = event.pageSize * event.pageIndex;
+      this.searchResult.push(...success.data);
+      this.searchResultLength = success.count;
+      this.loading = false;
+    }, err => {
+      alert(JSON.stringify(err));
+    });
   }
 }

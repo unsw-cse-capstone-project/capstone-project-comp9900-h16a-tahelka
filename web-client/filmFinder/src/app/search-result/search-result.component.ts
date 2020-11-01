@@ -31,7 +31,7 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   @ViewChildren(ReviewListComponent) movieReviewListComponents: QueryList<ReviewListComponent>;
   recommendations: Recommendations[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  loading = false;
+  @Input() loading: boolean;
   @Output() pageChangedEvent = new EventEmitter<any>();
   constructor() { }
 
@@ -67,20 +67,31 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   {
     return s && s[0].toUpperCase() + s.slice(1);
   }
-  pageChanged(event): void{
-    console.log(event);
-    this.pageChangedEvent.emit(event);
+  pageChanged(event: any): void {
+    if (event.pageIndex > event.previousPageIndex) {
+      this.loading = true;
+      this.pageChangedEvent.emit(event);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    if (changes.dataSource.currentValue) {
-      this.loading = false;
+    if (changes.dataSource && !changes.dataSource.firstChange) {
       if (changes.dataSourceLength) {
         changes.dataSource.currentValue.length = changes.dataSourceLength.currentValue;
       }
       this.dataSourceMatTable = new MatTableDataSource<MovieResult>(changes.dataSource.currentValue);
+      this.dataSourceMatTable._updateChangeSubscription();
       this.dataSourceMatTable.paginator = this.paginator;
+      this.loading = false;
+    } else {
+      if (this.dataSource) {
+        this.dataSource.length = this.dataSourceLength;
+      }
+      this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
+      this.dataSourceMatTable._updateChangeSubscription();
+      this.dataSourceMatTable.paginator = this.paginator;
+      this.loading = false;
+
     }
   }
 }

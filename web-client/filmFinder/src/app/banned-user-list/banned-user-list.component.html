@@ -2,6 +2,7 @@
 <h2 class="left-padding">Your banned user list</h2>
 <mat-paginator
   [pageSizeOptions]="[5, 10, 15, 20, 30]"
+  pageSize="10"
   showFirstLastButtons
   (page)="pageChanged($event)">
 </mat-paginator>

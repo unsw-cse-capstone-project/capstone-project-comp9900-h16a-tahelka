@@ -1,6 +1,6 @@
 export interface PageChangedModel{
   previousPageIndex: number;
-  pageSize: string;
+  pageSize: number;
   length: number;
   pageIndex: number;
 }
