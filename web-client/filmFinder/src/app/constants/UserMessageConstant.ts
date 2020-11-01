@@ -23,5 +23,6 @@ export class UserMessageConstant {
   public static get UNBAN_SUCCESSFUL(): string { return 'User have been unbanned'; }
   public static get UNBAN_UNSUCCESSFUL(): string { return 'User unbanned unsuccessful, try again!'; }
   public static get BROWSE_GENRE_ERROR(): string { return 'An error occurred. Select another Genre'; }
+  public static get BROWSE_DIRECTOR_ERROR(): string { return 'Could not find any result!'; }
   public static get ERROR(): string { return 'Try again!'; }
 }
