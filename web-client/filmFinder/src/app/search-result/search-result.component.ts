@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MovieDetailsComponent} from '../movie-details/movie-details.component';
 import {MovieResult} from '../models/MovieResult';
@@ -59,9 +59,15 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   }
   wishlistMovieRemoved(wishlistRemoved: WishlistRemove, movie: MovieResult): void {
     this.dataSource = this.dataSource.filter(obj => obj !== movie);
+    this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
+    this.dataSourceMatTable._updateChangeSubscription();
+    this.dataSourceMatTable.paginator = this.paginator;
   }
   watchlistMovieRemoved(movieID: number, movie: MovieResult): void {
     this.dataSource = this.dataSource.filter(obj => obj !== movie);
+    this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
+    this.dataSourceMatTable._updateChangeSubscription();
+    this.dataSourceMatTable.paginator = this.paginator;
   }
   capitalize(s: string): string
   {
@@ -69,7 +75,6 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   }
   pageChanged(event: any): void {
     if (event.pageIndex > event.previousPageIndex) {
-      this.loading = true;
       this.pageChangedEvent.emit(event);
     }
   }
@@ -82,7 +87,6 @@ export class SearchResultComponent implements OnInit, OnChanges  {
       this.dataSourceMatTable = new MatTableDataSource<MovieResult>(changes.dataSource.currentValue);
       this.dataSourceMatTable._updateChangeSubscription();
       this.dataSourceMatTable.paginator = this.paginator;
-      this.loading = false;
     } else {
       if (this.dataSource) {
         this.dataSource.length = this.dataSourceLength;
@@ -90,8 +94,6 @@ export class SearchResultComponent implements OnInit, OnChanges  {
       this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
       this.dataSourceMatTable._updateChangeSubscription();
       this.dataSourceMatTable.paginator = this.paginator;
-      this.loading = false;
-
     }
   }
 }

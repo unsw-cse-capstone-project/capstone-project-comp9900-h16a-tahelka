@@ -5,6 +5,7 @@ import {WebService} from '../services/web.service';
 import {Search} from '../models/Search';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { UserMessageConstant } from '../constants/UserMessageConstant';
+import {PageChangedModel} from '../models/PageChangedModel';
 
 @Component({
   selector: 'app-browse-genre',
@@ -19,6 +20,9 @@ export class BrowseGenreComponent implements OnInit {
   genreForm: FormGroup = new FormGroup({
     genre: new FormControl('')
   });
+  loading = false;
+  searchResultLength: number;
+  searchClicked = false;
   constructor(private webService: WebService, private snackBar: MatSnackBar) {
     this.genre = [
       {value: 'Action'},
@@ -47,13 +51,31 @@ export class BrowseGenreComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
+    this.searchClicked = true;
+    this.loading = true;
     this.webService.search(this.genreForm.value, 0, 10).subscribe(success => {
       this.searchResult = success.data;
+      this.searchResultLength = success.count;
+      this.loading = false;
     }, err => {
       this.snackBar.open(
         UserMessageConstant.BROWSE_GENRE_ERROR,
         UserMessageConstant.DISMISS,
         { duration: this.snackBarDuaration});
+    });
+  }
+  pageChangedEvent(event: PageChangedModel): void {
+    this.loading = true;
+    this.webService.search(this.genreForm.value, event.pageIndex, event.pageSize).subscribe(success => {
+      // set length to actual length
+      this.searchResult.length = event.pageSize * event.pageIndex;
+      // add data in
+      this.searchResult.push(...success.data);
+      // set max length in again
+      this.searchResultLength = success.count;
+      this.loading = false;
+    }, err => {
+      alert(JSON.stringify(err));
     });
   }
 }

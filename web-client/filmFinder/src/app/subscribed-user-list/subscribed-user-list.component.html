@@ -1,5 +1,11 @@
 <app-navbar [isLoggedIn]="true"></app-navbar>
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 15, 20, 30]"
+  pageSize="10"
+  showFirstLastButtons
+  (page)="pageChanged($event)">
+</mat-paginator>
+<mat-table [dataSource]="dataSourceMatTable" class="mat-elevation-z8">
   <!-- Name Column -->
   <ng-container matColumnDef="username">
     <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>

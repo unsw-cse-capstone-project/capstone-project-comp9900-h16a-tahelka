@@ -85,8 +85,11 @@ export class SearchComponent implements OnInit {
     this.loading = true;
     const queryCopy = (JSON.parse(JSON.stringify(this.searchForm.value)));
     this.webService.search(this.clean(queryCopy), event.pageIndex, event.pageSize).subscribe(success => {
+      // set length to actual length
       this.searchResult.length = event.pageSize * event.pageIndex;
+      // add data in
       this.searchResult.push(...success.data);
+      // set max length in again
       this.searchResultLength = success.count;
       this.loading = false;
     }, err => {
