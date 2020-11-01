@@ -33,14 +33,14 @@ film_summary = api.model('Film Summary',
                         )
 
 search_results = api.model('Search Results',
-                           {'search_results': fields.List(fields.Nested(film_summary)),
+                           {'data': fields.List(fields.Nested(film_summary)),
                             'count': fields.Integer(description = 'The total number of search results')
                            }
                           )
 
 parser = reqparse.RequestParser()
-parser.add_argument('offset', required = True, type = int)
-parser.add_argument('limit', required = True, type = int)
+parser.add_argument('page_index', required = True, type = int)
+parser.add_argument('page_size', 10, type = int)
 parser.add_argument('name', '')
 parser.add_argument('description', '')
 parser.add_argument('mood', choices = tuple(mood_mappings.keys()))
@@ -67,10 +67,10 @@ class MovieSearch(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         args = parser.parse_args()
-        offset = args.get('offset')
-        is_valid_integer(offset)
-        limit = args.get('limit')
-        is_valid_integer(limit)
+        page_index = args.get('page_index')
+        is_valid_integer(page_index)
+        page_size = args.get('page_size')
+        is_valid_integer(page_size)
         name_keywords = validate_search_keywords(args.get('name'))
         description_keywords = validate_search_keywords(args.get('description'))
         director = validate_director(args.get('director'))
@@ -91,7 +91,7 @@ class MovieSearch(Resource):
                                               Person.name == director,
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).distinct().offset(offset).limit(limit)
+                                             ).distinct().offset(page_index * page_size).limit(page_size)
                 count = session.query(Movie.movieID).join(GenreOfFilm).join(Genres)\
                                                     .join(FilmDirector).join(Person)\
                                                     .filter(Genres.genre.in_(genres),
@@ -106,7 +106,7 @@ class MovieSearch(Resource):
                                       .filter(Person.name == director,
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).offset(offset).limit(limit)
+                                             ).offset(page_index * page_size).limit(page_size)
                 count = session.query(Movie.movieID).join(FilmDirector).join(Person)\
                                                     .filter(Person.name == director,
                                                             Movie.title.ilike(f'%{name_keywords}%'),
@@ -120,7 +120,7 @@ class MovieSearch(Resource):
                                       .filter(Genres.genre.in_(genres),
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).distinct().offset(offset).limit(limit)
+                                             ).distinct().offset(page_index * page_size).limit(page_size)
                 count = session.query(Movie.movieID).join(GenreOfFilm).join(Genres)\
                                                     .filter(Genres.genre.in_(genres),
                                                             Movie.title.ilike(f'%{name_keywords}%'),
@@ -131,7 +131,7 @@ class MovieSearch(Resource):
                                       Movie.ratings_sum, Movie.review_count
                                      ).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).offset(offset).limit(limit)
+                                             ).offset(page_index * page_size).limit(page_size)
                 count = session.query(Movie.movieID).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                                             Movie.description.ilike(f'%{description_keywords}%')
                                                            ).count()
@@ -142,4 +142,4 @@ class MovieSearch(Resource):
         search_results.sort(key = lambda film: (-film['rating'], film['title']))
         for film in search_results:
             film['rating'] = str(film['rating'])
-        return {'search_results': search_results, 'count': count}, 200
+        return {'data': search_results, 'count': count}, 200
