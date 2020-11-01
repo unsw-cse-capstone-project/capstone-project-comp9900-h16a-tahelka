@@ -1,8 +1,13 @@
 <app-navbar [isLoggedIn]="true"></app-navbar>
 <h2 class="left-padding">Your banned user list</h2>
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 15, 20, 30]"
+  showFirstLastButtons
+  (page)="pageChanged($event)">
+</mat-paginator>
+<mat-table [dataSource]="dataSourceMatTable" matSort  class="mat-elevation-z8">
   <ng-container matColumnDef="username">
-    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element?.username}} </mat-cell>
   </ng-container>
 

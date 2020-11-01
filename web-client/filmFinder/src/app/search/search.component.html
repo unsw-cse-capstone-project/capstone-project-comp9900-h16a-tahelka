@@ -34,4 +34,4 @@
     </mat-grid-tile>
   </mat-grid-list>
 </form>
-<app-search-result [dataSource]="searchResult"></app-search-result>
+<app-search-result (pageChangedEvent)="pageChangedEvent($event)" [dataSourceLength]="searchResultLength" [dataSource]="searchResult"></app-search-result>

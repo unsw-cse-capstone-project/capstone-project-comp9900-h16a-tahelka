@@ -142,4 +142,4 @@ class MovieSearch(Resource):
         search_results.sort(key = lambda film: (-film['rating'], film['title']))
         for film in search_results:
             film['rating'] = str(film['rating'])
-        return {'search_results': search_results, 'count': count}, 200
+        return {'data': search_results, 'count': count}, 200

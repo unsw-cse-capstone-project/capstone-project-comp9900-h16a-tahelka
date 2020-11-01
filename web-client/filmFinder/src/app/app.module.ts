@@ -30,6 +30,7 @@ import { SubscribedWishlistMoviesComponent } from './subscribed-wishlist-movies/
 import { RemoveMovieWatchlistComponent } from './remove-movie-watchlist/remove-movie-watchlist.component';
 import { WatchedMoviesComponent } from './watched-movies/watched-movies.component';
 import { BannedUserListComponent } from './banned-user-list/banned-user-list.component';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -58,14 +59,15 @@ import { BannedUserListComponent } from './banned-user-list/banned-user-list.com
     WatchedMoviesComponent,
     BannedUserListComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatSortModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
