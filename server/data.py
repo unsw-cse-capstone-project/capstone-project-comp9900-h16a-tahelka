@@ -31,26 +31,26 @@ def import_data(file, table):
                     try:
                         Engine.execute(table.__table__.insert().values(records))
                     except: pass
-                    records.clear()
-        if records:
-            Engine.execute(table.__table__.insert().values(records))
+                    records = [line]
+        Engine.execute(table.__table__.insert().values(records))
     except: pass
 
 password_hash = HashGenerator('COMP9900').generate()
-records = []
 try:
     with open(data_dirname / 'User.csv', encoding = 'utf-8') as file:
         file = csv.reader(file)
         next(file)
+        records = []
         for line in file:
             if (len(records) + 1) * 5 <= VARIABLE_LIMIT:
                 records.append((line[0], line[1], line[2], password_hash, 2001))
             else:
-                Engine.execute(User.__table__.insert().values(records))
-                records.clear()
-except: pass
-if records:
+                try:
+                    Engine.execute(User.__table__.insert().values(records))
+                except: pass
+                records = [line]
     Engine.execute(User.__table__.insert().values(records))
+except: pass
 
 for file, table in ('Genres.csv', Genres), ('Movie.csv', Movie),\
                    ('Person.csv', Person), ('FilmCast.csv', FilmCast),\
