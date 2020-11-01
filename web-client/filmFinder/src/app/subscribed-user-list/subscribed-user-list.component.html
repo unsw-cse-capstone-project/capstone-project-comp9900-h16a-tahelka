@@ -5,10 +5,10 @@
   showFirstLastButtons
   (page)="pageChanged($event)">
 </mat-paginator>
-<mat-table [dataSource]="dataSourceMatTable" class="mat-elevation-z8">
+<mat-table [dataSource]="dataSourceMatTable" matSort class="mat-elevation-z8">
   <!-- Name Column -->
   <ng-container matColumnDef="username">
-    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element?.username}} </mat-cell>
   </ng-container>
 
