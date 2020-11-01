@@ -59,9 +59,15 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   }
   wishlistMovieRemoved(wishlistRemoved: WishlistRemove, movie: MovieResult): void {
     this.dataSource = this.dataSource.filter(obj => obj !== movie);
+    this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
+    this.dataSourceMatTable._updateChangeSubscription();
+    this.dataSourceMatTable.paginator = this.paginator;
   }
   watchlistMovieRemoved(movieID: number, movie: MovieResult): void {
     this.dataSource = this.dataSource.filter(obj => obj !== movie);
+    this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
+    this.dataSourceMatTable._updateChangeSubscription();
+    this.dataSourceMatTable.paginator = this.paginator;
   }
   capitalize(s: string): string
   {
