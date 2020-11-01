@@ -1,18 +1,14 @@
-import {Component, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MovieDetailsComponent} from '../movie-details/movie-details.component';
 import {MovieResult} from '../models/MovieResult';
 import {Recommendations} from '../models/Recommendations';
 import {ReviewListComponent} from '../review-list/review-list.component';
 import {WishlistRemove} from '../models/WishlistRemove';
-import {constructExclusionsMap} from 'tslint/lib/rules/completed-docs/exclusions';
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  description: string;
-}
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import { SimpleChanges } from '@angular/core';
+
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
@@ -25,13 +21,18 @@ export interface PeriodicElement {
     ]),
   ],
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent implements OnInit, OnChanges  {
   columnsToDisplay = ['title', 'year', 'rating'];
   @Input() dataSource: MovieResult[];
+  @Input() dataSourceLength: number;
+  dataSourceMatTable = new MatTableDataSource<MovieResult>();
   expandedElement: MovieResult | null;
   @ViewChildren(MovieDetailsComponent) movieDetailsComponents: QueryList<MovieDetailsComponent>;
   @ViewChildren(ReviewListComponent) movieReviewListComponents: QueryList<ReviewListComponent>;
   recommendations: Recommendations[];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  loading = false;
+  @Output() pageChangedEvent = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit(): void {
@@ -65,5 +66,21 @@ export class SearchResultComponent implements OnInit {
   capitalize(s: string): string
   {
     return s && s[0].toUpperCase() + s.slice(1);
+  }
+  pageChanged(event): void{
+    console.log(event);
+    this.pageChangedEvent.emit(event);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    if (changes.dataSource.currentValue) {
+      this.loading = false;
+      if (changes.dataSourceLength) {
+        changes.dataSource.currentValue.length = changes.dataSourceLength.currentValue;
+      }
+      this.dataSourceMatTable = new MatTableDataSource<MovieResult>(changes.dataSource.currentValue);
+      this.dataSourceMatTable.paginator = this.paginator;
+    }
   }
 }

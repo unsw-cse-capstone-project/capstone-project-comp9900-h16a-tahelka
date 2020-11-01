@@ -47,8 +47,8 @@ export class BrowseGenreComponent implements OnInit {
   ngOnInit(): void {
   }
   search(): void {
-    this.webService.search(this.genreForm.value).subscribe(success => {
-      this.searchResult = success;
+    this.webService.search(this.genreForm.value, 0, 10).subscribe(success => {
+      this.searchResult = success.data;
     }, err => {
       this.snackBar.open(
         UserMessageConstant.BROWSE_GENRE_ERROR,

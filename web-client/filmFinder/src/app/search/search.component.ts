@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit {
   mood: object[];
   searchObject: Search;
   searchResult: MovieResult[];
+  searchResultLength: number;
   searchForm: FormGroup = new FormGroup({
     name: new FormControl(),
     description: new FormControl(),
@@ -58,10 +59,11 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  search(): void {
+  search(offset= 0, limit= 15): void {
     const queryCopy = (JSON.parse(JSON.stringify(this.searchForm.value)));
-    this.webService.search(this.clean(queryCopy)).subscribe(success => {
-      this.searchResult = success;
+    this.webService.search(this.clean(queryCopy), offset, limit).subscribe(success => {
+      this.searchResult = success.data;
+      this.searchResultLength = success.count;
     }, err => {
       alert(JSON.stringify(err));
     });
@@ -74,5 +76,7 @@ export class SearchComponent implements OnInit {
     }
     return obj;
   }
-
+  pageChangedEvent(event: any): void {
+    this.search(10, 5);
+  }
 }
