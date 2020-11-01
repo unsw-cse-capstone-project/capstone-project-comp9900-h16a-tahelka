@@ -2,13 +2,14 @@ from flask import request, g
 from flask_restx import Namespace, fields, reqparse, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
+from models.BannedList import BannedList
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
 from models.Movie import Movie
 from models.Person import Person
 from util.IntValidations import is_valid_integer
-from util.StringValidations import validate_search_keywords, validate_director
+from util.StringValidations import validate_search_keywords
 from util.RatingCalculator import compute
 
 
@@ -50,14 +51,14 @@ parser.add_argument('genre',
                                'Animation', 'Biography', 'Action', 'Comedy', 'Family', 'Romance'
                               )
                    )
-parser.add_argument('director')
+parser.add_argument('director', '')
 
 @api.route('')
 class MovieSearch(Resource):
     @api.response(200, 'Success', search_results)
-    @api.response(400, 'Offset and limit must both be non-negative integers\n'
-                       'Name and description keyword strings must each be no more than 250 characters long\n'
-                       'Director must match the name of a director'
+    @api.response(400,
+                  'page_index and page_size must both be non-negative integers\n'
+                  'Name and description keyword strings, and director, must each be no more than 250 characters long\n'
                  )
     @api.response(401, 'Authentication token is missing')
     @api.expect(parser, validate = True)
@@ -73,7 +74,7 @@ class MovieSearch(Resource):
         is_valid_integer(page_size)
         name_keywords = validate_search_keywords(args.get('name'))
         description_keywords = validate_search_keywords(args.get('description'))
-        director = validate_director(args.get('director'))
+        director = validate_search_keywords(args.get('director'))
         genre = args.get('genre')
         mood = args.get('mood')
         if mood:
@@ -88,14 +89,14 @@ class MovieSearch(Resource):
                                      ).join(GenreOfFilm).join(Genres)\
                                       .join(FilmDirector).join(Person)\
                                       .filter(Genres.genre.in_(genres),
-                                              Person.name == director,
+                                              Person.name.ilike(director),
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
                                              ).distinct().offset(page_index * page_size).limit(page_size)
                 count = session.query(Movie.movieID).join(GenreOfFilm).join(Genres)\
                                                     .join(FilmDirector).join(Person)\
                                                     .filter(Genres.genre.in_(genres),
-                                                            Person.name == director,
+                                                            Person.name.ilike(director),
                                                             Movie.title.ilike(f'%{name_keywords}%'),
                                                             Movie.description.ilike(f'%{description_keywords}%')
                                                            ).distinct().count()
@@ -103,12 +104,12 @@ class MovieSearch(Resource):
                 query = session.query(Movie.movieID, Movie.title, Movie.year,
                                       Movie.ratings_sum, Movie.review_count
                                      ).join(FilmDirector).join(Person)\
-                                      .filter(Person.name == director,
+                                      .filter(Person.name.ilike(director),
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
                                              ).offset(page_index * page_size).limit(page_size)
                 count = session.query(Movie.movieID).join(FilmDirector).join(Person)\
-                                                    .filter(Person.name == director,
+                                                    .filter(Person.name.ilike(director),
                                                             Movie.title.ilike(f'%{name_keywords}%'),
                                                             Movie.description.ilike(f'%{description_keywords}%')
                                                            ).count()
@@ -135,8 +136,11 @@ class MovieSearch(Resource):
                 count = session.query(Movie.movieID).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                                             Movie.description.ilike(f'%{description_keywords}%')
                                                            ).count()
+        banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)
+                                                                    .filter(BannedList.userID == g.userID)
+                            )
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
-                           'rating': compute(movieID, g.userID, ratings_sum, review_count)
+                           'rating': compute(movieID, g.userID, ratings_sum, review_count, banned_users)
                           } for movieID, title, year, ratings_sum, review_count in query
                          ]
         search_results.sort(key = lambda film: (-film['rating'], film['title']))
