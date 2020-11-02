@@ -16,4 +16,14 @@ Week 5 (12/10 - 19/10)
 Worked on exploring the system and organizing stories to be presented in demo A. Practiced and presented demo A. Conducted more in-depth literature review for recommendation system and created diagrams to explain to the team and get team opinion on the backend structure and execution time allowed for the recommendation system. Finalized the algorithms to be used in the rec system (knn, Pearson correlation and an addition matrix). 
 
 Week 6 (20/10 - 27/10)
-Will create the recommendation system (at least 2/4 parts) in python and hand it over to the backend team to have it integrated with the system. 
+Created 2/5 parts of the recommendation system. Cleaned up the data and created a bag of words model then experimented with creating a word2vec from scratch using a 3 layer Neural Network, experimented with the python genism module for NLP, read over 12 literature papers regarding different recommendation systems. Finally decided on a bag of words model using the inverse document frequency and then the cosine function to find movie to movie similarity scores. Also cleaned up the Film director and cast datasets and created a movie to movie similarity matrix based on directors' bio similarities. 
+
+
+Week 7 (28/10 - 04/11)
+Will complete the recommendation system (creating the movie review to move matrix and the movie to movie matrix based on genre similarity). Will then code the ensemble model calculation and prepare for the demo B. 
+
+
+
+
+
+
