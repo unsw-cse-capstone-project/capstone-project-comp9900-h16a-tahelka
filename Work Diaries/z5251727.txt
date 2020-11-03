@@ -61,3 +61,21 @@ search for movies by mood.  Also added input validations for all the services
 I'd coded previously.  User Stories on the recommendation system are all still
 in progress.  The plan for the coming week is to complete the fourth sprint,
 which includes stories relating to banning other FilmFinders.
+
+Week 7
+
+Continued coding.  Added the ability for a user to ban and unban another user,
+as well as to view his Banned List.  Also coded the rating calculator, which
+computes the average rating a user sees for a movie, free from the influence of
+banned users, and updated Wishlist, Watchlist, movie search and full movie
+details code accordingly; also updated the code for full movie details to ensure
+reviews by banned users are not seen.  Updated the input validation for movie
+search such that it now occurs at the request level.  Discussed database
+validations with Yash and identified a few additions to be made.  Spent a lot of
+time trying to sort out issues that had arisen with the data migration script;
+finally identified the issue and got it working properly.  Implemented
+pagination for movie search/browse, which has created difficulties for sorting
+the results properly.  User Stories for the recommendation system are making
+good progress and are expected to be finished sometime in the next week.  The
+plan for the coming week is to finish the implementation and to start the
+project report.
