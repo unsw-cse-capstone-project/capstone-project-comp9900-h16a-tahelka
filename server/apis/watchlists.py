@@ -38,6 +38,7 @@ class Watchlists(Resource):
         session.add(new_watchlist)
         try:
             session.commit()
+            session.close()
         except IntegrityError:  #If Watchlist already present
             session.rollback()
             raise BadRequest

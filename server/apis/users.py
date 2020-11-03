@@ -50,7 +50,7 @@ class Users(Resource):
         new_user = User(username, email, hashed_password, yob)
         session.add(new_user)
         session.commit()
-
+        session.close()
         # Put the current user id in global
         # g.userID = new_user.userID    #TODO: check if needed later.
 

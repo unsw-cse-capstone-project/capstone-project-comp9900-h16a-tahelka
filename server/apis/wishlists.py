@@ -38,6 +38,7 @@ class Wishlists(Resource):
         session.add(new_wishlist)
         try:
             session.commit()
+            session.close()
         except IntegrityError:  #If wishlist already present
             session.rollback()
             raise BadRequest

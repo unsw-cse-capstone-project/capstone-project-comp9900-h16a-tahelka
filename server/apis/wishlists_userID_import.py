@@ -41,7 +41,7 @@ class Wishlists_UserID(Resource):
                 session.add(wl)
 
             session.commit()
-
+            session.close()
             response = {'message': 'Wishlisted Movies imported'}
             return response, 201
 

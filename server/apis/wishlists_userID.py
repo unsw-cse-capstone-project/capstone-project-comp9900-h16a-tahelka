@@ -45,6 +45,7 @@ class Wishlists_UserID(Resource):
         # Check if current user is subscribed to said user
         res = session.query(Subscription).filter(Subscription.userID == g.userID) \
             .filter(Subscription.subscribedUserID == userID).first()
+        session.close()
 
         isSubscribed = False
         if res:
