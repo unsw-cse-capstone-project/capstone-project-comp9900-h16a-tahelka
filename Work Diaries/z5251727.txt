@@ -77,5 +77,5 @@ finally identified the issue and got it working properly.  Implemented
 pagination for movie search/browse, which has created difficulties for sorting
 the results properly.  User Stories for the recommendation system are making
 good progress and are expected to be finished sometime in the next week.  The
-plan for the coming week is to finish the implementation and to start the
-project report.
+plan for the coming week is to fix pagination and finish the overall software
+implementation, and to start the project report.
