@@ -21,9 +21,8 @@ export class WatchedMoviesComponent implements OnInit {
   getData(): void{
     this.webService.getWatchlist().subscribe(success => {
       this.datasource = success.watchlist;
-      this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_REMOVED, UserMessageConstant.DISMISS);
     }, err => {
-      this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_REMOVE_UNSUCCESSFUL, UserMessageConstant.DISMISS);
+      this.successfulUpdateSnackbar(UserMessageConstant.ERROR, UserMessageConstant.DISMISS);
     });
   }
   private successfulUpdateSnackbar(message, action): void {

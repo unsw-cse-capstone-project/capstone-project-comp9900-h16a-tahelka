@@ -52,11 +52,11 @@ class SubscribeUsers(Resource):
 
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
-        limit = 10
+
 
         results = session.query(Subscription.subscribedUserID, User.username) \
             .filter(Subscription.userID == g.userID) \
-            .filter(User.userID == Subscription.subscribedUserID).limit(limit)
+            .filter(User.userID == Subscription.subscribedUserID)
 
         users = list()
         for id, username in results:

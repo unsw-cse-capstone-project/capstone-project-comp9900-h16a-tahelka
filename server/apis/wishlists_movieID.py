@@ -33,6 +33,6 @@ class Wishlists_MovieID(Resource):
             raise NotFound
         else:
             session.commit()
-
+            session.close()
         return 204
 

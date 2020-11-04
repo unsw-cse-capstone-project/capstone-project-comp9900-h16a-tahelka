@@ -29,4 +29,5 @@ class BannedLists(Resource):
             session.commit()
             raise NotFound
         session.commit()
+        session.close()
         return {'message': 'Reviewer unbanned.'}, 200

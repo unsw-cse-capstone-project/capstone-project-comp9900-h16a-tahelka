@@ -7,6 +7,7 @@ from models.User import User
 from werkzeug.exceptions import Forbidden, NotFound
 from util.IntValidations import is_valid_integer
 
+from models.Subscription import Subscription
 
 api = Namespace('Banned List', path = '/bannedlists')
 
@@ -40,16 +41,22 @@ class BannedLists(Resource):
         Add a FilmFinder to your Banned List.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
-        is_valid_integer(request.json['userID'])
+        bannedUserID = request.json['userID']
+        is_valid_integer(bannedUserID)
         session = Session()
         query = session.query(User).filter(User.userID == request.json['userID']).one_or_none()
         if not query:
             raise NotFound
         query = session.query(BannedList).filter(BannedList.userID == g.userID,
-                                                 BannedList.bannedUserID == request.json['userID']
+                                                 BannedList.bannedUserID == bannedUserID
                                                 ).one_or_none()
         if query or g.userID == request.json['userID']:
             raise Forbidden
+
+        removeSubQuery = session.query(Subscription).filter(Subscription.userID == g.userID,
+                                                            Subscription.subscribedUserID == bannedUserID)\
+                                                            .delete()
+
         session.add(BannedList(g.userID, request.json['userID']))
         session.commit()
         return {'message': 'Reviewer banned.'}, 201
