@@ -17,8 +17,10 @@ def write_data_to_mongo(csvfile, client, collectionName):
     for chunk in pd.read_csv(csvfile, chunksize=chunksize):
         records = json.loads(chunk.T.to_json()).values()
         # records = keys_to_int(records.)
+        c = client[dbname][collectionName]
+        c.delete_many({})
         if records:
-            client[dbname][collectionName].insert_many(records)
+            c.insert_many(records)
             index += 1
             print(f'inserted {index*chunksize} records of {csvfile}')
 
