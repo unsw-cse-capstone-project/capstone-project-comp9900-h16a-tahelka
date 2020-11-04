@@ -1,3 +1,12 @@
+<mat-slide-toggle (change)="updatedDirector($event)" [checked]="useDirector">Use Director </mat-slide-toggle>
+<mat-slide-toggle (change)="updatedGenre($event)" [checked]="useGenre">Use Genre </mat-slide-toggle>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10]"
+  pageSize="10"
+  showFirstLastButtons
+  >
+</mat-paginator>
 <mat-table [dataSource]="dataSourceMatTable" class="mat-elevation-z8">
   <ng-container matColumnDef="title">
     <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>

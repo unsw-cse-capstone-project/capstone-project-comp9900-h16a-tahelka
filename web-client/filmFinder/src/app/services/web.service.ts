@@ -47,13 +47,14 @@ export class WebService {
     headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
     return this.http.post(reviewUrl, review, {headers});
   }
-  // TODO: Remove this as we can get data from movie details but we will need this to get user-defined recommendations
-  // recommend(id: number): Observable<any>{
-  //   const moviesUrl = this.API_URL + 'movies/' + id.toString();
-  //   let headers = new HttpHeaders();
-  //   headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
-  //   return this.http.get(moviesUrl, {headers});
-  // }
+  recommend(id: number, useDirector = 1, useGenre= 1): Observable<any>{
+    const moviesUrl = this.API_URL + 'movies/' + id.toString() + '/recommendations';
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + this.authenticationService.currentUserValue.token);
+    let params = new HttpParams().append('use_director', useDirector.toString());
+    params = params.append('use_genre', useGenre.toString());
+    return this.http.get(moviesUrl, {headers, params});
+  }
   wishlistAdd(movieId: number): Observable<any> {
     const wishlistUrl =  this.API_URL + 'wishlists';
     let headers = new HttpHeaders();

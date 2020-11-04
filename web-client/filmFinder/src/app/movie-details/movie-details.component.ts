@@ -17,7 +17,6 @@ export class MovieDetailsComponent implements OnInit {
   movieDetailsObject: MovieDetails;
   displayedColumns: string[] = ['title', 'year', 'rating', 'description', 'genre', 'director', 'cast'];
   dataSource: MovieDetails[];
-  @Output() recommendations = new EventEmitter<Recommendations[]>();
   @Output() reviews = new EventEmitter<MovieReview[]>();
   constructor(private webService: WebService) { }
 
@@ -27,15 +26,11 @@ export class MovieDetailsComponent implements OnInit {
       this.webService.movieDetails(this.movie.movieID).subscribe(success => {
         this.movieDetailsObject = success;
         this.dataSource = [success];
-        this.emitRecommendations(this.movieDetailsObject.recommendations);
         this.emitMovieReviews(this.movieDetailsObject.reviews)
       }, err => {
         alert(JSON.stringify(err));
       });
     }
-  emitRecommendations(recommendations: Recommendations[]): void {
-    this.recommendations.emit(recommendations);
-  }
   emitMovieReviews(movieReviews: MovieReview[]): void {
     this.reviews.emit(movieReviews);
   }
