@@ -38,6 +38,7 @@ class Watchlists(Resource):
         session.add(new_watchlist)
         try:
             session.commit()
+            session.close()
         except IntegrityError:  #If Watchlist already present
             session.rollback()
             raise BadRequest
@@ -54,10 +55,10 @@ class Watchlists(Resource):
 
         is_valid_integer(userID)
 
-        limit = 10
+
         results = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum, \
                                 Movie.review_count).filter(Watchlist.userID == userID) \
-            .filter(Watchlist.movieID == Movie.movieID).limit(limit)
+            .filter(Watchlist.movieID == Movie.movieID)
 
         movies = list()
         for movieID, title, year, ratings_sum, review_count in results:
