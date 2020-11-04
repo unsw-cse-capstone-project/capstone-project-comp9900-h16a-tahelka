@@ -18,7 +18,7 @@ def write_data_to_mongo(csvfile, client, collectionName):
         records = json.loads(chunk.T.to_json()).values()
         # records = keys_to_int(records.)
         c = client[dbname][collectionName]
-        c.delete_many({})
+
         if records:
             c.insert_many(records)
             index += 1
@@ -44,10 +44,11 @@ def read_file_to_push():
         csvFile = join(mypath, csvFile)
         write_data_to_mongo(csvFile, client, collectionName)
 
-# read_file_to_push()
-mat = 'movie_movie'
-f = join(mypath, mat)
-f = f + '.csv'
+read_file_to_push()
 
-
-write_data_to_mongo(f, client, mat)
+# mat = 'movie_movie'
+# f = join(mypath, mat)
+# f = f + '.csv'
+#
+#
+# write_data_to_mongo(f, client, mat)
