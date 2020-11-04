@@ -32,6 +32,9 @@ export class WishListComponent implements OnInit {
     }
     this.route.params.subscribe(params => {
       this.id = params?.id;
+      if (this.id !== undefined) {
+        this.isWishlistDetails = false;
+      }
     });
     this.setRemoveButtonView();
   }

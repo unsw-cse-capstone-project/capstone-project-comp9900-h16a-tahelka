@@ -31,9 +31,7 @@ export class BannedUserListComponent implements OnInit, AfterViewInit  {
   getData(): void {
     this.webService.getBannedUserList().subscribe(success => {
       this.dataSource = success;
-      this.dataSourceMatTable = new MatTableDataSource<BannedUser>(this.dataSource);
-      this.dataSourceMatTable.paginator = this.paginator;
-      this.dataSourceMatTable.sort = this.sort;
+      this.setDataInMatTable();
     }, err => {
       alert(JSON.stringify(err));
     });
@@ -41,10 +39,17 @@ export class BannedUserListComponent implements OnInit, AfterViewInit  {
   onClick(bannedUser: BannedUser): void{
     this.webService.unBannedUser(bannedUser.userID).subscribe(success => {
       this.dataSource = this.dataSource.filter(obj => obj !== bannedUser);
+      this.setDataInMatTable();
       this.successfulUpdateSnackbar(UserMessageConstant.UNBAN_SUCCESSFUL, UserMessageConstant.DISMISS);
     }, err => {
       this.successfulUpdateSnackbar(UserMessageConstant.UNBAN_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });
+  }
+
+  private setDataInMatTable(): void {
+    this.dataSourceMatTable = new MatTableDataSource<BannedUser>(this.dataSource);
+    this.dataSourceMatTable.paginator = this.paginator;
+    this.dataSourceMatTable.sort = this.sort;
   }
 
   private successfulUpdateSnackbar(message, action): void {
