@@ -13,17 +13,19 @@ api = Namespace('Movies', path = '/movies',
 parser = reqparse.RequestParser()
 parser.add_argument('use_genre', required= False, type = int, default=1)
 parser.add_argument('use_director', required= False, type = int, default=1)
-movie_recommendation = api.model('Movie Recommendation',
+movie_details = api.model('movie',
                                  {'movieID': fields.Integer,
                                   'title': fields.String,
                                   'year': fields.Integer
                                  }
                                 )
-
+results = api.model('movies',
+                    {'movies':fields.List(fields.Nested(movie_details))}
+                    )
 @api.route('/<int:movieID>/recommendations')
 @api.param('movieID', 'The Movie identifier')
 class Recommendations(Resource):
-    # @api.response(200, 'Success', movie_recommendation)
+    @api.response(200, 'Success', results)
     @api.response(400, 'id must be a non-negative integer')
     @api.response(401, 'Authentication token is missing')
     @api.response(404, 'Movie was not found')
