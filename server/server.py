@@ -4,6 +4,8 @@ from apis import blueprint
 from apis import api
 import pandas as pd
 from os import path
+import threading
+
 app = Flask(__name__)
 CORS(app)
 
@@ -32,13 +34,17 @@ def handle_internal_server_error(error):
     response = {"message": "Internal server error."}
     return response, status_code
 
-recoDir = 'RecSystem'
-dataDir = 'RecoData'
-location = path.join(recoDir, dataDir)
-app.dirDf = pd.read_csv(path.join(location, 'director_movie.csv'))
-app.genDf = pd.read_csv(path.join(location,'genre_movie.csv'))
-app.userDf = pd.read_csv(path.join(location,'user_movie.csv'))
-app.movieDf = pd.read_csv(path.join(location,'movie_movie.csv'))
+def load_df():
+    recoDir = 'RecSystem'
+    dataDir = 'RecoData'
+    location = path.join(recoDir, dataDir)
+    app.dirDf = pd.read_csv(path.join(location, 'director_movie.csv'))
+    app.genDf = pd.read_csv(path.join(location,'genre_movie.csv'))
+    app.userDf = pd.read_csv(path.join(location,'user_movie.csv'))
+    app.movieDf = pd.read_csv(path.join(location,'movie_movie.csv'))
+
+dataLoaderThread = threading.Thread(target=load_df, name='dataLoaderThread')
+dataLoaderThread.start()
 
 # Run
 app.run(debug=True)
