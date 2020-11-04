@@ -10,7 +10,7 @@ def movie_similarity_calc(movieID, userID, movie, director, genre, user,
     movie_row = movie[movie.movieID == movieID]               
     dir_row = director[director.movieID == movieID]
     genre_row = genre[genre.movieID == movieID]
-    user_row = user[user.index == userID]
+    user_row = user[user.userID == userID]
     final = pd.concat([movie_row, dir_row, genre_row, user_row])
     totalMovies = len(movie_row.columns)
 
@@ -18,12 +18,13 @@ def movie_similarity_calc(movieID, userID, movie, director, genre, user,
     weights = (np.matrix([[use_movie,use_director,use_genre,use_user]]*totalMovies)).T
 
     #calculation
+    final = final.set_index('movieID')
     final = final*weights
     sim_score = pd.DataFrame(final.sum(0))            #sum down each column
-    sim_score.columns = ['score']                     #rename 
-    sim_score = sim_score.drop('movieID')             #delete movieID 
-    sim_score = sim_score.drop(str(movieID))          #delete actual movieID score
-    sim_score = sim_score.sort_values(by = 'score', ascending = False) #sort
+    # sim_score.columns = ['score']                     #rename
+    # sim_score = sim_score.drop('movieID')             #delete movieID
+    # sim_score = sim_score.drop(str(movieID))          #delete actual movieID score
+    # sim_score = sim_score.sort_values(by = 'score', ascending = False) #sort
 
     limit = 10
     topMovies = [int(movie) for movie in list(sim_score.head(limit).index)]
