@@ -27,7 +27,7 @@ def movie_similarity_calc(movieID, userID, movie, director, genre, user,
 
     sim_score = sim_score.sort_values(by = 0, ascending = False) #sort
     limit = 11
-    topMovies = [int(movie) for movie in list(sim_score.head(limit).index[1:])]
+    topMovies = [int(movie) for movie in list(sim_score.head(limit).index[2:])]
     return topMovies                    #return 10 best movies sim_score
 
 
