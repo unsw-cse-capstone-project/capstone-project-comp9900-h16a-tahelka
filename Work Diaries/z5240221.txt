@@ -42,3 +42,8 @@ Week 6:
 1. Multiple stories completed. (search by mood and wishlist add and remove)
 2. Recommendation engine discussions
 3. Code review 
+
+Week 7:
+1. Multiple stories completed. (pagination and banned user list)
+2. Recommendation engine discussions
+3. Code review 
