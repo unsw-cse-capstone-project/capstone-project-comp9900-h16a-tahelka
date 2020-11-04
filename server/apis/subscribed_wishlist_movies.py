@@ -24,7 +24,7 @@ class SubscribedWishlistMovies(Resource):
 
         cid = g.userID
 
-        results = session.query(User.username, Movie.title)\
+        results = session.query(User.username, Movie.title, User.userID)\
                 .select_from(Subscription)\
                 .join(Wishlist, Wishlist.userID == Subscription.subscribedUserID)\
                 .join(Movie, Movie.movieID == Wishlist.movieID)\
@@ -32,8 +32,8 @@ class SubscribedWishlistMovies(Resource):
                 .filter(Subscription.userID == cid)
 
         movies = list()
-        for username, title in results:
-            movies.append({'username': username, 'title': title})
+        for username, title, userID in results:
+            movies.append({'userID': userID, 'username': username, 'title': title})
 
         response = {'movies':movies}
         return response, 200
