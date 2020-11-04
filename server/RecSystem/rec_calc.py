@@ -4,7 +4,8 @@ import numpy as np
 #12.0 seconds (including reading the 4 files)
 
 # start = time.time()
-def movie_similarity_calc(movie, director, genre, user, movieID, userID, use_genre, use_director, use_movie = 5, use_user = 1):
+def movie_similarity_calc(movieID, userID, movie, director, genre, user,
+                          use_genre, use_director, use_movie = 5, use_user = 1):
     #retrieve the rows and concatenate
     movie_row = movie[movie.movieID == movieID]               
     dir_row = director[director.movieID == movieID]
@@ -28,6 +29,8 @@ def movie_similarity_calc(movie, director, genre, user, movieID, userID, use_gen
     topMovies = [int(movie) for movie in list(sim_score.head(limit).index)]
     return topMovies                    #return 10 best movies sim_score
 
+
+'''
 #SYSTEM INPUT -----------
 movieID = 114709.0
 userID = 2177.0
@@ -46,4 +49,5 @@ genre.columns = movie.columns.values
 
 #run file
 movie_similarity_calc(movie, director, genre, user, movieID, userID, use_genre, use_director)
+'''
 # print(time.time() - start)
