@@ -5,6 +5,9 @@ import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 import time
+from db_engine import Session
+from models.Subscription import Subscription
+from sqlalchemy import func
 
 
 def getIndex(userID, index_table):
@@ -74,7 +77,13 @@ dataset = pd.read_csv('MovieReview.csv', header = 0)
 movie_movie = pd.read_csv('movie_movie.csv', header = 0)               #load the movie-movie file
 
 #get the user: subscribed to users list dicionary
-sub_dict = {2177.0:[8619.0, 17474.0], 8619.0:[156183.0]}
+# sub_dict = {2177.0:[8619.0, 17474.0], 8619.0:[156183.0]}
+sub_dict = {userID: list(map(int, subscribedUserIDs.split(',')))
+                for userID, subscribedUserIDs
+                    in Session().query(Subscription.userID,
+                                       func.group_concat(Subscription.subscribedUserID)
+                                      ).group_by(Subscription.userID)
+           }
 
 #run file
 start = time.time()
