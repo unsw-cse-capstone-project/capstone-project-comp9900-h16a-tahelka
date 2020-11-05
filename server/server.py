@@ -47,4 +47,5 @@ dataLoaderThread = threading.Thread(target=load_df, name='dataLoaderThread')
 dataLoaderThread.start()
 
 # Run
-app.run(debug=True)
+# app.run(debug=True)
+app.run(debug = True, port = 7000)
