@@ -6,6 +6,7 @@ from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 import time
 from db_engine import Session
+from models.MovieReview import MovieReview
 from models.Subscription import Subscription
 from sqlalchemy import func
 
@@ -73,16 +74,18 @@ def getPerdictionsOfUsers(df, subscribed_dict):
 
 #---------------------------
 #import dataset ----------- CHANGE TO DRAW FROM DATABASE ------------------------------
-dataset = pd.read_csv('MovieReview.csv', header = 0)  
+# dataset = pd.read_csv('MovieReview.csv', header = 0)  
+session = Session()
+dataset = pd.read_sql('movieReviews', session.bind)
 movie_movie = pd.read_csv('movie_movie.csv', header = 0)               #load the movie-movie file
 
 #get the user: subscribed to users list dicionary
 # sub_dict = {2177.0:[8619.0, 17474.0], 8619.0:[156183.0]}
 sub_dict = {userID: list(map(int, subscribedUserIDs.split(',')))
                 for userID, subscribedUserIDs
-                    in Session().query(Subscription.userID,
-                                       func.group_concat(Subscription.subscribedUserID)
-                                      ).group_by(Subscription.userID)
+                    in session.query(Subscription.userID,
+                                     func.group_concat(Subscription.subscribedUserID)
+                                    ).group_by(Subscription.userID)
            }
 
 #run file
