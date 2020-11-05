@@ -19,3 +19,18 @@ Week 3:
 Week 4:
 1.) Completed learning angular.
 2.) Began coding, for the user stories of sprint 1 assigned to me. Was able to build and test the code. 
+
+Week 5:
+1.) Completed stories assigned to me.
+2.) Prepared for demo A.
+3.) Studied about the different recommendation engines.
+
+
+Week 6:
+1.) Worked on the UI tasks assigned to me.
+2.) Discussed about the recommendation engine that would work best for our application
+3.) Was able to build and test the code. 
+
+Week 7:
+1.) Started coding for Recommendation engine and completed the other stories assigned to me.
+2.) Discussed about the recommendation engine for making it better.
