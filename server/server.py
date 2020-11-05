@@ -48,4 +48,4 @@ dataLoaderThread.start()
 
 # Run
 # app.run(debug=True)
-app.run(debug = True, port = 7000)
+app.run(debug = True)
