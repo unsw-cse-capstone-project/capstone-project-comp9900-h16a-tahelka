@@ -6,6 +6,8 @@ from authentication.token_authenticator import TokenAuthenticator
 from util.IntValidations import is_valid_integer
 from db_engine import Session
 from models.Movie import Movie
+from models.BannedList import BannedList
+from util.RatingCalculator import compute
 
 api = Namespace('Movies', path = '/movies',
                 description='Get Movie Recommendations')
@@ -47,13 +49,18 @@ class Recommendations(Resource):
                                           use_genre=use_genre, use_director=use_director)
 
         session = Session()
-        result = session.query(Movie.movieID, Movie.title,
-                              Movie.year).filter(Movie.movieID.in_(topMovieIds)).all()
+        result = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum,
+                               Movie.review_count).filter(Movie.movieID.in_(topMovieIds)).all()
+
+        banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)\
+                             .filter(BannedList.userID == userID))
 
         movies = list()
-        for id, title, year in result:
-            movies.append({'movieID': id, 'title': title, 'year': year})
+        for id, title, year, ratings_sum, review_count in result:
+            movies.append({'movieID': id, 'title': title, 'year': year,
+                           'rating': compute(movieID, g.userID, ratings_sum, review_count, banned_users)})
 
+        movies.sort(key = lambda film: (-film['rating'], film['title']))
         response = {'movies': movies}
         return response, 200
 
