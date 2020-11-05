@@ -96,4 +96,7 @@ export class SearchComponent implements OnInit {
       alert(JSON.stringify(err));
     });
   }
+  resetForm(): void {
+    this.searchForm.reset();
+  }
 }

@@ -14,7 +14,7 @@ export class RecommendComponent implements OnInit {
 
   @Input() movieID: number;
   dataSourceMatTable = new MatTableDataSource<Recommendations>();
-  columnsToDisplay: string[] = ['title', 'year'];
+  columnsToDisplay: string[] = ['title', 'year', 'rating'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource: Recommendations[];
