@@ -52,7 +52,9 @@ dataLoaderThread.start()
 def recompute_user_pred():
     while True:
         print('recomputing userPred: ', time.ctime())
-        readWriteComputeUserPred()
+        userMovieDf = readWriteComputeUserPred()
+        if userMovieDf:
+            app.userDf = userMovieDf
         time.sleep(300)
 
 

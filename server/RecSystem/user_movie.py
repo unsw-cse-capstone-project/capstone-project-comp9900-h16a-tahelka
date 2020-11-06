@@ -71,7 +71,7 @@ def getPerdictionsOfUsers(df, subscribed_dict, movie_movie):
     dataDir = 'RecoData'
     location = path.join(recoDir, dataDir)
     final_df.to_csv(path.join(location, 'user_movie.csv'),index=True)                        # save to file
-    return 0
+    return final_df
 
 
 
@@ -99,7 +99,7 @@ def readWriteComputeUserPred():
                                  ).group_by(Subscription.userID)
                 }
 
-    getPerdictionsOfUsers(dataset, sub_dict, movie_movie)
+    return getPerdictionsOfUsers(dataset, sub_dict, movie_movie)
 # print(time.time() - start)
 
 
