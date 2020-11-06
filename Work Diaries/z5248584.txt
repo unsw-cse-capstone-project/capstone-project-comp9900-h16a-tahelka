@@ -54,4 +54,13 @@ Week 7
 3. Made API to remove a movie from user's watchlist.
 4. Testing of the system.
 5. Held meeting with team to discuss strategy.
-6. Added swagger documenation of a few APIs.
+6. Added swagger documentation of a few APIs.
+
+Week 8
+1. Made Recommendations API.
+2. Added Swagger documentation for Recommendations API.
+2. Closed database sessions to prevent Database Lock.
+3. Experimented with different approaches to integrate recommendation system.
+4. Integrated recommendation system.
+5. Held discussions with Theruni, Jatin and Ian.
+6. Managed stories and sprints in JIRA.
