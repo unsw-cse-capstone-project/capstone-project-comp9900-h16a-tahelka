@@ -98,7 +98,7 @@ def readWriteComputeUserPred():
                                  func.group_concat(Subscription.subscribedUserID)
                                  ).group_by(Subscription.userID)
                 }
-
+    session.close()           
     return getPerdictionsOfUsers(dataset, sub_dict, movie_movie)
 # print(time.time() - start)
 
