@@ -21,17 +21,17 @@ def validate_search_keywords(keywords):
         raise BadRequest
     return ' '.join(word for word in keywords.split())
 
-def validate_director(director):
-    if director is not None:
-        if type(director) is not str or len(director) > 100:
-            raise BadRequest
-        director = Session().query(Person.name)\
-                            .join(FilmDirector)\
-                            .filter(Person.name.ilike(' '.join(name for name in director.split())))\
-                            .distinct().one_or_none()
-        if not director:
-            raise BadRequest
-        return director[0]
+# def validate_director(director):
+#     if director is not None:
+#         if type(director) is not str or len(director) > 100:
+#             raise BadRequest
+#         director = Session().query(Person.name)\
+#                             .join(FilmDirector)\
+#                             .filter(Person.name.ilike(' '.join(name for name in director.split())))\
+#                             .distinct().one_or_none()
+#         if not director:
+#             raise BadRequest
+#         return director[0]
 
 def validate_rating(rating):
     if type(rating) is not str\

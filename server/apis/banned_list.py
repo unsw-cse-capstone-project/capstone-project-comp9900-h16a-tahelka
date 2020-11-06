@@ -3,11 +3,11 @@ from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.BannedList import BannedList
+from models.Subscription import Subscription
 from models.User import User
 from werkzeug.exceptions import Forbidden, NotFound
 from util.IntValidations import is_valid_integer
 
-from models.Subscription import Subscription
 
 api = Namespace('Banned List', path = '/bannedlists')
 
@@ -52,11 +52,9 @@ class BannedLists(Resource):
                                                 ).one_or_none()
         if query or g.userID == request.json['userID']:
             raise Forbidden
-
-        removeSubQuery = session.query(Subscription).filter(Subscription.userID == g.userID,
-                                                            Subscription.subscribedUserID == bannedUserID)\
-                                                            .delete()
-
+        session.query(Subscription).filter(Subscription.userID == g.userID,
+                                           Subscription.subscribedUserID == bannedUserID
+                                          ).delete()
         session.add(BannedList(g.userID, request.json['userID']))
         session.commit()
         return {'message': 'Reviewer banned.'}, 201

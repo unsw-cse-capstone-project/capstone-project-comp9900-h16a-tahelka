@@ -2,7 +2,6 @@ from flask import request, g
 from flask_restx import Namespace, fields, reqparse, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
-from models.BannedList import BannedList
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
@@ -11,6 +10,7 @@ from models.Person import Person
 from util.IntValidations import is_valid_integer
 from util.StringValidations import validate_search_keywords
 from util.RatingCalculator import compute
+from sqlalchemy import desc
 
 
 mood_mappings = {'Indifferent': {'Western', 'War', 'Biography', 'Family'},
@@ -40,8 +40,8 @@ search_results = api.model('Search Results',
                           )
 
 parser = reqparse.RequestParser()
-parser.add_argument('page_index', required = True, type = int)
-parser.add_argument('page_size', 10, type = int)
+parser.add_argument('page size', 10, type = int)
+parser.add_argument('page index', required = True, type = int)
 parser.add_argument('name', '')
 parser.add_argument('description', '')
 parser.add_argument('mood', choices = tuple(mood_mappings.keys()))
@@ -57,7 +57,7 @@ parser.add_argument('director', '')
 class MovieSearch(Resource):
     @api.response(200, 'Success', search_results)
     @api.response(400,
-                  'page_index and page_size must both be non-negative integers\n'
+                  'Page size and page index must both be non-negative integers\n'
                   'Name and description keyword strings, and director, must each be no more than 250 characters long\n'
                  )
     @api.response(401, 'Authentication token is missing')
@@ -68,10 +68,10 @@ class MovieSearch(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         args = parser.parse_args()
-        page_index = args.get('page_index')
-        is_valid_integer(page_index)
-        page_size = args.get('page_size')
+        page_size = args.get('page size')
         is_valid_integer(page_size)
+        page_index = args.get('page index')
+        is_valid_integer(page_index)
         name_keywords = validate_search_keywords(args.get('name'))
         description_keywords = validate_search_keywords(args.get('description'))
         director = validate_search_keywords(args.get('director'))
@@ -84,15 +84,17 @@ class MovieSearch(Resource):
         session = Session()
         if director:
             if genres:
-                query = session.query(Movie.movieID, Movie.title, Movie.year,
-                                      Movie.ratings_sum, Movie.review_count
+                query = session.query(Movie.movieID,
+                                      Movie.title, Movie.year
                                      ).join(GenreOfFilm).join(Genres)\
                                       .join(FilmDirector).join(Person)\
                                       .filter(Genres.genre.in_(genres),
                                               Person.name.ilike(director),
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).distinct().offset(page_index * page_size).limit(page_size)
+                                             ).distinct().order_by(desc(Movie.average_rating(g.userID)),
+                                                                   Movie.title
+                                                                  ).limit(page_size).offset(page_size * page_index)
                 count = session.query(Movie.movieID).join(GenreOfFilm).join(Genres)\
                                                     .join(FilmDirector).join(Person)\
                                                     .filter(Genres.genre.in_(genres),
@@ -101,13 +103,15 @@ class MovieSearch(Resource):
                                                             Movie.description.ilike(f'%{description_keywords}%')
                                                            ).distinct().count()
             else:
-                query = session.query(Movie.movieID, Movie.title, Movie.year,
-                                      Movie.ratings_sum, Movie.review_count
+                query = session.query(Movie.movieID,
+                                      Movie.title, Movie.year
                                      ).join(FilmDirector).join(Person)\
                                       .filter(Person.name.ilike(director),
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).offset(page_index * page_size).limit(page_size)
+                                             ).order_by(desc(Movie.average_rating(g.userID)),
+                                                        Movie.title
+                                                       ).limit(page_size).offset(page_size * page_index)
                 count = session.query(Movie.movieID).join(FilmDirector).join(Person)\
                                                     .filter(Person.name.ilike(director),
                                                             Movie.title.ilike(f'%{name_keywords}%'),
@@ -115,35 +119,33 @@ class MovieSearch(Resource):
                                                            ).count()
         else:
             if genres:
-                query = session.query(Movie.movieID, Movie.title, Movie.year,
-                                      Movie.ratings_sum, Movie.review_count
+                query = session.query(Movie.movieID,
+                                      Movie.title, Movie.year
                                      ).join(GenreOfFilm).join(Genres)\
                                       .filter(Genres.genre.in_(genres),
                                               Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).distinct().offset(page_index * page_size).limit(page_size)
+                                             ).distinct().order_by(desc(Movie.average_rating(g.userID)),
+                                                                   Movie.title
+                                                                  ).limit(page_size).offset(page_size * page_index)
                 count = session.query(Movie.movieID).join(GenreOfFilm).join(Genres)\
                                                     .filter(Genres.genre.in_(genres),
                                                             Movie.title.ilike(f'%{name_keywords}%'),
                                                             Movie.description.ilike(f'%{description_keywords}%')
                                                            ).distinct().count()
             else:
-                query = session.query(Movie.movieID, Movie.title, Movie.year,
-                                      Movie.ratings_sum, Movie.review_count
+                query = session.query(Movie.movieID,
+                                      Movie.title, Movie.year
                                      ).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                               Movie.description.ilike(f'%{description_keywords}%')
-                                             ).offset(page_index * page_size).limit(page_size)
+                                             ).order_by(desc(Movie.average_rating(g.userID)),
+                                                        Movie.title
+                                                       ).limit(page_size).offset(page_size * page_index)
                 count = session.query(Movie.movieID).filter(Movie.title.ilike(f'%{name_keywords}%'),
                                                             Movie.description.ilike(f'%{description_keywords}%')
                                                            ).count()
-        banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)
-                                                                    .filter(BannedList.userID == g.userID)
-                            )
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
-                           'rating': compute(movieID, g.userID, ratings_sum, review_count, banned_users)
-                          } for movieID, title, year, ratings_sum, review_count in query
+                           'rating': str(compute(movieID, g.userID))
+                          } for movieID, title, year in query
                          ]
-        search_results.sort(key = lambda film: (-film['rating'], film['title']))
-        for film in search_results:
-            film['rating'] = str(film['rating'])
         return {'data': search_results, 'count': count}, 200
