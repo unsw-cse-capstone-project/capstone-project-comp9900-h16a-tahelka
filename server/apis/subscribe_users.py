@@ -27,6 +27,7 @@ class SubscribeUsers(Resource):
     @api.expect(subscribe_model)
     @api.response(201, "Subscribed to User")
     @api.response(400, "The parameters submitted are invalid.")
+    @api.response(401, 'Authentication token is missing')
     def post(self):
         '''
             Subscribe to the user.
@@ -51,7 +52,7 @@ class SubscribeUsers(Resource):
         response = {'message':'Subscribed to User'}
         return response, 201
 
-    @api.response('200', 'List of subscribed users', subscribed_users_list)
+    @api.response(200, 'List of subscribed users', subscribed_users_list)
     @api.response(401, 'Authentication token is missing')
     def get(self):
         '''
