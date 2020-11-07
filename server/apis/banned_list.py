@@ -8,7 +8,8 @@ from werkzeug.exceptions import Forbidden, NotFound
 from util.IntValidations import is_valid_integer
 
 
-api = Namespace('Banned List', path = '/bannedlists')
+api = Namespace('Banned List', path = '/bannedlists',
+                description='CRUD Bannedlist of users')
 
 banned_user = api.model('Banned Reviewer', {'userID': fields.Integer})
 
