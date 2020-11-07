@@ -12,18 +12,31 @@ from util.IntValidations import is_valid_integer
 from util.RatingCalculator import compute
 
 api = Namespace('Watchlist', path='/watchlists',
-                description='Operations on Watchlist.')
+                description='CRUD on Watchlist movies')
 
 watchlist_model = api.model('Watchlist', {
     'movieID': fields.Integer(description='Identifier of movie'),
 })
 
+film_summary = api.model('Film Summary',
+                         {'movieID': fields.Integer,
+                          'title': fields.String,
+                          'year': fields.Integer,
+                          'rating': fields.String(description = 'Average rating out of 5')
+                         }
+                        )
+
+movies_list = api.model('list',
+                        {
+                            'watchlist': fields.List(fields.Nested(film_summary))
+                        })
 @api.route('')
 class Watchlists(Resource):
 
     @api.expect(watchlist_model)
     @api.response(201, "Movie added to Watchlist.")
     @api.response(400, "The parameters submitted are invalid.")
+    @api.response(401, 'Authentication token is missing')
     def post(self):
         '''
             Adds a movie to the users' Watchlist.
@@ -46,9 +59,14 @@ class Watchlists(Resource):
         response = {'message':'Movie added to Watchlist.'}
         return response, 201
 
-    @api.response(200, "Movies in user's Watchlist.")
+    @api.response(200, "Movies in user's Watchlist.", movies_list)
+    @api.response(401, 'Authentication token is missing')
     @api.response(404, "User not found")
     def get(self):
+        '''
+        View list of movies in user's Watchlist
+        :return:
+        '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
         userID = g.userID
