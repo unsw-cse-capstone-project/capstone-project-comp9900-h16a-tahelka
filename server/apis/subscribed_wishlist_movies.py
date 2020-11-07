@@ -1,5 +1,5 @@
 from flask import request, g
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource, fields
 from werkzeug.exceptions import NotFound
 
 from authentication.token_authenticator import TokenAuthenticator
@@ -9,16 +9,21 @@ from models.Movie import Movie
 from models.User import User
 from models.WishList import Wishlist
 
-api = Namespace('SubscribedWishlistMovies', path='/subscribedWishlistMovies')
+api = Namespace('SubscribedWishlistMovies', path='/subscribedWishlistMovies',
+                description='Get wishlisted movies of the users the current user is subscribed to')
 
+movies = api.model('Subscribed Reviewer', {'title': fields.String,
+                                            'username': fields.String})
+movies_list = api.model('List',
+                                  {
+                                      'movies': fields.List(fields.Nested(movies))
+                                  })
 @api.route('')
 class SubscribedWishlistMovies(Resource):
 
+    @api.response(200, 'Subscribed Wishlist movies', movies_list)
+    @api.response(401, 'Authentication token is missing')
     def get(self):
-        '''
-        Get wishlised movies of the users the current user is subscribed to.
-        :return:
-        '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
 
