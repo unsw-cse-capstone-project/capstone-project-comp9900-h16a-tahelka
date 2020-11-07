@@ -1,5 +1,5 @@
 from flask import request, g
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource, fields
 from werkzeug.exceptions import NotFound
 
 from authentication.token_authenticator import TokenAuthenticator
@@ -14,10 +14,23 @@ from util.RatingCalculator import compute
 
 api = Namespace('Wishlist', path='/wishlists')
 
+film_summary = api.model('Film Summary',
+                         {'movieID': fields.Integer,
+                          'title': fields.String,
+                          'year': fields.Integer,
+                          'rating': fields.String(description = 'Average rating out of 5')
+                         }
+                        )
+
+resp_model = api.model('Response',
+                       {'username':fields.String,
+                        'wishlist': fields.List(fields.Nested(film_summary)),
+                        'isSubscribed': fields.Boolean})
+
 @api.route('/<int:userID>')
 class Wishlists_UserID(Resource):
 
-    @api.response(200, "Movies in user's Wishlist.")
+    @api.response(200, "Movies in user's Wishlist", resp_model)
     @api.response(404, "User not found")
     @api.doc(params={'userID': 'Identifier of user'})
     def get(self, userID):
