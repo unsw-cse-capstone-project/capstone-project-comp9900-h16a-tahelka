@@ -11,7 +11,8 @@ from util.IntValidations import is_valid_integer
 api = Namespace('Banned List', path = '/bannedlists',
                 description='CRUD Bannedlist of users')
 
-banned_user = api.model('Banned Reviewer', {'userID': fields.Integer})
+banned_user = api.model('Banned Reviewer', {'userID': fields.Integer,
+                                            'username': fields.String})
 
 @api.route('')
 class BannedLists(Resource):
