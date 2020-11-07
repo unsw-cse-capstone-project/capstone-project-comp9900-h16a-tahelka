@@ -26,13 +26,6 @@ movie_review = api.model('Movie Review',
                          }
                         )
 
-movie_recommendation = api.model('Movie Recommendation',
-                                 {'movieID': fields.Integer,
-                                  'title': fields.String,
-                                  'year': fields.Integer
-                                 }
-                                )
-
 movie_details = api.model('Full Movie Details',
                           {'movieID': fields.Integer,
                            'title': fields.String,
@@ -42,8 +35,7 @@ movie_details = api.model('Full Movie Details',
                            'director': fields.List(fields.String),
                            'cast': fields.List(fields.String),
                            'rating': fields.String(description = 'Average rating out of 5'),
-                           'reviews': fields.List(fields.Nested(movie_review)),
-                           'recommendations': fields.List(fields.Nested(movie_recommendation))
+                           'reviews': fields.List(fields.Nested(movie_review))
                           }
                          )
 
