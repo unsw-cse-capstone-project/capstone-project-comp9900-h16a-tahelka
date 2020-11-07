@@ -12,7 +12,7 @@ from models.User import User
 from util.IntValidations import is_valid_integer
 
 api = Namespace('Wishlist', path='/wishlists',
-                description='Add movies in Wishlist.')
+                description='CRUD Wishlist movies.')
 
 wishlist_model = api.model('Wishlist', {
     'movieID': fields.Integer(description='Identifier of movie'),
