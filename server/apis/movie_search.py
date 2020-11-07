@@ -21,7 +21,8 @@ mood_mappings = {'Indifferent': {'Western', 'War', 'Biography', 'Family'},
                  'Weird': {'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery'}
                 }
 
-api = Namespace('Movies', path = '/movies')
+api = Namespace('Movies', path = '/movies',
+                description='Search for Movies and get Movie details')
 
 film_summary = api.model('Film Summary',
                          {'movieID': fields.Integer,
