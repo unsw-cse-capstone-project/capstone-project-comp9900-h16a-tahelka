@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float
-from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy.ext.hybrid import hybrid_method
 from db_engine import Session
 from models.Common import Base
 from models.BannedList import BannedList
@@ -25,23 +25,6 @@ class Movie(Base):
 
     @hybrid_method
     def average_rating(): pass
-    '''
-    def average_rating(self, userID):
-        session = Session()
-        banned_user_ratings\
-            = session.query(MovieReview.rating)\
-                     .filter(MovieReview.movieID == self.movieID,
-                             MovieReview.userID.in_(session.query(BannedList.bannedUserID)
-                                                           .filter(BannedList.userID == userID)
-                                                   )
-                            ).all()
-        review_count = Movie.review_count - len(banned_user_ratings)
-        return round((Movie.ratings_sum - sum(rating for rating, in banned_user_ratings))
-                     / review_count,
-                     1
-                    ) if review_count\
-                      else 0.0
-    '''
 
     @average_rating.expression
     def average_rating(cls, userID):
