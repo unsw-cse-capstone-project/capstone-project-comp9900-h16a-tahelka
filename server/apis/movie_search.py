@@ -93,72 +93,9 @@ class MovieSearch(Resource):
         if director:
             query = query.join(FilmDirector).join(Person).filter(Person.name.ilike(f'%{director}%'))
             count = count.join(FilmDirector).join(Person).filter(Person.name.ilike(f'%{director}%'))
-            if genres:
-                query = query.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()
-                # query = session.query(Movie.movieID, Movie.title, Movie.year,
-                #                       Movie.ratings_sum, Movie.review_count
-                #                      ).join(GenreOfFilm).join(Genres)\
-                #                       .join(FilmDirector).join(Person)\
-                #                       .filter(Genres.genre.in_(genres),
-                #                               Person.name.ilike(f'%{director}%'),
-                #                               Movie.title.ilike(f'%{name_keywords}%'),
-                #                               Movie.description.ilike(f'%{description_keywords}%')
-                #                              ).distinct().order_by(desc(Movie.average_rating(g.userID)),
-                #                                                    Movie.title
-                #                                                   ).limit(page_size).offset(page_size * page_index)
-                count = count.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()
-                # count = session.query(Movie.movieID).join(GenreOfFilm).join(Genres)\
-                #                                     .join(FilmDirector).join(Person)\
-                #                                     .filter(Genres.genre.in_(genres),
-                #                                             Person.name.ilike(f'%{director}%'),
-                #                                             Movie.title.ilike(f'%{name_keywords}%'),
-                #                                             Movie.description.ilike(f'%{description_keywords}%')
-                #                                            ).distinct().count()
-            # else:
-                # query = session.query(Movie.movieID, Movie.title, Movie.year,
-                #                       Movie.ratings_sum, Movie.review_count
-                #                      ).join(FilmDirector).join(Person)\
-                #                       .filter(Person.name.ilike(director),
-                #                               Movie.title.ilike(f'%{name_keywords}%'),
-                #                               Movie.description.ilike(f'%{description_keywords}%')
-                #                              ).order_by(desc(Movie.average_rating(g.userID)),
-                #                                         Movie.title
-                #                                        ).limit(page_size).offset(page_size * page_index)
-                # count = session.query(Movie.movieID).join(FilmDirector).join(Person)\
-                #                                     .filter(Person.name.ilike(f'%{director}%'),
-                #                                             Movie.title.ilike(f'%{name_keywords}%'),
-                #                                             Movie.description.ilike(f'%{description_keywords}%')
-                #                                            ).count()
-        # else:
-            # if genres:
-        elif genres:
+        if genres:
             query = query.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()
-                # query = session.query(Movie.movieID, Movie.title, Movie.year,
-                #                       Movie.ratings_sum, Movie.review_count
-                #                      ).join(GenreOfFilm).join(Genres)\
-                #                       .filter(Genres.genre.in_(genres),
-                #                               Movie.title.ilike(f'%{name_keywords}%'),
-                #                               Movie.description.ilike(f'%{description_keywords}%')
-                #                              ).distinct().order_by(desc(Movie.average_rating(g.userID)),
-                #                                                    Movie.title
-                #                                                   ).limit(page_size).offset(page_size * page_index)
             count = count.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()
-                # count = session.query(Movie.movieID).join(GenreOfFilm).join(Genres)\
-                #                                     .filter(Genres.genre.in_(genres),
-                #                                             Movie.title.ilike(f'%{name_keywords}%'),
-                #                                             Movie.description.ilike(f'%{description_keywords}%')
-                #                                            ).distinct().count()
-            # else:
-                # query = session.query(Movie.movieID, Movie.title, Movie.year,
-                #                       Movie.ratings_sum, Movie.review_count
-                #                      ).filter(Movie.title.ilike(f'%{name_keywords}%'),
-                #                               Movie.description.ilike(f'%{description_keywords}%')
-                #                              ).order_by(desc(Movie.average_rating(g.userID)),
-                #                                         Movie.title
-                #                                        ).limit(page_size).offset(page_size * page_index)
-                # count = session.query(Movie.movieID).filter(Movie.title.ilike(f'%{name_keywords}%'),
-                #                                             Movie.description.ilike(f'%{description_keywords}%')
-                #                                            ).count()
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
                            'rating': str(compute(movieID, g.userID, ratings_sum, review_count))
                           } for movieID, title, year, ratings_sum, review_count
