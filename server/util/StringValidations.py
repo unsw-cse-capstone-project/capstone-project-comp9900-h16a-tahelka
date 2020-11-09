@@ -10,8 +10,8 @@ def cleanString(stringVar: str):
 
 
 def isValidEmail(email: str):
-    # type- first.last@domain.com
-    email_regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+
+    email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 
     if not (re.search(email_regex, email)):
         raise BadRequest
