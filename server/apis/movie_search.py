@@ -2,6 +2,7 @@ from flask import request, g
 from flask_restx import Namespace, fields, reqparse, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
+from models.BannedList import BannedList
 from models.FilmDirector import FilmDirector
 from models.GenreOfFilm import GenreOfFilm
 from models.Genres import Genres
@@ -96,8 +97,11 @@ class MovieSearch(Resource):
         if genres:
             query = query.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()
             count = count.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()
+        banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)
+                                                                    .filter(BannedList.userID == g.userID)
+                            )
         search_results = [{'movieID': movieID, 'title': title, 'year': year,
-                           'rating': str(compute(movieID, g.userID, ratings_sum, review_count))
+                           'rating': str(compute(movieID, g.userID, ratings_sum, review_count, banned_users))
                           } for movieID, title, year, ratings_sum, review_count
                                 in query.limit(page_size).offset(page_size * page_index)
                          ]
