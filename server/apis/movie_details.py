@@ -69,28 +69,21 @@ class MovieDetails(Resource):
         cast = [member for member, in session.query(Person.name).join(FilmCast)
                                                                 .filter(FilmCast.movieID == id)
                ]
+        banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)
+                                                                    .filter(BannedList.userID == g.userID)
+                            )
         reviews = session.query(User.userID, User.username,
                                 MovieReview.rating, MovieReview.review
-                               ).join(MovieReview)\
-                                .filter(MovieReview.movieID == id,
-                                        User.userID.notin_(session.query(BannedList.bannedUserID)
-                                                                  .filter(BannedList.userID == g.userID)
-                                                          )
-                                       )
+                               ).join(MovieReview).filter(MovieReview.movieID == id,
+                                                          User.userID.notin_(banned_users)
+                                                         )
         reviews = [{'userID': userID, 'username': username,
                     'rating': str(rating), 'review': review
                    } for userID, username, rating, review in reviews
                   ]
-        recommendations = [{'movieID': 57012,
-                            'title': 'Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb',
-                            'year': 1964
-                           },
-                           {'movieID': 62622, 'title': '2001: A Space Odyssey', 'year': 1968},
-                           {'movieID': 66921, 'title': 'A Clockwork Orange', 'year': 1971}
-                          ]
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
-                'rating': str(compute(id, g.userID, movie.ratings_sum, movie.review_count)),
-                'reviews': reviews, 'recommendations': recommendations
+                'rating': str(compute(id, g.userID, movie.ratings_sum, movie.review_count, banned_users)),
+                'reviews': reviews
                }, 200

@@ -1,5 +1,10 @@
 from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.ext.hybrid import hybrid_method
+from db_engine import Session
 from models.Common import Base
+from models.BannedList import BannedList
+from models.MovieReview import MovieReview
+from sqlalchemy.sql import text
 
 class Movie(Base):
     __tablename__ = 'movies'
@@ -17,3 +22,51 @@ class Movie(Base):
         self.description = description
         self.ratings_sum = ratings_sum
         self.review_count = review_count
+
+    @hybrid_method
+    def average_rating(): pass
+
+    @average_rating.expression
+    def average_rating(cls, userID):
+        banned_users = f'SELECT bannedlists.bannedUserID FROM bannedlists WHERE bannedlists.userID = {userID}'
+        banned_users_review_count = f'SELECT count(*) FROM movieReviews WHERE movieReviews.movieID = movies.movieID AND movieReviews.userID IN ({banned_users})'
+        banned_users_ratings_sum = f'SELECT coalesce(sum(movieReviews.rating), 0) FROM movieReviews WHERE movieReviews.movieID = movies.movieID AND movieReviews.userID IN ({banned_users})'
+        return text(f'round(CASE WHEN movies.review_count - ({banned_users_review_count}) = 0 THEN 0'
+                              f' ELSE (movies.ratings_sum - ({banned_users_ratings_sum})) / (movies.review_count - ({banned_users_review_count}))'
+                          ' END,'
+                          ' 1'
+                          ')'
+                   )
+        '''
+        return CASE WHEN movies.review_count - (SELECT count(*)
+                                                FROM movieReviews
+                                                WHERE movieReviews.movieID = movies.movieID
+                                                      AND movieReviews.userID IN (SELECT bannedlists.bannedUserID
+                                                                                  FROM bannedlists
+                                                                                  WHERE bannedlists.userID = userID
+                                                                                 )
+                                               ) = 0 THEN 0.0
+                    ELSE (movies.ratings_sum - (SELECT sum(movieReviews.rating)
+                                                FROM movieReviews
+                                                WHERE movieReviews.movieID = movies.movieID
+                                                      AND movieReviews.userID IN (SELECT bannedlists.bannedUserID
+                                                                                  FROM bannedlists
+                                                                                  WHERE bannedlists.userID = userID
+                                                                                 )
+                                               )
+                         ) / (movies.review_count - (SELECT count(*)
+                                                     FROM movieReviews
+                                                     WHERE movieReviews.movieID = movies.movieID
+                                                           AND movieReviews.userID IN (SELECT bannedlists.bannedUserID
+                                                                                       FROM bannedlists
+                                                                                       WHERE bannedlists.userID = userID
+                                                                                      )
+                                                    )
+                             )
+               END
+        
+        return case({cls.review_count - (subquery_1): 0.0},
+                    0,
+                    (cls.ratings_sum - func.sum(subquery_2)) / cls.review_count - (subquery_1)
+                   )
+        '''

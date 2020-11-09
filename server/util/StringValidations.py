@@ -1,8 +1,5 @@
 import re
 from werkzeug.exceptions import BadRequest
-from db_engine import Session
-from models.FilmDirector import FilmDirector
-from models.Person import Person
 
 
 def cleanString(stringVar: str):
@@ -17,23 +14,9 @@ def isValidEmail(email: str):
         raise BadRequest
 
 def validate_search_keywords(keywords):
-    if keywords is None:
-        return ''
     if type(keywords) is not str or len(keywords) > 250:
         raise BadRequest
     return ' '.join(word for word in keywords.split())
-
-def validate_director(director):
-    if director is not None:
-        if type(director) is not str or len(director) > 100:
-            raise BadRequest
-        director = Session().query(Person.name)\
-                            .join(FilmDirector)\
-                            .filter(Person.name.ilike(' '.join(name for name in director.split())))\
-                            .distinct().one_or_none()
-        if not director:
-            raise BadRequest
-        return director[0]
 
 def validate_rating(rating):
     if type(rating) is not str\

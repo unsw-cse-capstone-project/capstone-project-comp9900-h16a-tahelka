@@ -31,8 +31,8 @@ class SubscribedWishlistMovies(Resource):
 
         results = session.query(User.username, Movie.title)\
                 .select_from(Subscription)\
-                .join(Wishlist, Wishlist.userID == Subscription.subscribedUserID, isouter = True)\
-                .join(Movie, Movie.movieID == Wishlist.movieID, isouter = True)\
+                .join(Wishlist, Wishlist.userID == Subscription.subscribedUserID)\
+                .join(Movie, Movie.movieID == Wishlist.movieID)\
                 .join(User, User.userID == Subscription.subscribedUserID)\
                 .filter(Subscription.userID == cid)
 

@@ -42,10 +42,10 @@ class Wishlists_UserID(Resource):
 
         is_valid_integer(userID)
 
-        limit = 10
+
         results = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum, \
                                 Movie.review_count).filter(Wishlist.userID == userID)\
-            .filter(Wishlist.movieID == Movie.movieID).limit(limit)
+            .filter(Wishlist.movieID == Movie.movieID)
 
         username = session.query(User.username).filter(User.userID == userID).first()
 
