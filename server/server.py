@@ -4,7 +4,8 @@ from apis import blueprint
 from apis import api
 import pandas as pd
 from os import path
-import threading
+from RecSystem.user_movie import readWriteComputeUserPred
+import threading, time
 
 app = Flask(__name__)
 CORS(app)
@@ -44,8 +45,22 @@ def load_df():
     app.movieDf = pd.read_csv(path.join(location,'movie_movie.csv'))
 
 dataLoaderThread = threading.Thread(target=load_df, name='dataLoaderThread')
+dataLoaderThread.daemon = True
 dataLoaderThread.start()
 
+
+def recompute_user_pred():
+    while True:
+        print('recomputing userPred: ', time.ctime())
+        userMovieDf = readWriteComputeUserPred()
+        if userMovieDf:
+            app.userDf = userMovieDf
+        time.sleep(300)
+
+
+userPredCalcThread = threading.Thread(target=recompute_user_pred, name='userPredCalcThread')
+userPredCalcThread.daemon = True
+userPredCalcThread.start()
+
 # Run
-# app.run(debug=True)
 app.run(debug = True)

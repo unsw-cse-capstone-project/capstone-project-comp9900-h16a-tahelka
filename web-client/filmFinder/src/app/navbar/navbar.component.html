@@ -1,8 +1,12 @@
 <p>
   <mat-toolbar color="primary">
     <span>FilmFinder</span>
-    <a mat-button *ngIf="isLoggedIn" (click)="navigate('/browse')" class="left-right-spacing">Browse</a>
+    <a mat-button *ngIf="isLoggedIn" (click)="navigate('/browse')" >Browse</a>
     <a mat-button *ngIf="isLoggedIn" [routerLink]="['/wishlist']">My Wishlist</a>
+    <a mat-button *ngIf="isLoggedIn" routerLink="/watched-movies">My Watchlist</a>
+    <a mat-button *ngIf="isLoggedIn" routerLink="/subscribed-users">My Subscriptions</a>
+    <a mat-button *ngIf="isLoggedIn" routerLink="/subscribed-wishlist-movies">Subscribed Wishlists</a>
+    <a mat-button *ngIf="isLoggedIn" routerLink="/banned-user">Banned Users</a>
     <span class="example-spacer"></span>
     <button *ngIf="isLoggedIn" (click)="navigate('/search')" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>search</mat-icon>
@@ -12,10 +16,10 @@
       <mat-icon>person</mat-icon>
     </button>
     <mat-menu #userMenu="matMenu">
-      <button routerLink="/subscribed-users" mat-menu-item>Subscribed List</button>
-      <button routerLink="/subscribed-wishlist-movies" mat-menu-item>Subscribed Wishlist</button>
-      <button routerLink="/watched-movies" mat-menu-item>Watched Movies</button>
-      <button routerLink="/banned-user" mat-menu-item>Banned Users List</button>
+<!--      <button routerLink="/subscribed-users" mat-menu-item>Subscribed List</button>-->
+<!--      <button routerLink="/subscribed-wishlist-movies" mat-menu-item>Subscribed Wishlist</button>-->
+<!--      <button routerLink="/watched-movies" mat-menu-item>Watched Movies</button>-->
+<!--      <button routerLink="/banned-user" mat-menu-item>Banned Users List</button>-->
       <button mat-menu-item (click)="logout()">Log Out</button>
     </mat-menu>
   </mat-toolbar>
