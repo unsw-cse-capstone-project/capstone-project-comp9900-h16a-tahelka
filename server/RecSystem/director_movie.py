@@ -18,7 +18,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 
-def director_movie_similarity(final, movie_movie):
+def getPerdictionsOfDirectors(final, movie_movie):
 	#clean up description
 	stop_words = set(stopwords.words('english'))
 	for i in range(len(final)):
@@ -63,24 +63,35 @@ def director_movie_similarity(final, movie_movie):
 	colNames = [float(movie) for movie in movie_movie.columns[1:]]         #get the columns names as floats excluding the first column
 	sim = sim[colNames]                                                    #reorder the columns 
 	sim = sim.reindex(colNames)                                            #reorder the rows
+	
+	#rename columns as strings
+	sim.columns = [ str(int(movie)) for movie in sim.columns]           
+     
+	#round down 
+	sim = sim.round(2)
 
-	#save file 
-	sim.to_csv('director_movie.csv',index=True)         # save to file
-	return 0
+	#save file
+    recoDir = 'RecSystem'
+    dataDir = 'RecoData'
+    location = path.join(recoDir, dataDir)
+    sim.to_csv(path.join(location, 'director_movie.csv'),index=True)                        # save to file
+    return 0
 
+#read data from the database and compute the user_movie similarity table
+def readWriteComputeDirectorPred():
+	session = Session()
+    fd = pd.read_sql('filmDirectors', session.bind)
+    person = pd.read_sql('persons', session.bind)
+    final = pd.merge(person,fd,on='personID')
+	final = final.drop(columns = ['personID'])
 
-#import dataset ----------- CHANGE TO DRAW FROM DATABASE ------------------------------
-fd = pd.read_csv('FilmDirector.csv', header = 0) 
-person = pd.read_csv('Person.csv', header = 0)
-movie_movie = pd.read_csv('movie_movie.csv', header = 0)               #load the movie-movie file
-final = pd.merge(person,fd,on='personID')
-final = final.drop(columns = ['personID'])
-
-
-#run file
-start = time.time()
-director_movie_similarity(final, movie_movie)
-print(time.time() - start)
+    recoDir = 'RecSystem'
+    dataDir = 'RecoData'
+    location = path.join(recoDir, dataDir)
+    movie_movie = pd.read_csv(path.join(location, 'movie_movie.csv'), header = 0)   #load the movie-movie file
+   
+    session.close()  
+    return getPerdictionsOfDirectors(final, movie_movie)     
 
 
 

@@ -18,7 +18,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 
-def genre_movie_similarity(final, movie_movie):
+def getPerdictionsOfGenres(gen, movie_movie):
 
 	 #create bag of words 
 	bag = pd.DataFrame(columns = ['movieID','genre'])  
@@ -50,22 +50,34 @@ def genre_movie_similarity(final, movie_movie):
 	colNames = [float(movie) for movie in movie_movie.columns[1:]]         #get the columns names as floats excluding the first column
 	sim = sim[colNames]                                                    #reorder the columns 
 	sim = sim.reindex(colNames)                                            #reorder the rows
+	
+	#rename columns as strings
+	sim.columns = [ str(int(movie)) for movie in sim.columns]           
+    
+	#round down 
+	sim = sim.round(2)
 
-	#save file 
-	sim.to_csv('genre_movie.csv',index=True)         				# save to file
-	return 0
+	#save file
+    recoDir = 'RecSystem'
+    dataDir = 'RecoData'
+    location = path.join(recoDir, dataDir)
+    sim.to_csv(path.join(location, 'genre_movie.csv'),index=True)                        # save to file
+    return 0
 
+#read data from the database and compute the user_movie similarity table
+def readWriteComputeGenrePred():
+    session = Session()
+    genreoffilm = pd.read_sql('genreOfFilm', session.bind)
+    genre = pd.read_sql('genres', session.bind)
+    gen = pd.merge(genreoffilm, genre, on = 'genreID')
 
-#import dataset ----------- CHANGE TO DRAW FROM DATABASE ------------------------------
-genreoffilm = pd.read_csv('GenreOfFilm.csv', header = 0)                                 
-genre = pd.read_csv('Genres.csv', header = 0)    
-gen = pd.merge(genreoffilm, genre, on = 'genreID')
-movie_movie = pd.read_csv('movie_movie.csv', header = 0)               #load the movie-movie file
-
-#run file
-start = time.time()
-genre_movie_similarity(gen, movie_movie)
-print(time.time() - start)
+    recoDir = 'RecSystem'
+    dataDir = 'RecoData'
+    location = path.join(recoDir, dataDir)
+    movie_movie = pd.read_csv(path.join(location, 'movie_movie.csv'), header = 0)   #load the movie-movie file
+      
+    session.close()  
+    return getPerdictionsOfGenres(gen, movie_movie)      
 
 
 
