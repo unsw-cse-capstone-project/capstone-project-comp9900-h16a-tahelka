@@ -6,6 +6,11 @@ from math import ceil, floor
 
 
 def compute(movieID, userID, ratings_sum = None, review_count = None, banned_users = None):
+    '''
+    This method computes a movie's average rating, free of the influence of banned users.
+    If the caller already knows the movie's ratings sum or review count, or the FilmFinders
+    banned by the user, these can be passed in to make the computation more efficient.
+    '''
     session = Session()
     if ratings_sum is None or review_count is None:
         query = session.query(Movie.ratings_sum,

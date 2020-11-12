@@ -9,11 +9,11 @@ from werkzeug.exceptions import Forbidden, NotFound
 from util.IntValidations import is_valid_integer
 
 
-api = Namespace('Banned List', path = '/bannedlists',
-                description='CRUD Bannedlist of users')
+api = Namespace('Banned List', 'CRUD Bannedlist of users', '/bannedlists')
 
-banned_user = api.model('Banned Reviewer', {'userID': fields.Integer,
-                                            'username': fields.String})
+banned_user = api.model('Banned Reviewer', {'userID': fields.Integer, 'username': fields.String})
+
+user_to_ban = api.model('Reviewer to Ban', {'userID': fields.Integer})
 
 @api.route('')
 class BannedLists(Resource):
@@ -37,26 +37,29 @@ class BannedLists(Resource):
                   'or the user has attempted to add himself to his own Banned List'
                  )
     @api.response(404, 'Reviewer was not found')
-    @api.expect(banned_user)
+    @api.expect(user_to_ban)
     def post(self):
         '''
         Add a FilmFinder to your Banned List.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
-        bannedUserID = request.json['userID']
-        is_valid_integer(bannedUserID)
+        is_valid_integer(request.json['userID'])
         session = Session()
         query = session.query(User).filter(User.userID == request.json['userID']).one_or_none()
         if not query:
             raise NotFound
         query = session.query(BannedList).filter(BannedList.userID == g.userID,
-                                                 BannedList.bannedUserID == bannedUserID
+                                                 BannedList.bannedUserID == request.json['userID']
                                                 ).one_or_none()
         if query or g.userID == request.json['userID']:
+            # If the FilmFinder being banned is already in the user's Banned List,
+            # or if a user is attempting to ban himself, raise an Exception.
             raise Forbidden
+        # Remove a user's subscription to a FilmFinder when banning that FilmFinder.
         session.query(Subscription).filter(Subscription.userID == g.userID,
-                                           Subscription.subscribedUserID == bannedUserID
+                                           Subscription.subscribedUserID == request.json['userID']
                                           ).delete()
         session.add(BannedList(g.userID, request.json['userID']))
         session.commit()
+        session.close()
         return {'message': 'Reviewer banned.'}, 201

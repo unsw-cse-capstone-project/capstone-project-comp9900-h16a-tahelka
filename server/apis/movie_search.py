@@ -24,8 +24,7 @@ mood_mappings = {'Indifferent': {'Western', 'War', 'Biography', 'Family'},
                  'Weird': {'Film-Noir', 'Crime', 'Drama', 'Horror', 'Mystery'}
                 }
 
-api = Namespace('Movies', path = '/movies',
-                description='Search for Movies and get Movie details')
+api = Namespace('Movies', 'Search for Movies and get Movie details', '/movies')
 
 film_summary = api.model('Film Summary',
                          {'movieID': fields.Integer,
@@ -42,8 +41,8 @@ search_results = api.model('Search Results',
                           )
 
 parser = reqparse.RequestParser()
-parser.add_argument('page size', 10, type = int)
-parser.add_argument('page index', required = True, type = int)
+parser.add_argument('page_size', 10, type = int)
+parser.add_argument('page_index', required = True, type = int)
 parser.add_argument('name', '')
 parser.add_argument('description', '')
 parser.add_argument('mood', choices = tuple(mood_mappings.keys()))
@@ -70,9 +69,9 @@ class MovieSearch(Resource):
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         args = parser.parse_args()
-        page_size = args.get('page size')
+        page_size = args.get('page_size')
         is_valid_integer(page_size)
-        page_index = args.get('page index')
+        page_index = args.get('page_index')
         is_valid_integer(page_index)
         name_keywords = validate_search_keywords(args.get('name'))
         description_keywords = validate_search_keywords(args.get('description'))
@@ -93,8 +92,8 @@ class MovieSearch(Resource):
                                                     Movie.description.ilike(f'%{description_keywords}%')
                                                    )
         if director:
-            query = query.join(FilmDirector).join(Person).filter(Person.name.ilike(f'%{director}%'))
-            count = count.join(FilmDirector).join(Person).filter(Person.name.ilike(f'%{director}%'))
+            query = query.join(FilmDirector).join(Person).filter(Person.name.ilike(f'%{director}%')).distinct()
+            count = count.join(FilmDirector).join(Person).filter(Person.name.ilike(f'%{director}%')).distinct()
         if genres:
             query = query.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()
             count = count.join(GenreOfFilm).join(Genres).filter(Genres.genre.in_(genres)).distinct()

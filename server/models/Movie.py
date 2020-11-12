@@ -26,10 +26,16 @@ class Movie(Base):
 
     @hybrid_method
     def average_rating(): pass
+    '''
+    This method is required by the method below.
+    '''
 
     @average_rating.expression
     def average_rating(cls, userID):
-        # banned_users = select([BannedList.bannedUserID]).where(BannedList.userID == userID)
+        '''
+        This method enables a movie's average rating, free of the influence
+        of banned users, to be determined during a database query.
+        '''
         banned_users = tuple(banned_user
                                  for banned_user,
                                      in Session().query(BannedList.bannedUserID)
@@ -42,33 +48,17 @@ class Movie(Base):
                                                )
                                           )
         banned_users_ratings_sum = select([func.coalesce(func.sum(MovieReview.rating),
-                                                         0
-                                                        )
-                                          ]
+                                           # This is necessary for a movie with no banned
+                                                         0  # user ratings to be treated
+                                                        )   # as having a sum of banned
+                                          ]                 # user ratings of 0.
                                          ).where(and_(MovieReview.movieID == cls.movieID,
                                                       MovieReview.userID.in_(banned_users)
                                                      )
                                                 )
-        '''
-        session = Session()
-        banned_users = session.query(BannedList.bannedUserID).filter(BannedList.userID == userID)
-        banned_users_review_count = session.query(MovieReview).filter(MovieReview.movieID == cls.movieID, MovieReview.userID.in_(banned_users)).count()
-        banned_users_ratings_sum = session.query(func.sum(MovieReview.rating)).filter(MovieReview.movieID == cls.movieID, MovieReview.userID.in_(banned_users))
-        '''
-        return func.round(case([(cls.review_count - banned_users_review_count == 0, 0)],
-                               else_ = (cls.ratings_sum - banned_users_ratings_sum)
-                                       / (cls.review_count - banned_users_review_count)
-                              ),
-                          1
-                         )
-        '''
-        banned_users = f'SELECT bannedlists.bannedUserID FROM bannedlists WHERE bannedlists.userID = {userID}'
-        banned_users_review_count = f'SELECT count(*) FROM movieReviews WHERE movieReviews.movieID = movies.movieID AND movieReviews.userID IN ({banned_users})'
-        banned_users_ratings_sum = f'SELECT coalesce(sum(movieReviews.rating), 0) FROM movieReviews WHERE movieReviews.movieID = movies.movieID AND movieReviews.userID IN ({banned_users})'
-        return text(f'round(CASE WHEN movies.review_count - ({banned_users_review_count}) = 0 THEN 0'
-                              f' ELSE (movies.ratings_sum - ({banned_users_ratings_sum})) / (movies.review_count - ({banned_users_review_count}))'
-                          ' END,'
-                          ' 1'
-                          ')'
+        return case([(cls.review_count - banned_users_review_count == 0, 0)],
+                    else_ = func.round((cls.ratings_sum - banned_users_ratings_sum)
+                                       / (cls.review_count - banned_users_review_count),
+                                       1
+                                      )
                    )
-        '''

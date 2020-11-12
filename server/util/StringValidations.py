@@ -21,6 +21,8 @@ def validate_search_keywords(keywords):
 def validate_rating(rating):
     if type(rating) is not str\
     or not re.fullmatch('\.[05]0?|[0-4](\.[05]?)?|5(\.0?)?|0[0-5]\.?|00[0-5]',
+                        # We allow all possible three-character representations
+                        # of a rating from 0 to 5 that is a multiple of 0.5.
                         rating
                        ):
         raise BadRequest

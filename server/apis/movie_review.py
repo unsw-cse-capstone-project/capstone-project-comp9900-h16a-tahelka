@@ -47,11 +47,14 @@ class MovieReviews(Resource):
                                                   MovieReview.userID == g.userID
                                                  ).one_or_none()
         if query:
+            # We disallow a user from leaving more than one review for the same movie.
             raise Forbidden
         query = session.query(Watchlist).filter(Watchlist.movieID == id,
                                                 Watchlist.userID == g.userID
                                                ).one_or_none()
         if not query:
+            # When a user leaves a review for a film, we add that
+            # film to his Watchlist if it isn't there already.
             session.add(Watchlist(id, g.userID))
         request.json['rating'] = float(request.json['rating'])
         session.add(MovieReview(id, g.userID,
@@ -61,4 +64,5 @@ class MovieReviews(Resource):
         movie.ratings_sum += request.json['rating']
         movie.review_count += 1
         session.commit()
+        session.close()
         return {'message': 'Review saved.'}, 201
