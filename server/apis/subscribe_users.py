@@ -8,19 +8,26 @@ from db_engine import Session
 from models.Subscription import Subscription
 from models.User import User
 
-api = Namespace('Subscribe', path='/subscribeUsers')
+api = Namespace('Subscribe', path='/subscribeUsers',
+                description='CRUD Subscribed Users')
 
 subscribe_model = api.model('Subscribe', {
     'userID': fields.Integer(description='Identifier of user'),
 })
 
-
+subscribed_users = api.model('Subscribed Reviewer', {'userID': fields.Integer,
+                                            'username': fields.String})
+subscribed_users_list = api.model('List',
+                                  {
+                                      'subscribedUsers': fields.List(fields.Nested(subscribed_users))
+                                  })
 @api.route('')
 class SubscribeUsers(Resource):
 
     @api.expect(subscribe_model)
     @api.response(201, "Subscribed to User")
     @api.response(400, "The parameters submitted are invalid.")
+    @api.response(401, 'Authentication token is missing')
     def post(self):
         '''
             Subscribe to the user.
@@ -45,6 +52,8 @@ class SubscribeUsers(Resource):
         response = {'message':'Subscribed to User'}
         return response, 201
 
+    @api.response(200, 'List of subscribed users', subscribed_users_list)
+    @api.response(401, 'Authentication token is missing')
     def get(self):
         '''
         Show list of subscribed users
@@ -52,11 +61,11 @@ class SubscribeUsers(Resource):
 
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
-        limit = 10
+
 
         results = session.query(Subscription.subscribedUserID, User.username) \
             .filter(Subscription.userID == g.userID) \
-            .filter(User.userID == Subscription.subscribedUserID).limit(limit)
+            .filter(User.userID == Subscription.subscribedUserID)
 
         users = list()
         for id, username in results:

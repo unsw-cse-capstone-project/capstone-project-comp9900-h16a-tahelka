@@ -79,3 +79,23 @@ the results properly.  User Stories for the recommendation system are making
 good progress and are expected to be finished sometime in the next week.  The
 plan for the coming week is to fix pagination and finish the overall software
 implementation, and to start the project report.
+
+Week 8
+
+Continued coding.  Worked on the results being sorted properly in conjunction
+with pagination.  Up until this point, search results have been sorted
+subsequent to their being generated however pagination has broken this, thus
+requiring the results to be sorted as part of the query that retrieves them.
+The fact of a movie's average rating being user specific made this quite
+difficult but I got there in the end.  A further problem then arose in that SQL
+and Python round differently, meaning the ratings displayed (computed by Python)
+and the ratings by which search results are ordered (computed by SQL) were not
+always identical.  Finally managed to overcome this problem too, though, and
+pagination and searching/browsing is now complete.  A couple of other minor
+things I did were identify some remaining issues with the dataset (which are
+being sorted out) and made a couple of additions/modifications to the
+recommendations script that were requested.  The software system is essentially
+complete but I'll probably try and polish a couple of things before its
+submitted.  Other than that, the plan for the coming week is to complete the
+project report (and the project as a whole), which we discussed as a group late
+this week.

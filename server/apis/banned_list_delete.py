@@ -27,6 +27,7 @@ class BannedLists(Resource):
                                                 BannedList.bannedUserID == id
                                                ).delete():
             session.commit()
+            session.close()
             raise NotFound
         session.commit()
         session.close()

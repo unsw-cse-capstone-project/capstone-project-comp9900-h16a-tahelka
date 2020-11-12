@@ -3,14 +3,17 @@ from flask_restx import Namespace, fields, Resource
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
 from models.BannedList import BannedList
+from models.Subscription import Subscription
 from models.User import User
 from werkzeug.exceptions import Forbidden, NotFound
 from util.IntValidations import is_valid_integer
 
 
-api = Namespace('Banned List', path = '/bannedlists')
+api = Namespace('Banned List', path = '/bannedlists',
+                description='CRUD Bannedlist of users')
 
-banned_user = api.model('Banned Reviewer', {'userID': fields.Integer})
+banned_user = api.model('Banned Reviewer', {'userID': fields.Integer,
+                                            'username': fields.String})
 
 @api.route('')
 class BannedLists(Resource):
@@ -40,16 +43,20 @@ class BannedLists(Resource):
         Add a FilmFinder to your Banned List.
         '''
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
-        is_valid_integer(request.json['userID'])
+        bannedUserID = request.json['userID']
+        is_valid_integer(bannedUserID)
         session = Session()
         query = session.query(User).filter(User.userID == request.json['userID']).one_or_none()
         if not query:
             raise NotFound
         query = session.query(BannedList).filter(BannedList.userID == g.userID,
-                                                 BannedList.bannedUserID == request.json['userID']
+                                                 BannedList.bannedUserID == bannedUserID
                                                 ).one_or_none()
         if query or g.userID == request.json['userID']:
             raise Forbidden
+        session.query(Subscription).filter(Subscription.userID == g.userID,
+                                           Subscription.subscribedUserID == bannedUserID
+                                          ).delete()
         session.add(BannedList(g.userID, request.json['userID']))
         session.commit()
         return {'message': 'Reviewer banned.'}, 201

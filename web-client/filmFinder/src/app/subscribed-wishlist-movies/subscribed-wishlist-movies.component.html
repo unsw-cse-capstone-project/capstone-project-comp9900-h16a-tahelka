@@ -1,14 +1,20 @@
 <app-navbar [isLoggedIn]="true"></app-navbar>
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 15, 20, 30]"
+  pageSize="10"
+  showFirstLastButtons
+  (page)="pageChanged($event)">
+</mat-paginator>
 <h2 class="left-padding">Your subscribed wishlist movies</h2>
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-table [dataSource]="dataSourceMatTable" matSort class="mat-elevation-z8">
   <!-- Name Column -->
   <ng-container matColumnDef="username">
-    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element?.username}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="title">
-    <mat-header-cell *matHeaderCellDef> Movie Name </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Movie Name </mat-header-cell>
     <mat-cell *matCellDef="let element">{{element?.title}}</mat-cell>
   </ng-container>
 

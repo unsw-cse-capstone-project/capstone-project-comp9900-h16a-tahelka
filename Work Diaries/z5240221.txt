@@ -47,3 +47,10 @@ Week 7:
 1. Multiple stories completed. (pagination and banned user list)
 2. Recommendation engine discussions
 3. Code review 
+
+Week 8:
+1. All stories completed. 
+2. Recommendation engine discussions and update
+3. Code review 
+4. Prepared for demo
+5. Report Discussion
