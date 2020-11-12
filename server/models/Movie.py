@@ -27,7 +27,7 @@ class Movie(Base):
     @hybrid_method
     def average_rating(): pass
     '''
-    This method is required by the method below.
+    This method is required to exist by the method below.
     '''
 
     @average_rating.expression
