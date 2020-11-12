@@ -7,6 +7,14 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 import time 
+from db_engine import Session
+from models.Subscription import Subscription
+from sqlalchemy import func
+from os import path
+from models.FilmDirector import FilmDirector
+from models.Person import Person
+
+
 import pip
 try:
     from pip import main as pipmain
