@@ -1,32 +1,14 @@
 #COMP9900 T3 2020 - Team Tahelka 
 #92.57 seconds 
 
-#install packages 
-import pandas as pd
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-from db_engine import Session
-from models.FilmCast import FilmCast
-from models.FilmDirector import FilmDirector
-from models.Person import Person
-from models.Genres import Genres
-from models.GenreOfFilm import GenreOfFilm
-from models.Movie import Movie
-from models.MovieReview import MovieReview
-
-from models.Subscription import Subscription
-from sqlalchemy import func
 from os import path
 
-import time 
-import pip
-try:
-    from pip import main as pipmain
-except ImportError:
-    from pip._internal import main as pipmain   
-pipmain(['install', 'nltk'])
+# install packages
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+from db_engine import Session
 
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords

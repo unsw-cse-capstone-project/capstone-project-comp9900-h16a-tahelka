@@ -1,14 +1,15 @@
 #COMP9900 T3 2020 - Team Tahelka 
 
+from os import path
+
 import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
-import time
-from db_engine import Session
-from models.MovieReview import MovieReview
-from models.Subscription import Subscription
 from sqlalchemy import func
-from os import path
+
+from db_engine import Session
+from models.Subscription import Subscription
+
 
 def getIndex(userID, index_table):
     return index_table[index_table['userID'] == userID].index[0]
