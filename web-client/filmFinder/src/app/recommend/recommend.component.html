@@ -1,12 +1,25 @@
-<mat-table [dataSource]="dataSourceMatTable" class="mat-elevation-z8">
+<mat-slide-toggle (change)="updatedDirector($event)" [checked]="useDirector">Use Director </mat-slide-toggle>
+<mat-slide-toggle (change)="updatedGenre($event)" [checked]="useGenre">Use Genre </mat-slide-toggle>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10]"
+  pageSize="10"
+  showFirstLastButtons
+  >
+</mat-paginator>
+<mat-table [dataSource]="dataSourceMatTable" matSort class="mat-elevation-z8">
   <ng-container matColumnDef="title">
-    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element?.title}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="year">
-    <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Year </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element?.year}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="rating">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Rating </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.rating}} </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>

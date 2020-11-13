@@ -1,10 +1,14 @@
 #COMP9900 T3 2020 - Team Tahelka 
-#2.99 seconds (with 2/100 users with subscribers)
+
+from os import path
 
 import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
-import time
+from sqlalchemy import func
+
+from db_engine import Session
+from models.Subscription import Subscription
 
 
 def getIndex(userID, index_table):
@@ -20,8 +24,8 @@ def getSimilarUsers(model, index_table, userID, matrix, neighbours=5, calc_metri
     n_list = indicies[0].tolist() 
     return n_list
 
-# Make sure the subscibed_list is a dictinary of userID as key and value as list of userID's
-def getPerdictionsOfUsers(df, subscribed_dict):
+# Make sure the subscribed_list is a dictionary of userID as key and value as list of userID's
+def getPerdictionsOfUsers(df, subscribed_dict, movie_movie):
     df = df.drop('review', axis=1)
 
     pivot_table = pd.pivot_table(df, values='rating', columns=['movieID'], index='userID', fill_value=0)
@@ -60,26 +64,39 @@ def getPerdictionsOfUsers(df, subscribed_dict):
 
     #reorganise column names 
     colNames = [float(movie) for movie in movie_movie.columns[1:]]         #get the columns names as floats excluding the first column
-    final_df = final_df[colNames]                                                    #reorder the columns 
+    final_df = final_df[colNames]                                          #reorder the columns 
+    final_df.columns = [str(int(movie)) for movie in final_df.columns]          #int col names 
     
-    #save file 
-    final_df.to_csv('user_movie.csv',index=True)                        # save to file
+    #round down 
+    final_df = final_df.round(2)
+
+    #save file
+    recoDir = 'RecSystem'
+    dataDir = 'RecoData'
+    location = path.join(recoDir, dataDir)
+    final_df.to_csv(path.join(location, 'user_movie.csv'),index=True)                        # save to file
     return 0
 
 
+#read data from the database and compute the user_movie similarity table
+def readWriteComputeUserPred():
+    session = Session()
+    dataset = pd.read_sql('movieReviews', session.bind)
+    recoDir = 'RecSystem'
+    dataDir = 'RecoData'
+    location = path.join(recoDir, dataDir)
+    movie_movie = pd.read_csv(path.join(location, 'movie_movie.csv'), header=0)  # load the movie-movie file
 
-#---------------------------
-#import dataset ----------- CHANGE TO DRAW FROM DATABASE ------------------------------
-dataset = pd.read_csv('MovieReview.csv', header = 0)  
-movie_movie = pd.read_csv('movie_movie.csv', header = 0)               #load the movie-movie file
+    sub_dict = {userID: list(map(int, subscribedUserIDs.split(',')))
+                for userID, subscribedUserIDs
+                in session.query(Subscription.userID,
+                                 func.group_concat(Subscription.subscribedUserID)
+                                 ).group_by(Subscription.userID)
+                }
+              
+    session.close()           
+    return getPerdictionsOfUsers(dataset, sub_dict, movie_movie)  
 
-#get the user: subscribed to users list dicionary
-sub_dict = {2177.0:[8619.0, 17474.0], 8619.0:[156183.0]}
-
-#run file
-start = time.time()
-getPerdictionsOfUsers(dataset, sub_dict)
-print(time.time() - start)
 
 
 

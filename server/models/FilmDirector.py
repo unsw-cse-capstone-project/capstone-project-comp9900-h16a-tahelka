@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, String
+
 from models.Common import Base
+
 
 class FilmDirector(Base):
     __tablename__ = "filmDirectors"

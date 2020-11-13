@@ -29,7 +29,6 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   expandedElement: MovieResult | null;
   @ViewChildren(MovieDetailsComponent) movieDetailsComponents: QueryList<MovieDetailsComponent>;
   @ViewChildren(ReviewListComponent) movieReviewListComponents: QueryList<ReviewListComponent>;
-  recommendations: Recommendations[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() loading: boolean;
   @Output() pageChangedEvent = new EventEmitter<any>();
@@ -44,9 +43,6 @@ export class SearchResultComponent implements OnInit, OnChanges  {
         component.movieDetails();
       }
     });
-  }
-  setRecommendations(recommendations: Recommendations[]): void {
-    this.recommendations = recommendations;
   }
   tabChanged(event: any): void {
   }
