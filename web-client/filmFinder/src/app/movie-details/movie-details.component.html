@@ -33,17 +33,17 @@
 
   <ng-container matColumnDef="genre">
     <mat-header-cell *matHeaderCellDef> Genre </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.genre}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element?.genre.join(', ')}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="director">
     <mat-header-cell *matHeaderCellDef> Director </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.director}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element?.director.join(', ')}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="cast">
-    <mat-header-cell *matHeaderCellDef> cast </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.cast}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef> Cast </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.cast.join(', ')}} </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

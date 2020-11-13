@@ -1,16 +1,17 @@
 <app-navbar [isLoggedIn]="true"></app-navbar>
+<h2 class="left-padding">Your subscribed wishlist movies</h2>
+
 <mat-paginator
   [pageSizeOptions]="[5, 10, 15, 20, 30]"
   pageSize="10"
   showFirstLastButtons
   (page)="pageChanged($event)">
 </mat-paginator>
-<h2 class="left-padding">Your subscribed wishlist movies</h2>
 <mat-table [dataSource]="dataSourceMatTable" matSort class="mat-elevation-z8">
   <!-- Name Column -->
   <ng-container matColumnDef="username">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.username}} </mat-cell>
+    <mat-cell *matCellDef="let element" [routerLink]="['/wishlist', element?.userID]"> {{element?.username}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="title">

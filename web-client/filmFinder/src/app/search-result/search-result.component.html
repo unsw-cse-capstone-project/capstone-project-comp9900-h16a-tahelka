@@ -23,10 +23,12 @@
           <div class="tabs-width-100">
             <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)"  backgroundColor="accent">
               <mat-tab label="Movie Details">
-                <app-movie-details (recommendations)="setRecommendations($event)" (reviews)="setReviewList($event, element)" [movie]="element"></app-movie-details>
+                <app-movie-details (reviews)="setReviewList($event, element)" [movie]="element"></app-movie-details>
               </mat-tab>
-              <mat-tab label="Wishlist/Watchlist">
+              <mat-tab label="Wishlist">
                 <app-wish-list (deleteFromWishlist)="wishlistMovieRemoved($event, element)" [movieID]="element.movieID"></app-wish-list>
+              </mat-tab>
+              <mat-tab label="Watchlist">
                 <app-watch-list [movieID]="element.movieID"></app-watch-list>
                 <app-remove-movie-watchlist (deleteFromWatchlist)="watchlistMovieRemoved($event, element)" [movieID]="element.movieID"></app-remove-movie-watchlist>
               </mat-tab>
@@ -37,7 +39,7 @@
                 <app-review (reviewAdded)="getMovieDetailsInChildComponent(element)" [movieId]="element.movieID"></app-review>
               </mat-tab>
               <mat-tab label="Recommendation">
-                <app-recommend [recommendSource]="recommendations"></app-recommend>
+                <app-recommend [movieID]="element.movieID"></app-recommend>
               </mat-tab>
             </mat-tab-group>
           </div>

@@ -12,7 +12,7 @@ class Movie(Base):
 
     movieID = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
-    year = Column(Integer, nullable=False)
+    year = Column(String, nullable=False)
     description = Column(String)
     ratings_sum = Column(Float)
     review_count = Column(Integer)

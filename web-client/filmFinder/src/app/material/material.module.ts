@@ -15,6 +15,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 const MaterialComponents = [
@@ -35,6 +36,7 @@ const MaterialComponents = [
   MatSnackBarModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({
