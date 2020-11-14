@@ -22,6 +22,7 @@ def getPerdictionsOfMovies(fc, fd, person, genre, genlist, movies, review):
     fc = pd.merge(person,fc,on='personID')
     fd = pd.merge(person,fd,on='personID')
     person = fc.append(fd)
+    person = person[['personID','name','movieID','bio']]
     movie_list = [int(movie) for movie in fd.movieID]
 
     #create movieid: cast list dictionary 
