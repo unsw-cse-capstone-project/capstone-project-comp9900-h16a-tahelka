@@ -12,7 +12,11 @@ from pathlib import Path
 import csv
 
 
-VARIABLE_LIMIT = 999
+VARIABLE_LIMIT = 999  # SQLite sets a limit of 999 for the number of
+# variable parameters in a single SQL statement, such as an insertion.  In
+# the case of inserting a single tuple with five attributes, this counts
+# as five variables, therefore, when inserting in bulk, a maximum of 199
+# such tuples, i.e. 199 * 5 = 995 variables, can be inserted at once.
 
 
 data_dirname = Path('dataset')
