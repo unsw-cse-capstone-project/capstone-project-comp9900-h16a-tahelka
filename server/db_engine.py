@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import event
 
-Engine = create_engine('sqlite:///filmfinder_tahelka.db', echo=True)
+Engine = create_engine('sqlite:///filmfinder_tahelka.db', echo=False)
 Session = sessionmaker(bind=Engine)
 
 # To enforce Foreign Key constraints.

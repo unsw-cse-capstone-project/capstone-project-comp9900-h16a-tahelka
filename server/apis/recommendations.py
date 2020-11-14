@@ -41,12 +41,19 @@ class Recommendations(Resource):
 
         use_genre = args.get('use_genre')
         use_director = args.get('use_director')
-        movie = current_app.movieDf
-        director = current_app.dirDf
-        genre = current_app.genDf
-        user = current_app.userDf
-        topMovieIds = movie_similarity_calc(movieID, userID, movie=movie, director=director, genre=genre, user=user,
+        topMovieIds = list()
+        try:
+            movie = current_app.movieDf
+            director = current_app.dirDf
+            genre = current_app.genDf
+            user = current_app.userDf
+
+            topMovieIds = movie_similarity_calc(movieID=movieID, userID=userID, movie=movie, director=director, genre=genre, user=user,
                                           use_genre=use_genre, use_director=use_director)
+
+        except Exception as e:
+            print(str(e))
+            print("Or, Movie Df hasn't loaded yet.")
 
         session = Session()
         result = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum,
