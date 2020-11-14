@@ -39,8 +39,6 @@ class Tokens(Resource):
 
         # Analytics here
         status_code = 201
-        # record = Recorder('login', status_code)
-        # record.recordUsage()
 
         response = {
             'message': 'Login successful. Token is successfully created.',
