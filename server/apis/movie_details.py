@@ -82,7 +82,6 @@ class MovieDetails(Resource):
                     'rating': str(rating), 'review': review
                    } for userID, username, rating, review in reviews
                   ]
-
         return {'movieID': id, 'title': movie.title,
                 'year': movie.year, 'description': movie.description,
                 'genre': genres, 'director': directors, 'cast': cast,
