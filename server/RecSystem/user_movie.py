@@ -88,11 +88,11 @@ def readWriteComputeUserPred():
     movie_movie = pd.read_csv(path.join(location, 'movie_movie.csv'), header=0)  # load the movie-movie file
 
     sub_dict = {userID: list(map(int, subscribedUserIDs.split(',')))
-                for userID, subscribedUserIDs
-                in session.query(Subscription.userID,
-                                 func.group_concat(Subscription.subscribedUserID)
-                                 ).group_by(Subscription.userID)
-                }
+                    for userID, subscribedUserIDs
+                        in session.query(Subscription.userID,
+                                         func.group_concat(Subscription.subscribedUserID)
+                                        ).group_by(Subscription.userID)
+               }
               
     session.close()           
     return getPerdictionsOfUsers(dataset, sub_dict, movie_movie)  
