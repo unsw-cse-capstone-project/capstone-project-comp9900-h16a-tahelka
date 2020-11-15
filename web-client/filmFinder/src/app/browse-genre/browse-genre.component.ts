@@ -25,27 +25,24 @@ export class BrowseGenreComponent implements OnInit {
   searchClicked = false;
   constructor(private webService: WebService, private snackBar: MatSnackBar) {
     this.genre = [
-      {value: 'Action'},
-      {value: 'Thriller'},
-      {value: 'Romance'},
-      {value: 'Sci-Fi'},
-      {value: 'War'},
-      {value: 'Drama'},
-      {value: 'Mystery'},
-      {value: 'Crime'},
-      {value: 'Horror'},
-      {value: 'Musical'},
       {value: 'Western'},
-      {value: 'Sport'},
-      {value: 'Music'},
-      {value: 'History'},
-      {value: 'Family'},
+      {value: 'Thriller'},
+      {value: 'Musical'},
+      {value: 'War'},
+      {value: 'Film-Noir'},
+      {value: 'Crime'},
+      {value: 'Drama'},
+      {value: 'Horror'},
+      {value: 'Mystery'},
+      {value: 'Fantasy'},
+      {value: 'Adventure'},
+      {value: 'Sci-Fi'},
       {value: 'Animation'},
       {value: 'Biography'},
+      {value: 'Action'},
       {value: 'Comedy'},
-      {value: 'Adventure'},
-      {value: 'Fantasy'},
-      {value: 'Film-Noir'},
+      {value: 'Family'},
+      {value: 'Romance'}
     ];
   }
   ngOnInit(): void {

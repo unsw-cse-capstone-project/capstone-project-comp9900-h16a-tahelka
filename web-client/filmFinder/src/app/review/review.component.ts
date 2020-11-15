@@ -18,7 +18,7 @@ export class ReviewComponent implements OnInit {
   review: Review;
   @Output() reviewAdded = new EventEmitter<boolean>();
   reviewForm = new FormGroup({
-    rating: new FormControl(0, [Validators.required]),
+    rating: new FormControl(null, [Validators.required]),
     review: new FormControl('', [Validators.required])
   });
 
