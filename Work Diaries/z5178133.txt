@@ -1,0 +1,29 @@
+Week 1 (14/09 - 20/09)
+Group was formed online and we had our first meeting for an hour on the 16th of September. Went over our backgrounds, skills we were bringing to the table, project ideas and then voted on a project to pursue which was FilmFinder. Class lab meeting to discuss database choice, structure, clarifications. Assigned roles for the rest of the project. Planned to self-study about Jira and note down novel ideas to add on to the FilmFinder before our next meeting on the 19th of September. I created the latex outline for the project proposal in Overleaf and noted down over eight novel ideas of potential projects. Meeting on the 19th included finalizing project scope/novel idea/architecture. 
+
+
+Week 2 (21-09-27/09)
+Completed existing platforms research and finalized novelty of three concepts to be implemented for the project. Wrote out part of the project proposal. Found 3 databases to be combined to get all the information for our project. Coded a Jupiter notebook and then moved it to Google Collaborate since the processing power was not adequate to process on my computer but the Google Collab GPUs could not be used either since it was not a tensor flow operation. Had a discussion on 24th Sept lab 2 about how many users, movies etc we wanted to retain from the data sources due to limited processing power and how to structure it. 
+
+Week 3 (28/09-04/10)
+Completed majority of combining the three databases but had an issue with the number of records per user and the number fo movies we wanted to retain because the data distribution was different to what was expected. Finalized in team meeting. Completed writing parts of the proposal and transferred the whole report from MS teams word document to overleaf latex. Proof read the proposal. Read proposal specs and project objective document and ticked off satisfying all criteria in the proposal. 
+  
+
+Week 4 (05/10 - 11/10)
+Completed the datasets to be uploaded to the database. Completed one set of 1.2million ratings but then redid the code to create a dataset with 96k ratings for ease of demonstration. Cleaned, commented the 6 notebooks of code for dataset creation, but files were too large so they were deleted and will be uploaded the last week of the project. Carried out literature and video review of movie recommendation system algorithm choices and decided to use a Hybrid system but the main system to be k-NN. 
+
+Week 5 (12/10 - 19/10)
+Worked on exploring the system and organizing stories to be presented in demo A. Practiced and presented demo A. Conducted more in-depth literature review for recommendation system and created diagrams to explain to the team and get team opinion on the backend structure and execution time allowed for the recommendation system. Finalized the algorithms to be used in the rec system (knn, Pearson correlation and an addition matrix). 
+
+Week 6 (20/10 - 27/10)
+Created 2/5 parts of the recommendation system. Cleaned up the data and created a bag of words model then experimented with creating a word2vec from scratch using a 3 layer Neural Network, experimented with the python genism module for NLP, read over 12 literature papers regarding different recommendation systems. Finally decided on a bag of words model using the inverse document frequency and then the cosine function to find movie to movie similarity scores. Also cleaned up the Film director and cast datasets and created a movie to movie similarity matrix based on directors' bio similarities. 
+
+
+Week 7 (28/10 - 04/11)
+Will complete the recommendation system (creating the movie review to move matrix and the movie to movie matrix based on genre similarity). Will then code the ensemble model calculation and prepare for the demo B. 
+
+
+
+
+
+
