@@ -1,6 +1,6 @@
 from flask import request, g
 from flask_restx import Namespace, Resource
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, BadRequest
 
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
@@ -20,7 +20,13 @@ class SubscribeUsersID(Resource):
         TokenAuthenticator(request.headers.get('Authorization')).authenticate()
         session = Session()
 
-        affectedRows = session.query(Subscription).filter(Subscription.userID == g.userID) \
+        curUserID = g.userID
+
+        # Can't subscribe to oneself.
+        if curUserID == int(userID):
+            raise BadRequest
+
+        affectedRows = session.query(Subscription).filter(Subscription.userID == curUserID) \
             .filter(Subscription.subscribedUserID == userID).delete()
 
         # When 0, it means userIDs are not present in database.

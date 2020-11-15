@@ -37,7 +37,7 @@ class SubscribeUsers(Resource):
         curUserID = g.userID
 
         # Can't subscribe to oneself.
-        if curUserID == subscribedUserID:
+        if curUserID == int(subscribedUserID):
             raise BadRequest
 
         subscribe = Subscription(curUserID, subscribedUserID)
