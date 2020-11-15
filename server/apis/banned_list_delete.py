@@ -26,6 +26,8 @@ class BannedLists(Resource):
         if not session.query(BannedList).filter(BannedList.userID == g.userID,
                                                 BannedList.bannedUserID == id
                                                ).delete():
+            # If the FilmFinder being unbanned is not in
+            # the user's Banned List, raise an Exception.
             session.commit()
             raise NotFound
         session.commit()
