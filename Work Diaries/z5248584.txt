@@ -64,3 +64,9 @@ Week 8
 4. Integrated recommendation system.
 5. Held discussions with Theruni, Jatin and Ian.
 6. Managed stories and sprints in JIRA.
+
+Week 9
+1. Polished the system.
+2. Wrote report.
+3. Held discussions with the team.
+4. Fixed bugs and other issues.
