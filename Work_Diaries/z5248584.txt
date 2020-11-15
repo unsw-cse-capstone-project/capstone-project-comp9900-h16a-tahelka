@@ -1,3 +1,66 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a30e252d76370aa5ef000f527e956b4f8a26bbc38204841b01d2ca5b3be93012
-size 2737
+Week 1
+
+Gathered team members and formed Webcms group. I also created project on JIRA and invited team members to collaborate. Had a couple of team meetings over MS teams where we discusses various project topics and settled on FilmFinder. In other meetings, we discussed FilmFinder specs, features and technicalities. Also, finalised everyone's roles and involvement.
+
+Week 2
+
+1. I Created System Architecture diagram using draw.io tool.
+2. Wrote a bit about System Architecture in the proposal.
+3. As scrum master, I am to create user stories in JIRA.
+4. The task for this week is collaboratively have 60-70% of proposal complete. 
+5. Brainstormed technicalities of various ideas with team.
+6. Updated a few JIRA stories.
+
+Week 3
+
+1. Assigned various stories to different sprints.
+2. Sprint planning for 1st Sprint.
+3. Proofread JIRA stories.
+4. Held meetings with Jatin, Ian and Theruni to discuss other technicalities.
+5. Updated JIRA board after lab meeting. 
+6. Updated sprint planning to address concerns raised in the lab.
+7. Finalised DB Design with Ian
+8. Proof read proposal, made edits and submitted it.
+9. Wrote script to setup database.
+
+Week 4
+1. Setup backend of platform.
+2. Incorporated JWT authentication.
+3. Made signup service.
+4. Made login service.
+5. Made Swagger docs for those 2 services.
+5. Held meetings with Ian and Jatin regarding implementation and integration.
+6. Maintained a service contract outlining REST endpoint, sample request and responses.
+
+Week 5
+1. Made API to add movie to Wishlist.
+2. Made API to remove movie from Wishlist
+3. Made API to view a user's Wishlist.
+4. Managed JIRA board.
+5. Held technical discussions with the group.
+
+Week 6
+1. Made API to allow FilmFinder to subscribe to other filmfinders.
+2. Made API to allow FilmFinder to unsubscribe to other filmfinders.
+3. Made API to allow FilmFinder to view the list of filmfinders he is subscribed to.
+4. Made API to allow FilmFinder to view the subscribed Wishlist.
+5. Made API to allow FilmFinder to integrate Wishlist of other filmfinders into his own.
+6. Managed JIRA.
+7. Held group meeting.
+
+Week 7
+1. Made API to add a movie to user's watchlist.
+2. Made API to see all the movies in the user's watchlist.
+3. Made API to remove a movie from user's watchlist.
+4. Testing of the system.
+5. Held meeting with team to discuss strategy.
+6. Added swagger documentation of a few APIs.
+
+Week 8
+1. Made Recommendations API.
+2. Added Swagger documentation for Recommendations API.
+2. Closed database sessions to prevent Database Lock.
+3. Experimented with different approaches to integrate recommendation system.
+4. Integrated recommendation system.
+5. Held discussions with Theruni, Jatin and Ian.
+6. Managed stories and sprints in JIRA.

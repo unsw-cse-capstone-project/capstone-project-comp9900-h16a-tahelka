@@ -1,3 +1,56 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e030e2ca8dfdd12f3360136687cc1871fd5b84fd48f255aaabbfe387ba7bc0f
-size 1584
+Week 1:
+1. Set up github repo. 
+2. Discussed and finalized topic. 
+3. Discussed and finalized novel featrues. 
+4. Discussed DB. 
+5. Learnt Angular and angular material. 
+6. Started work on UI mock ups and UI flow. 
+7. Target for this week is to finish proposal work and put in stories in JIRA. Then start setting up development env.
+
+Week 2:
+1. Helped in creating Story boards.
+2. Created and updated tasks on JIRA.
+3. Held multiple meeting for discussion about architecture.
+4. Finalized novel ideas.
+5. Wrote parts of proposal.
+6. Contributed to Architecture Diagram.
+
+Week 3:
+1. Sprint planning for 1st Sprint.
+2. Sprint planning for other weeks.
+3. Updated and created JIRA stories
+4. Held multiple meetings for architecture, db, recommendation engine and UI.
+5. Mapped storyboard with story in JIRA.
+6. Contributed in proposal.
+7. Intial code set up for front end
+8. Started sprint 1.
+9. Created Login Page with validations
+10. Created Signup page with validations
+
+Week 4:
+1. Multiple stories completed
+2. Recommendation engine discussions
+3. Code review 
+
+Week 5:
+1. Multiple stories completed.
+2. Prepared for demo.
+3. Recommendation engine discussions
+4. Code review 
+
+Week 6:
+1. Multiple stories completed. (search by mood and wishlist add and remove)
+2. Recommendation engine discussions
+3. Code review 
+
+Week 7:
+1. Multiple stories completed. (pagination and banned user list)
+2. Recommendation engine discussions
+3. Code review 
+
+Week 8:
+1. All stories completed. 
+2. Recommendation engine discussions and update
+3. Code review 
+4. Prepared for demo
+5. Report Discussion
