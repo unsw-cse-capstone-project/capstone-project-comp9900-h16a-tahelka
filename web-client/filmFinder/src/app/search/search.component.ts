@@ -4,6 +4,8 @@ import {Search} from '../models/Search';
 import {WebService} from '../services/web.service';
 import {MovieResult} from '../models/MovieResult';
 import {PageChangedModel} from '../models/PageChangedModel';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {UserMessageConstant} from '../constants/UserMessageConstant';
 
 
 @Component({
@@ -25,7 +27,8 @@ export class SearchComponent implements OnInit {
   });
   loading = false;
   searchClicked = false;
-  constructor(private webService: WebService) {
+  snackBarDuaration: 3000;
+  constructor(private webService: WebService, private snackBar: MatSnackBar) {
     this.genre = [
       {value: 'Western'},
       {value: 'Thriller'},
@@ -67,7 +70,10 @@ export class SearchComponent implements OnInit {
       this.searchResultLength = success.count;
       this.loading = false;
     }, err => {
-      alert(JSON.stringify(err));
+      this.snackBar.open(
+        UserMessageConstant.ERROR,
+        UserMessageConstant.DISMISS,
+        { duration: this.snackBarDuaration});
     });
   }
   clean(obj: any): any {

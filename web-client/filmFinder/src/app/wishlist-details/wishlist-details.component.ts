@@ -16,6 +16,7 @@ export class WishlistDetailsComponent implements OnInit {
   showSubscribeButtons = true;
   showSubscribeButton = true;
   showUnsubscribeButton = true;
+  currentUserName = this.authenticationService.currentUserValue.username;
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params.id;

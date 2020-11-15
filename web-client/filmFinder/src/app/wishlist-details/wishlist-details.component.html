@@ -1,6 +1,6 @@
 <app-navbar [isLoggedIn]="true"></app-navbar>
 <h2 class="left-padding">{{result?.username}}'s wishlist</h2>
-<div *ngIf="showSubscribeButtons">
+<div *ngIf="showSubscribeButtons && (result?.username != currentUserName)">
   <app-subscribe
     (subscribed)="subscribeSuccessful()"
     *ngIf="showSubscribeButton" [userID]="id"
