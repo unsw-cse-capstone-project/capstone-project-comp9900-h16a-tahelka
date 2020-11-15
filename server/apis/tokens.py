@@ -37,7 +37,6 @@ class Tokens(Resource):
         authenticator = CredentialsAuthenticator(email, password)
         user, token = authenticator.authenticate()
 
-        # Analytics here
         status_code = 201
 
         response = {

@@ -18,7 +18,8 @@ parser.add_argument('use_director', required= False, type = int, default=1)
 movie_details = api.model('movie',
                                  {'movieID': fields.Integer,
                                   'title': fields.String,
-                                  'year': fields.Integer
+                                  'year': fields.Integer,
+                                  'rating': fields.Float(description = 'Average rating out of 5')
                                  }
                                 )
 results = api.model('movies',

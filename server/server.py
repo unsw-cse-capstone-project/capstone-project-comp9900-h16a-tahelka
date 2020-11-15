@@ -16,7 +16,6 @@ app.config.from_pyfile('configuration.py')
 # Register app error handlers
 @app.errorhandler(404)
 def handle_not_found(error):
-    # Analytics
     status_code = 404
 
     response = {"message": "Resource not found."}
@@ -24,7 +23,6 @@ def handle_not_found(error):
 
 @app.errorhandler(Exception)
 def handle_internal_server_error(error):
-    # Analytics
     status_code = 500
 
     print(error.__class__)
