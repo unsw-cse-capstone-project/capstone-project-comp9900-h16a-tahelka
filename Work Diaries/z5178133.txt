@@ -20,7 +20,15 @@ Created 2/5 parts of the recommendation system. Cleaned up the data and created 
 
 
 Week 7 (28/10 - 04/11)
-Will complete the recommendation system (creating the movie review to move matrix and the movie to movie matrix based on genre similarity). Will then code the ensemble model calculation and prepare for the demo B. 
+Completed the 3 NLTK model exploration and coding using csv files. Tested the recommendation system outputs and decided on the weights for each model. 
+
+
+Week 8 (05/10 - 11/11)
+Integrated Nishant's user-movie knn model (4th model) with the other 3 models. Completed the recommendation system ensemble and recalculation script. Integrated it to the database using SQLlite. Troubleshooted all integration issues with the back-end team. Had meeting to be shown the teams progress on the UI front, then prepared notes and practiced for demo B presentation. Redid the movie recommendation model to include reviews and skip grams. 
+
+
+Week 9 (12/10 - 18/11)
+Troubleshooted git lfs issues with the integration of the recommendation system. Got the system working on cse servers and handed to the backend team for one last issue. Completed recommendation system sections and data creation manual in the report, edited grammar and latex cleanup for submission.  
 
 
 
