@@ -16,7 +16,6 @@ def write_data_to_mongo(csvfile, client, collectionName):
     chunksize, index = 100, 0
     for chunk in pd.read_csv(csvfile, chunksize=chunksize):
         records = json.loads(chunk.T.to_json()).values()
-        # records = keys_to_int(records.)
         c = client[dbname][collectionName]
 
         if records:
@@ -45,10 +44,3 @@ def read_file_to_push():
         write_data_to_mongo(csvFile, client, collectionName)
 
 read_file_to_push()
-
-# mat = 'movie_movie'
-# f = join(mypath, mat)
-# f = f + '.csv'
-#
-#
-# write_data_to_mongo(f, client, mat)

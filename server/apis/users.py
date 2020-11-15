@@ -51,8 +51,6 @@ class Users(Resource):
         session.add(new_user)
         session.commit()
         session.close()
-        # Put the current user id in global
-        # g.userID = new_user.userID    #TODO: check if needed later.
 
         response = {'message': 'Registration successful.'}
         return response, 201
