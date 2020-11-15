@@ -1,0 +1,101 @@
+Week 1
+
+Found a group after a bit of searching.  Had a couple of group meetings where we
+discussed possible project ideas, and settled on FilmFinder.  Found a couple of
+useable datasets for movie data.  Discussed database design for the project and
+more or less decided on a schema.  The plan for the coming week is to complete
+about two thirds of the project proposal.
+
+Week 2
+
+Entered user stories on Jira.  Made Project Objectives document, with FilmFinder
+specification divided up into objectives and paired description points with
+corresponding objectives points, for our convenience, as the similar but
+non-identical 'Project Description' and 'Project Objectives' descriptions were
+annoying.  Produced an initial software architecture diagram, then produced a
+new version of the diagram that Jatin had drawn.  Updated some user stories on
+Jira to conform to the 'Connextra' format.  With regard to the stories, was a
+bit uncertain about whether we were breaking up the objectives sufficiently, so
+emailed mentor for feedback.  The plan for the coming week is to complete the
+project proposal.
+
+Week 3
+
+Did some more work on user stories on Jira.  Matched each project objective with
+its corresponding user stories, for proposal, to justify that the stories
+satisfy all the objectives.  Produced a new software architecture diagram after
+discussion with our mentor revealed that the previous one didn't have the right
+details in it.  Finalised database schema with Yash and made up some web
+contracts between the API and the UI for the first sprint.  The project proposal
+was completed and submitted.  The plan for the coming week is to complete the
+first sprint, which includes user stories on authentication, searching for
+movies by name and viewing a movie's full details.
+
+Week 4
+
+Began coding.  Worked primarily on code to allow a user to search for movies by
+name, to allow a user to view the full details of a movie, and to allow a user
+to leave a review for a movie, including testing and debugging.  The only thing
+from Sprint 1 that wasn't finished was a pair of User Stories on the
+recommendation system, which were probably a bit ambitious to have the first
+sprint, but are being worked on steadily.  The plan for the coming week is to
+complete the second sprint and to prepare for the first progressive demo.
+
+Week 5
+
+Continued coding.  Added the ability for a user to search for movies by
+description and genre in addition to name; wrote code to allow a user to browse
+movies by either director or genre; made some updates and improvements to code
+previously written.  Also had our first progressive demo and corresponding
+retrospective.  Again, unfinished User Stories from Sprint 2 were all on the
+recommendation system, which is still underway; had a meeting to continue
+working out the details of this aspect of the project.  The plan for the coming
+week is to complete the third sprint, which includes stories on searching by
+mood and subscribing to other users.
+
+Week 6
+
+Continued coding.  Figured out how to migrate our dataset from its .csv files to
+our database and wrote a script to do so.  Added the ability for a user to
+search for movies by mood.  Also added input validations for all the services
+I'd coded previously.  User Stories on the recommendation system are all still
+in progress.  The plan for the coming week is to complete the fourth sprint,
+which includes stories relating to banning other FilmFinders.
+
+Week 7
+
+Continued coding.  Added the ability for a user to ban and unban another user,
+as well as to view his Banned List.  Also coded the rating calculator, which
+computes the average rating a user sees for a movie, free from the influence of
+banned users, and updated Wishlist, Watchlist, movie search and full movie
+details code accordingly; also updated the code for full movie details to ensure
+reviews by banned users are not seen.  Updated the input validation for movie
+search such that it now occurs at the request level.  Discussed database
+validations with Yash and identified a few additions to be made.  Spent a lot of
+time trying to sort out issues that had arisen with the data migration script;
+finally identified the issue and got it working properly.  Implemented
+pagination for movie search/browse, which has created difficulties for sorting
+the results properly.  User Stories for the recommendation system are making
+good progress and are expected to be finished sometime in the next week.  The
+plan for the coming week is to fix pagination and finish the overall software
+implementation, and to start the project report.
+
+Week 8
+
+Continued coding.  Worked on the results being sorted properly in conjunction
+with pagination.  Up until this point, search results have been sorted
+subsequent to their being generated however pagination has broken this, thus
+requiring the results to be sorted as part of the query that retrieves them.
+The fact of a movie's average rating being user specific made this quite
+difficult but I got there in the end.  A further problem then arose in that SQL
+and Python round differently, meaning the ratings displayed (computed by Python)
+and the ratings by which search results are ordered (computed by SQL) were not
+always identical.  Finally managed to overcome this problem too, though, and
+pagination and searching/browsing is now complete.  A couple of other minor
+things I did were identify some remaining issues with the dataset (which are
+being sorted out) and made a couple of additions/modifications to the
+recommendations script that were requested.  The software system is essentially
+complete but I'll probably try and polish a couple of things before its
+submitted.  Other than that, the plan for the coming week is to complete the
+project report (and the project as a whole), which we discussed as a group late
+this week.
