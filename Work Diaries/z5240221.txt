@@ -55,7 +55,7 @@ Week 8:
 4. Prepared for demo
 5. Report Discussion
 
-Week 8:
+Week 9:
 1. Testing. 
 2. Recommendation engine discussions and update
 3. Code review 
