@@ -54,3 +54,10 @@ Week 8:
 3. Code review 
 4. Prepared for demo
 5. Report Discussion
+
+Week 8:
+1. Testing. 
+2. Recommendation engine discussions and update
+3. Code review 
+4. Testing on CSE server
+5. File writing
