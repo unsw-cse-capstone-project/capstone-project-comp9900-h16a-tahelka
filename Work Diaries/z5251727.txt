@@ -95,7 +95,17 @@ pagination and searching/browsing is now complete.  A couple of other minor
 things I did were identify some remaining issues with the dataset (which are
 being sorted out) and made a couple of additions/modifications to the
 recommendations script that were requested.  The software system is essentially
-complete but I'll probably try and polish a couple of things before its
+complete but I'll probably try and polish a couple of things before it's
 submitted.  Other than that, the plan for the coming week is to complete the
 project report (and the project as a whole), which we discussed as a group late
 this week.
+
+Week 9
+
+Finished coding.  Rewrote the average_rating method in the Movie class to use
+Python/SQLAlchemy; I initially wrote it in essentially raw SQL.  Identified and
+corrected an error in the Swagger documentation for banned_list.py.  Added some
+additional comments to the code and smoothed out a few things here and there.
+Researched Git LFS, which had been causing us some issues, and figured out how
+to install and use it correctly.  Assisted in debugging a number of issues that
+cropped up over the course of the week.  Wrote part of the project report.
