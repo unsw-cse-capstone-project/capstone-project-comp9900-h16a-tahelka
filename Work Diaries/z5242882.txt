@@ -34,3 +34,11 @@ Week 6:
 Week 7:
 1.) Started coding for Recommendation engine and completed the other stories assigned to me.
 2.) Discussed about the recommendation engine for making it better.
+3.) Fixed the bugs that were present on the front end.
+
+Week 8:
+1. All stories completed. 
+2. Recommendation engine discussions and completed the code for movie-user matrix as requested by Runi.
+3. Code review. 
+4. Discussed and prepared for demo
+5. Discussions were made on how the report must be presented.
