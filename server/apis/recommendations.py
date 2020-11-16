@@ -8,6 +8,7 @@ from db_engine import Session
 from models.Movie import Movie
 from models.BannedList import BannedList
 from util.RatingCalculator import compute
+from sqlite3 import ProgrammingError
 
 api = Namespace('Movies', path = '/movies',
                 description='Get Movie Recommendations')
@@ -69,6 +70,9 @@ class Recommendations(Resource):
                                'rating': compute(movieID, g.userID, ratings_sum, review_count, banned_users)})
 
             movies.sort(key = lambda film: (-film['rating'], film['title']))
+        
+        except ProgrammingError as pe:
+            print("Df hasn't loaded yet.")
 
         except Exception as e:
             print("Df hasn't loaded yet.")
