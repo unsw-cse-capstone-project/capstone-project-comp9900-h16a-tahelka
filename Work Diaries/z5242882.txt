@@ -37,8 +37,14 @@ Week 7:
 3.) Fixed the bugs that were present on the front end.
 
 Week 8:
-1. All stories completed. 
-2. Recommendation engine discussions and completed the code for movie-user matrix as requested by Runi.
-3. Code review. 
-4. Discussed and prepared for demo
-5. Discussions were made on how the report must be presented.
+1.) All stories completed. 
+2.) Recommendation engine discussions and completed the code for movie-user matrix as requested by Runi.
+3.) Code review. 
+4.) Discussed and prepared for demo
+5.) Discussions were made on how the report must be presented.
+
+Week 9:
+1.) Manual testing of all the code was done.
+2.) Report was written and completed.
+3.) Tested the code by removing everything on the local and cloning it again.
+4.) Tested on the CSE server.
