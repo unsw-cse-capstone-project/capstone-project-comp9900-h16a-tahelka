@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call for login
   login(): void {
     this.user = this.loginForm.value;
     this.webService.login(this.user).subscribe(success => {
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.login(authUser);
       this.navigate('/search');
     }, err => {
+      // left comment for user who forgets port placement
       alert(JSON.stringify(err));
     });
     this.navigate('/search');

@@ -22,11 +22,13 @@ export class MovieDetailsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call for movie detail
   movieDetails(): void {
       this.webService.movieDetails(this.movie.movieID).subscribe(success => {
         this.movieDetailsObject = success;
         this.dataSource = [success];
-        this.emitMovieReviews(this.movieDetailsObject.reviews)
+        // tell parent that movie has been reviewed
+        this.emitMovieReviews(this.movieDetailsObject.reviews);
       }, err => {
         alert(JSON.stringify(err));
       });

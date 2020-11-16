@@ -24,6 +24,7 @@ export class RecommendComponent implements OnInit {
   ngOnInit(): void {
     this.recommend();
   }
+  // call to get data via HTTP methods
   recommend(): void {
     this.webService.recommend(this.movieID, +this.useDirector, +this.useGenre).subscribe(success => {
       this.dataSource = success.movies;
@@ -34,10 +35,12 @@ export class RecommendComponent implements OnInit {
       console.log(err);
     });
   }
+  // When user selects recommendations params
   updatedDirector(event: any): any {
     this.useDirector = ! this.useDirector;
     this.recommend();
   }
+  // When user selects recommendations params
   updatedGenre(event: any): any {
     this.useGenre = ! this.useGenre;
     this.recommend();

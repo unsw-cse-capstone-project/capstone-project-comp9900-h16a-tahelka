@@ -18,6 +18,7 @@ export class WatchedMoviesComponent implements OnInit {
   ngOnInit(): void {
     this.getData();
   }
+  // http call to get data
   getData(): void{
     this.webService.getWatchlist().subscribe(success => {
       this.datasource = success.watchlist;

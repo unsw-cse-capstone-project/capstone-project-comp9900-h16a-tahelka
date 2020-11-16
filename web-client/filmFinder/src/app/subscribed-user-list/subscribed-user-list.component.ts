@@ -24,6 +24,7 @@ export class SubscribedUserListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSourceMatTable.sort = this.sort;
   }
+  // http call to get data
   getData(): void {
     this.webService.getSubscriptionList().subscribe(success => {
       this.dataSource = success.subscribedUsers;
@@ -34,6 +35,7 @@ export class SubscribedUserListComponent implements OnInit, AfterViewInit {
       alert(err);
     });
   }
+  // http call to unsubscribe
   unsubscribed(removeUserID: number): void {
     this.dataSource = this.dataSource.filter(({ userID }) => userID !== removeUserID);
     this.dataSourceMatTable = new MatTableDataSource<SubscribedUser>(this.dataSource);

@@ -22,9 +22,11 @@ export class ReviewListComponent implements OnInit {
   setMovieReviews(event: MovieReview[]): void {
     this.movieReviewsSource = event;
   }
+  // block users http call
   blockUser(event: MovieReview): void {
     this.webService.blockUser(event.userID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.BLOCKED_USER_SUCCESSFUL, UserMessageConstant.DISMISS);
+      // remove user in the list on successful calls
       this.movieReviewsSource = this.movieReviewsSource.filter(obj => obj !== event);
     }, err => {
       this.successfulUpdateSnackbar(UserMessageConstant.BLOCKED_USER_UNSUCCESSFUL, UserMessageConstant.DISMISS);

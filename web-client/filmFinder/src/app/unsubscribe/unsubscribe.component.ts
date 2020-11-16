@@ -16,6 +16,7 @@ export class UnsubscribeComponent implements OnInit {
   @Output() unsubscribedUserID = new EventEmitter<number>();
   ngOnInit(): void {
   }
+  // http call to unsubscribe
   unsubscribe(): void {
     this.webService.unsubscribeUser(this.userID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.UNSUBSCRIBED_USER, UserMessageConstant.DISMISS);

@@ -26,11 +26,13 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http method to add review
   saveClick(fData: any, formDirective: FormGroupDirective): void {
     this.review = this.reviewForm.value;
     this.webService.review(this.review, this.movieId).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.REVIEW_ADDED, UserMessageConstant.DISMISS);
       this.reviewForm.reset();
+      // let parent know that review has been added, so it can load new reviews
       this.reviewAdded.emit(true);
       formDirective.resetForm();
     }, err => {

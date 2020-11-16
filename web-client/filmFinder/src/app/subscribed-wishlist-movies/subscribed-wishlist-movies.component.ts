@@ -25,6 +25,7 @@ export class SubscribedWishlistMoviesComponent implements OnInit, AfterViewInit 
   ngAfterViewInit(): void {
     this.dataSourceMatTable.sort = this.sort;
   }
+  // http call to get data
   getData(): void {
     this.webService.getSubscribedWishlistMovies().subscribe(success => {
       this.dataSource = success.movies;

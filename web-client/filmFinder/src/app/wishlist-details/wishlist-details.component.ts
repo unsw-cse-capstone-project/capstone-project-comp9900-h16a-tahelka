@@ -23,6 +23,7 @@ export class WishlistDetailsComponent implements OnInit {
     });
     this.getData();
   }
+  // http to get data
   getData(): void {
     if (this.id === undefined) {
       this.id = this.authenticationService.currentUserValue.userID;
@@ -35,6 +36,7 @@ export class WishlistDetailsComponent implements OnInit {
       alert(JSON.stringify(err));
     });
   }
+  // show buttons to different users
   checkButtons(): void {
     if (this.result.isSubscribed === true) {
       this.subscribeSuccessful();

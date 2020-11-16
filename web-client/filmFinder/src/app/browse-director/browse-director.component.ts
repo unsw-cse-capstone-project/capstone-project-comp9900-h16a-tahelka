@@ -26,6 +26,7 @@ export class BrowseDirectorComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call to get data
   search(): void {
     this.searchClicked = true;
     this.searchObject = this.directorForm.value;

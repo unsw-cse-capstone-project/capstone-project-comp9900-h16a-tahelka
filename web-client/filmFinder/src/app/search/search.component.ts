@@ -61,6 +61,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call to get search
   search(page= 0, size= 10): void {
     this.loading = true;
     this.searchClicked = true;
@@ -76,6 +77,7 @@ export class SearchComponent implements OnInit {
         { duration: this.snackBarDuaration});
     });
   }
+  // need to clean object to be sent to HTTP as it can contain initial values
   clean(obj: any): any {
     for (const propName in obj) {
       if (obj[propName] === null || obj[propName] === undefined || obj[propName] === '') {

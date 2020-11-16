@@ -21,6 +21,7 @@ export class IntegrateWishlistComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call to import wishlist
   wishlistImport(): void{
     this.webService.wishlistImport(this.userID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_IMPORT_SUCCESSFUL, UserMessageConstant.DISMISS);
