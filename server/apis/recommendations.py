@@ -43,6 +43,10 @@ class Recommendations(Resource):
         use_genre = args.get('use_genre')
         use_director = args.get('use_director')
         topMovieIds = list()
+        movies = list()
+
+        # Need this try/except block to catch errors when calling
+        # recommendations if dataframes haven't loaded yet.
         try:
             movie = current_app.movieDf
             director = current_app.dirDf
@@ -52,23 +56,23 @@ class Recommendations(Resource):
             topMovieIds = movie_similarity_calc(movieID=movieID, userID=userID, movie=movie, director=director, genre=genre, user=user,
                                           use_genre=use_genre, use_director=use_director)
 
+            session = Session()
+            result = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum,
+                                   Movie.review_count).filter(Movie.movieID.in_(topMovieIds)).all()
+
+            banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)\
+                                 .filter(BannedList.userID == userID))
+
+
+            for id, title, year, ratings_sum, review_count in result:
+                movies.append({'movieID': id, 'title': title, 'year': year,
+                               'rating': compute(movieID, g.userID, ratings_sum, review_count, banned_users)})
+
+            movies.sort(key = lambda film: (-film['rating'], film['title']))
+
         except Exception as e:
-            print(str(e))
-            print("Or, Movie Df hasn't loaded yet.")
+            print("Df hasn't loaded yet.")
 
-        session = Session()
-        result = session.query(Movie.movieID, Movie.title, Movie.year, Movie.ratings_sum,
-                               Movie.review_count).filter(Movie.movieID.in_(topMovieIds)).all()
-
-        banned_users = tuple(banned_user for banned_user, in session.query(BannedList.bannedUserID)\
-                             .filter(BannedList.userID == userID))
-
-        movies = list()
-        for id, title, year, ratings_sum, review_count in result:
-            movies.append({'movieID': id, 'title': title, 'year': year,
-                           'rating': compute(movieID, g.userID, ratings_sum, review_count, banned_users)})
-
-        movies.sort(key = lambda film: (-film['rating'], film['title']))
         response = {'movies': movies}
         return response, 200
 
