@@ -1,6 +1,6 @@
 from flask import request, g
 from flask_restx import Namespace, Resource
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, BadRequest
 
 from authentication.token_authenticator import TokenAuthenticator
 from db_engine import Session
@@ -29,6 +29,10 @@ class Wishlists_UserID(Resource):
             raise NotFound
 
         cID = g.userID
+        # Can't subscribe to oneself.
+        if cID == userID:
+            raise BadRequest
+
         new = set(session.query(Wishlist.movieID).filter(Wishlist.userID == userID))
         cur = set(session.query(Wishlist.movieID).filter(Wishlist.userID == cID))
 
