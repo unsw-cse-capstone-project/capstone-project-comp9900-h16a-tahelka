@@ -19,9 +19,11 @@ export class SubscribeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call to subscribe
   subscribe(): void {
       this.webService.subscribeUser(this.userID).subscribe(success => {
         this.successfulUpdateSnackbar(UserMessageConstant.SUBSCRIBED_USER, UserMessageConstant.DISMISS);
+        // emit event to change button style
         this.subscribed.emit(true);
       }, err => {
         this.successfulUpdateSnackbar(UserMessageConstant.SUBSCRIBED_USER_UNSUCCESSFUL, UserMessageConstant.DISMISS);

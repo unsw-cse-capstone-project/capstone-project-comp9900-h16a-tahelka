@@ -22,6 +22,7 @@ export class RemoveMovieWatchlistComponent implements OnInit {
     this.webService.removeWatchlist(this.movieID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.WATCHLIST_REMOVED, UserMessageConstant.DISMISS);
       if (this.router.url.startsWith('/watched-movies')) {
+        // let parent know that movie has been deleted so that, parent can remove movie from list
         this.deleteFromWatchlist.emit(this.movieID);
       }
     }, err => {

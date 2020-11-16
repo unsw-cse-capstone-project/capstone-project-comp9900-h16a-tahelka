@@ -37,7 +37,7 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   ngOnInit(): void {
   }
   getMovieDetailsInChildComponent(movie: MovieResult): void {
-    // Try to find a better way here
+    // Get data onclick
     this.movieDetailsComponents.forEach(component => {
       if (component.movie.movieID === movie.movieID) {
         component.movieDetails();
@@ -46,6 +46,7 @@ export class SearchResultComponent implements OnInit, OnChanges  {
   }
   tabChanged(event: any): void {
   }
+  // add reviews
   setReviewList(event: any, movie: MovieResult): void {
     this.movieReviewListComponents.forEach(component => {
       if (component.movieID === movie.movieID) {
@@ -53,18 +54,21 @@ export class SearchResultComponent implements OnInit, OnChanges  {
       }
     });
   }
+  // when wishlist is removed update datasource
   wishlistMovieRemoved(wishlistRemoved: WishlistRemove, movie: MovieResult): void {
     this.dataSource = this.dataSource.filter(obj => obj !== movie);
     this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
     this.dataSourceMatTable._updateChangeSubscription();
     this.dataSourceMatTable.paginator = this.paginator;
   }
+  // when watchlist is removed update datasource
   watchlistMovieRemoved(movieID: number, movie: MovieResult): void {
     this.dataSource = this.dataSource.filter(obj => obj !== movie);
     this.dataSourceMatTable = new MatTableDataSource<MovieResult>(this.dataSource);
     this.dataSourceMatTable._updateChangeSubscription();
     this.dataSourceMatTable.paginator = this.paginator;
   }
+  // to capitalize table headers
   capitalize(s: string): string
   {
     return s && s[0].toUpperCase() + s.slice(1);
@@ -74,7 +78,7 @@ export class SearchResultComponent implements OnInit, OnChanges  {
       this.pageChangedEvent.emit(event);
     }
   }
-
+  // lifecycle hooks
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.dataSource && !changes.dataSource.firstChange) {
       if (changes.dataSourceLength) {

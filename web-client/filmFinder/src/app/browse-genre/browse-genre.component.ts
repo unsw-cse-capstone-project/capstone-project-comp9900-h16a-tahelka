@@ -47,6 +47,7 @@ export class BrowseGenreComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+  // http call to get data
   search(): void {
     this.searchClicked = true;
     this.loading = true;
@@ -61,6 +62,7 @@ export class BrowseGenreComponent implements OnInit {
         { duration: this.snackBarDuaration});
     });
   }
+  // event for page change
   pageChangedEvent(event: PageChangedModel): void {
     this.loading = true;
     this.webService.search(this.genreForm.value, event.pageIndex, event.pageSize).subscribe(success => {

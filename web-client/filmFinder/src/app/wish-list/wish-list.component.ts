@@ -36,8 +36,8 @@ export class WishListComponent implements OnInit {
         this.isWishlistDetails = false;
       }
     });
-    // this.setRemoveButtonView();
   }
+  // http call to add to wishlist
   addToWishlist(): void{
     this.webService.wishlistAdd(this.movieID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_ADDED, UserMessageConstant.DISMISS);
@@ -45,6 +45,7 @@ export class WishListComponent implements OnInit {
       this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_ADD_UNSUCCESSFUL, UserMessageConstant.DISMISS);
     });
   }
+  // remove from wishlist http call
   removeFromWishlist(): void{
     this.webService.wishlistRemove(this.movieID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.WISHLIST_REMOVED, UserMessageConstant.DISMISS);
@@ -59,9 +60,4 @@ export class WishListComponent implements OnInit {
     const snackbarRef = this.snackbar.open(message, action, {duration: this.snackbarDuration});
     snackbarRef.afterDismissed().subscribe(() => {});
   }
-  // setRemoveButtonView(): void {
-  //   if (this.id === undefined || +this.id === this.authenticationService.currentUserValue.userID) {
-  //     this.showDelete = true;
-  //   }
-  // }
 }

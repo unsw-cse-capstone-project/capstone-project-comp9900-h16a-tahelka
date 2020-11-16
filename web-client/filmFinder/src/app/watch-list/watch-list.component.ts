@@ -16,6 +16,7 @@ export class WatchListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call to get data
   onClick(): void{
     this.webService.watchlist(this.movieID).subscribe(success => {
       this.successfulUpdateSnackbar(UserMessageConstant.WATCH_LIST_ADDED, UserMessageConstant.DISMISS);

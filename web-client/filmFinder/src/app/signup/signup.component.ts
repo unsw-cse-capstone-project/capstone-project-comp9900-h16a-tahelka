@@ -30,6 +30,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  // http call to sign up
   signup(): void {
     if (this.signUpForm.value.confirmPassword === this.signUpForm.value.password) {
       this.newUser = this.signUpForm.value;
