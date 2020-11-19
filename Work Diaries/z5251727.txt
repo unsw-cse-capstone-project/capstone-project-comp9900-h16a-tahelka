@@ -109,3 +109,10 @@ additional comments to the code and smoothed out a few things here and there.
 Researched Git LFS, which had been causing us some issues, and figured out how
 to install and use it correctly.  Assisted in debugging a number of issues that
 cropped up over the course of the week.  Wrote part of the project report.
+
+Week 10
+
+Proofread the report and identified some things that needed fixing.  We
+discussed the demonstration/presentation and sorted out who was going to talk
+about what, and had a couple of run throughs before our lab.  Filled out and
+submitted the Peer Assessment, and with that, there was nothing left to do.
