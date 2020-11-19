@@ -61,3 +61,7 @@ Week 9:
 3. Code review 
 4. Testing on CSE server
 5. File writing
+
+Week 10:
+1. Submission
+2. Presentation
