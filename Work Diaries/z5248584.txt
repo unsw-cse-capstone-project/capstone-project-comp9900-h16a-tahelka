@@ -70,3 +70,8 @@ Week 9
 2. Wrote report.
 3. Held discussions with the team.
 4. Fixed bugs and other issues.
+
+Week 10
+1. Finished report
+2. Finished codebase
+3. Prepared and demonstrated the system. 
