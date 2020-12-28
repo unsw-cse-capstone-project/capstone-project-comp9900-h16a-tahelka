@@ -1,4 +1,4 @@
-# capstone-project-comp9900-h16a-tahelka: FilmFinder
+# FilmFinder
 ## Project Description
 People are often looking for movies to watch. In this project we call them FilmFinders. These
 FilmFinders must be able to search for new movies to watch by keywords that can match on the name,
